@@ -2,8 +2,10 @@ import axios from "axios";
 import * as TYPES from "../store/actions";
 
 export const getPromptsAction = () => dispatch => {
+    const DAP_SERVICE = process.env.REACT_APP_DAP_SERVICE
+    console.log("DAP_SERVICE: ", DAP_SERVICE)
   axios
-    .get("http://localhost:8080/prompt/all")
+    .get(`${DAP_SERVICE}/prompt/all`)
     .then(response => {
       dispatch({
         type: TYPES.SET_INITIAL_PROMPTS,
