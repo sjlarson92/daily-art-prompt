@@ -15,8 +15,8 @@ export const PromptLayout = ({ prompts, date, updateNextDate, updatePreviousDate
       {
           (Object.keys(prompts).length > 0 && prompts[date]) &&
               (<Prompt
-              data-testid="prompt"
-              prompt={prompts[date]}
+                data-testid="prompt"
+                prompt={prompts[date]}
               />)
       }
 
