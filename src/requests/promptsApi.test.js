@@ -8,6 +8,8 @@ jest.mock("../EntryScreen");
 
 const dispatch = jest.fn();
 
+const DAP_SERVICE = process.env.REACT_APP_DAP_SERVICE
+
 const response = {
   data: {
     prompts: "array of prompt objects"
@@ -22,7 +24,7 @@ describe("getPromptsAction", () => {
   it("should call api with correct params", () => {
     axios.get.mockResolvedValue(response);
     getPromptsAction()(dispatch);
-    expect(axios.get).toHaveBeenCalledWith("http://localhost:8080/prompt/all");
+    expect(axios.get).toHaveBeenCalledWith(`${DAP_SERVICE}/prompt/all`);
   });
 });
 
