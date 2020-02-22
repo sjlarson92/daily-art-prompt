@@ -65,6 +65,19 @@ describe("<PromptLayout>", () => {
           });
         });
       });
+        describe("when the date in state is NOT in prompts", () => {
+          it("should not render", () => {
+            const props = {
+              ...defaultProps,
+              prompts: {
+                "2020-02-22": "Had to have high hopes for a living"
+              }
+            }
+            const wrapper = shallow(<PromptLayout {...props} />);
+            const result = wrapper.find({"data-testid": "prompt"});
+            expect(result).toHaveLength(0)
+          })
+        })
 
       describe("when there are no prompts", () => {
         it("should not render <Prompt>", () => {
