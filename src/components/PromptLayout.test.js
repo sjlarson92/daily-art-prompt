@@ -13,7 +13,7 @@ import {
 describe("<PromptLayout>", () => {
   const defaultProps = {
     prompts: {
-      text: "na na na na na na na na BATMAN!!!"
+      "2020-01-11" : "na na na na na na na na BATMAN!!!"
     },
     date: "2020-01-11",
     updateNextDate: jest.fn(),
@@ -44,25 +44,40 @@ describe("<PromptLayout>", () => {
 
     describe("<Prompt>", () => {
       describe("when there are prompts", () => {
-        it("should render", () => {
-          const props = {
-            ...defaultProps,
-            prompts: {
-              mood: "I'm up all night to get lucky"
-            }
-          };
-          const wrapper = shallow(<PromptLayout {...props} />);
-          const result = wrapper.find({ "data-testid": "prompt" });
-          expect(result).toHaveLength(1);
-        });
-        it("should render with correct prompt prop", () => {
-          const wrapper = shallow(<PromptLayout {...defaultProps} />);
-          const result = wrapper
-            .find({ "data-testid": "prompt" })
-            .prop("prompt");
-          expect(result).toEqual(defaultProps.prompts[defaultProps.date]);
+        describe("when the date in state is in prompts", () => {
+          it("should render", () => {
+            const props = {
+              ...defaultProps,
+              prompts: {
+                "2020-01-11": "I'm up all night to get lucky"
+              }
+            };
+            const wrapper = shallow(<PromptLayout {...props} />);
+            const result = wrapper.find({ "data-testid": "prompt" });
+            expect(result).toHaveLength(1);
+          });
+          it("should render with correct prompt prop", () => {
+            const wrapper = shallow(<PromptLayout {...defaultProps} />);
+            const result = wrapper
+                .find({ "data-testid": "prompt" })
+                .prop("prompt");
+            expect(result).toEqual(defaultProps.prompts[defaultProps.date]);
+          });
         });
       });
+        describe("when the date in state is NOT in prompts", () => {
+          it("should not render", () => {
+            const props = {
+              ...defaultProps,
+              prompts: {
+                "2020-02-22": "Had to have high hopes for a living"
+              }
+            }
+            const wrapper = shallow(<PromptLayout {...props} />);
+            const result = wrapper.find({"data-testid": "prompt"});
+            expect(result).toHaveLength(0)
+          })
+        })
 
       describe("when there are no prompts", () => {
         it("should not render <Prompt>", () => {
