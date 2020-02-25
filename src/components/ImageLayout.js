@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import Image from './Image.js'
 import CommentLayout from './CommentLayout'
 import * as TYPES from '../store/actions'
@@ -11,6 +11,8 @@ export const ImageLayout = ({
   deleteComment,
   updateCommentEditing,
   editComment,
+  someValue,
+  onChange
 }) => {
 
   const handleSubmit = (e, imageId, commentId) => {
@@ -51,6 +53,8 @@ export const ImageLayout = ({
           data-testid='inputBox'
           type='text'
           name='commentBox'
+          value={someValue}
+          onChange={(e) => onChange(e)}
           onKeyDown={(e) => onKeyDown(e, image.id)}
           placeholder='Add Comment...' />
       </div>

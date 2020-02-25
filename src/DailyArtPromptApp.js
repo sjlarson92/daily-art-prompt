@@ -1,16 +1,21 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import './DailyArtPromptApp.css';
 import ImageLayout from './components/ImageLayout.js'
 import PromptLayout from './components/PromptLayout.js'
 import * as TYPES from './store/actions'
 
 export const DailyArtPromptApp = ({ promptsImages, updatePromptImages, addComment }) => {
+    const [stateValue, setValue] = useState("");
 
-  const handleKeyDown = (e, imageId) => {
+    const onChange = (e) => {
+        setValue(e.target.value)
+    }
+    const handleKeyDown = (e, imageId) => {
     if (e.keyCode === 13) {
-      const value = e.target.value
-      addComment(value, imageId)
+        const value = e.target.value
+        addComment(value, imageId)
+        setValue("")
     }
   }
 
@@ -34,8 +39,10 @@ export const DailyArtPromptApp = ({ promptsImages, updatePromptImages, addCommen
             data-className='imageLayout'
             data-testid={`image-${image.id}`}
             key={image.id}
+            onChange={(e) => onChange(e)}
             onDoubleClick={() => updatePromptImages(image.id)}
             image={image}
+            someValue={stateValue}
             onKeyDown={(e) => handleKeyDown(e, image.id)}
           />)}
       </div>
