@@ -1,19 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux'
 import Image from './Image.js'
 import CommentLayout from './CommentLayout'
 import * as TYPES from '../store/actions'
 
 export const ImageLayout = ({
-  onDoubleClick,
   image,
-  onKeyDown,
   deleteComment,
   updateCommentEditing,
   editComment,
-  someValue,
-  onChange
+  addComment
 }) => {
+  const [inputBoxText, setInputBoxText] = useState("");
+
+  const onChange = (e) => {
+    setInputBoxText(e.target.value)
+  }
+  const onKeyDown = (e, imageId) => {
+    if (e.keyCode === 13) {
+      const value = e.target.value
+      addComment(value, imageId)
+      setInputBoxText("")
+    }
+  }
 
   const handleSubmit = (e, imageId, commentId) => {
     if (e.keyCode === 13) {
@@ -25,7 +34,6 @@ export const ImageLayout = ({
     <div className="column">
       <Image
         image={image}
-        onDoubleClick={() => onDoubleClick(image.id)}
       />
       {image.liked && (
         <div
@@ -53,7 +61,7 @@ export const ImageLayout = ({
           data-testid='inputBox'
           type='text'
           name='commentBox'
-          value={someValue}
+          value={inputBoxText}
           onChange={(e) => onChange(e)}
           onKeyDown={(e) => onKeyDown(e, image.id)}
           placeholder='Add Comment...' />
@@ -83,6 +91,13 @@ export const mapDispatchToProps = (dispatch) => ({
     payload: {
       imageId,
       commentId,
+      value
+    }
+  }),
+  addComment: (value, imageId) => dispatch({
+    type: TYPES.ADD_COMMENT,
+    payload: {
+      imageId,
       value
     }
   })

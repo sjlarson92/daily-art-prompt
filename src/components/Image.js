@@ -1,10 +1,21 @@
 import React from 'react';
+import * as TYPES from "../store/actions";
+import {connect} from 'react-redux';
 
-const Image = ({image: {src, name}, onDoubleClick}) =>
+const Image = ({image, updatePromptImages}) =>
   <img
-    src={src}
-    alt={name}
-    onDoubleClick={onDoubleClick}
+    src={image.src}
+    alt={image.name}
+    onDoubleClick={() => updatePromptImages(image.id)}
   />
 
-export default Image;
+export const mapDispatchToProps = (dispatch) => ({
+  updatePromptImages: (imageId) => dispatch({
+    type: TYPES.UPDATE_PROMPT_IMAGES,
+    payload: {
+      imageId
+    }
+  }),
+})
+
+export default connect(null, mapDispatchToProps)(Image)
