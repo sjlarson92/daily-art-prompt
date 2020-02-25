@@ -33,6 +33,7 @@ export const ImageLayout = ({
   return (
     <div className="column">
       <Image
+        data-testid="image"
         image={image}
       />
       {image.liked && (

@@ -2,7 +2,7 @@ import React from 'react';
 import * as TYPES from "../store/actions";
 import {connect} from 'react-redux';
 
-const Image = ({image, updatePromptImages}) =>
+export const Image = ({image, updatePromptImages}) =>
   <img
     src={image.src}
     alt={image.name}
