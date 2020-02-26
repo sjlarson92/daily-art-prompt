@@ -146,6 +146,11 @@ describe('<ImageLayout />', () => {
           wrapper.find({'data-testid': 'inputBox'}).simulate('keyDown', { keyCode: 13, target: {value: 'new comment'}})
           expect(defaultProps.addComment).toHaveBeenCalledWith('new comment', 1)
         });
+
+        it('should call update inputBoxText to an empty string', () => {
+          wrapper.find({'data-testid': 'inputBox'}).simulate('keyDown', { keyCode: 13, target: {value: 'new comment'}})
+          expect(wrapper.find({'data-testid':'inputBox'}).prop('value')).toEqual('')
+        });
       });
 
       describe('when user clicks a key that does not equal to enter', () => {
