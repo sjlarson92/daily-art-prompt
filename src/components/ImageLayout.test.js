@@ -29,6 +29,7 @@ const defaultProps = {
 describe('<ImageLayout />', () => {
   let wrapper
   beforeEach(() => {
+    jest.clearAllMocks()
     wrapper = shallow(<ImageLayout {...defaultProps} />)
   })
 
@@ -126,7 +127,44 @@ describe('<ImageLayout />', () => {
       })
     })
   })
+
+  describe('input', () => {
+    it('should have correct type prop', () => {
+      expect(wrapper.find({'data-testid': 'inputBox'}).prop('type')).toEqual('text')
+    });
+
+    describe('when onChange is called', () => {
+      it('should update value to user input', () => {
+        wrapper.find({'data-testid': 'inputBox'}).simulate('change', {target: {value: 'new comment'}})
+        expect(wrapper.find({'data-testid':'inputBox'}).prop('value')).toEqual('new comment')
+      });
+    });
+
+    describe('when onKeyDown is called', () => {
+      describe('when user clicks enter', () => {
+        it('should call addComment with correct params', () => {
+          wrapper.find({'data-testid': 'inputBox'}).simulate('keyDown', { keyCode: 13, target: {value: 'new comment'}})
+          expect(defaultProps.addComment).toHaveBeenCalledWith('new comment', 1)
+        });
+      });
+
+      describe('when user clicks a key that does not equal to enter', () => {
+        it('should not call addComment', () => {
+          wrapper.find({'data-testid':'inputBox'}).simulate('keyDown', {keyCode: 4})
+          expect(defaultProps.addComment).not.toHaveBeenCalled()
+        });
+      });
+    });
+
+    describe('placeholder', () => {
+      it('should equal correct text', () => {
+        expect(wrapper.find({'data-testid':'inputBox'}).prop('placeholder')).toEqual('Add Comment...')
+      });
+    });
+  });
 })
+
+
 
 describe('mapDispatchToProps', () => {
   const dispatch = jest.fn()
@@ -171,6 +209,19 @@ describe('mapDispatchToProps', () => {
       })
     })
   })
+
+  describe('addComment', () => {
+    it('should call dispatch with correct TYPE and payload', () => {
+      mapDispatchToProps(dispatch).addComment("comment", 1)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: TYPES.ADD_COMMENT,
+        payload: {
+          imageId: 1,
+          value: "comment"
+        }
+      })
+    });
+  });
 })
 
 
