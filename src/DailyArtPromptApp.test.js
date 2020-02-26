@@ -1,7 +1,6 @@
 import React from 'react';
-import {DailyArtPromptApp, mapDispatchToProps, mapStateToProps} from './DailyArtPromptApp.js'
+import {DailyArtPromptApp, mapStateToProps} from './DailyArtPromptApp.js'
 import {shallow} from 'enzyme';
-import * as TYPES from './store/actions'
 
 const defaultProps = {
   promptsImages: [
@@ -80,22 +79,6 @@ describe('mapStateToProps', () => {
     }
     const result = mapStateToProps(state)
     expect(result.promptsImages).toEqual('promptsImages')
-  })
-})
-
-describe('mapDispatchToProps', () => {
-  const dispatch = jest.fn()
-
-  describe('updatePromptImages', () => {
-    it('should call dispatch with type: UPDATE_PROMPT_IMAGES and correct payload', () => {
-      mapDispatchToProps(dispatch).updatePromptImages(1)
-      expect(dispatch).toHaveBeenCalledWith({
-        type: TYPES.UPDATE_PROMPT_IMAGES,
-        payload: {
-          imageId: 1
-        }
-      })
-    })
   })
 })
 

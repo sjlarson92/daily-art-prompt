@@ -1,14 +1,14 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {Image} from './Image'
+import {Image, mapDispatchToProps} from './Image'
+import * as TYPES from "../store/actions";
 
 const defaultProps = {
   image: {
     src: 'source',
     name: 'name',
   },
-  updatePromptImages: jest.fn(),
-  onDoubleClick: jest.fn()
+  updatePromptImages: jest.fn()
 }
 describe('Image', () => {
   describe('img', () => {
@@ -27,10 +27,26 @@ describe('Image', () => {
       expect(wrapper.find('img').prop('id')).toEqual(defaultProps.image.id)
     })
 
-    // it('should call onDoubleClick from props when image is doubleClicked', () => {
-    //   const wrapper = shallow(<Image {...defaultProps}/>)
-    //   wrapper.find('img').simulate('doubleClick')
-    //   expect(defaultProps.onDoubleClick).toHaveBeenCalled()
-    // })
+    it('should call onDoubleClick from props when image is doubleClicked', () => {
+      const wrapper = shallow(<Image {...defaultProps}/>)
+      wrapper.find('img').simulate('doubleClick')
+      expect(defaultProps.updatePromptImages).toHaveBeenCalled()
+    })
+  })
+})
+
+describe('mapDispatchToProps', () => {
+  const dispatch = jest.fn()
+
+  describe('updatePromptImages', () => {
+    it('should call dispatch with type: UPDATE_PROMPT_IMAGES and correct payload', () => {
+      mapDispatchToProps(dispatch).updatePromptImages(1)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: TYPES.UPDATE_PROMPT_IMAGES,
+        payload: {
+          imageId: 1
+        }
+      })
+    })
   })
 })
