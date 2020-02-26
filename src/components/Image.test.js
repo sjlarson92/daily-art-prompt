@@ -1,34 +1,34 @@
-import React from 'react';
-import {shallow} from 'enzyme';
-import {Image, mapDispatchToProps} from './Image'
-import * as TYPES from "../store/actions";
+import React from 'react'
+import { shallow } from 'enzyme'
+import { Image, mapDispatchToProps } from './Image'
+import * as TYPES from '../store/actions'
 
 const defaultProps = {
   image: {
     src: 'source',
     name: 'name',
   },
-  updatePromptImages: jest.fn()
+  updatePromptImages: jest.fn(),
 }
 describe('Image', () => {
   describe('img', () => {
     it('renders with correct src prop', () => {
-      const wrapper = shallow(<Image {...defaultProps}/>)
+      const wrapper = shallow(<Image {...defaultProps} />)
       expect(wrapper.find('img').prop('src')).toEqual(defaultProps.image.src)
     })
 
     it('render with correct alt prop', () => {
-      const wrapper = shallow(<Image {...defaultProps}/>)
+      const wrapper = shallow(<Image {...defaultProps} />)
       expect(wrapper.find('img').prop('alt')).toEqual(defaultProps.image.name)
     })
 
     it('render with correct id prop', () => {
-      const wrapper = shallow(<Image {...defaultProps}/>)
+      const wrapper = shallow(<Image {...defaultProps} />)
       expect(wrapper.find('img').prop('id')).toEqual(defaultProps.image.id)
     })
 
     it('should call onDoubleClick from props when image is doubleClicked', () => {
-      const wrapper = shallow(<Image {...defaultProps}/>)
+      const wrapper = shallow(<Image {...defaultProps} />)
       wrapper.find('img').simulate('doubleClick')
       expect(defaultProps.updatePromptImages).toHaveBeenCalled()
     })
@@ -44,8 +44,8 @@ describe('mapDispatchToProps', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: TYPES.UPDATE_PROMPT_IMAGES,
         payload: {
-          imageId: 1
-        }
+          imageId: 1,
+        },
       })
     })
   })

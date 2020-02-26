@@ -1,31 +1,28 @@
-import thunkMiddleware from "redux-thunk";
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import * as TYPES from "./actions";
-import moment from "moment";
+import thunkMiddleware from 'redux-thunk'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
+import moment from 'moment'
+import * as TYPES from './actions'
 
 export const promptImagesReducer = (state = [], action) => {
   switch (action.type) {
-    case TYPES.SET_INITIAL_IMAGES:
-      const image = action.payload.image;
+    case TYPES.SET_INITIAL_IMAGES: {
+      const { image } = action.payload
       if (image === null || undefined) {
-        return state;
-      } else {
-        const updatedImages = [...state, image];
-        return updatedImages;
+        return state
       }
+      return [...state, image]
+    }
 
     case TYPES.UPDATE_PROMPT_IMAGES:
-      const updatedPromptImages = state.map(image => {
+      return state.map(image => {
         if (image.id === action.payload.imageId) {
           return {
             ...image,
-            liked: !image.liked
-          };
-        } else {
-          return image;
+            liked: !image.liked,
+          }
         }
-      });
-      return updatedPromptImages;
+        return image
+      })
 
     case TYPES.ADD_COMMENT:
       return state.map(image => {
@@ -35,16 +32,15 @@ export const promptImagesReducer = (state = [], action) => {
               image.comments.length > 0
                 ? image.comments[image.comments.length - 1].id + 1
                 : 1,
-            text: action.payload.value
-          };
+            text: action.payload.value,
+          }
           return {
             ...image,
-            comments: [...image.comments, newComment]
-          };
-        } else {
-          return image;
+            comments: [...image.comments, newComment],
+          }
         }
-      });
+        return image
+      })
 
     case TYPES.DELETE_COMMENT:
       return state.map(image => {
@@ -53,20 +49,18 @@ export const promptImagesReducer = (state = [], action) => {
             if (comment.id === action.payload.commentId) {
               return {
                 ...comment,
-                deleted: true
-              };
-            } else {
-              return comment;
+                deleted: true,
+              }
             }
-          });
+            return comment
+          })
           return {
             ...image,
-            comments: updatedComments
-          };
-        } else {
-          return image;
+            comments: updatedComments,
+          }
         }
-      });
+        return image
+      })
 
     case TYPES.UPDATE_COMMENT_EDITING:
       return state.map(image => {
@@ -75,20 +69,18 @@ export const promptImagesReducer = (state = [], action) => {
             if (comment.id === action.payload.commentId) {
               return {
                 ...comment,
-                editing: !comment.editing
-              };
-            } else {
-              return comment;
+                editing: !comment.editing,
+              }
             }
-          });
+            return comment
+          })
           return {
             ...image,
-            comments: updatedCommentsClassName
-          };
-        } else {
-          return image;
+            comments: updatedCommentsClassName,
+          }
         }
-      });
+        return image
+      })
 
     case TYPES.EDIT_COMMENT:
       return state.map(image => {
@@ -98,54 +90,52 @@ export const promptImagesReducer = (state = [], action) => {
               return {
                 ...comment,
                 text: action.payload.value,
-                editing: false
-              };
-            } else {
-              return comment;
+                editing: false,
+              }
             }
-          });
+            return comment
+          })
           return {
             ...image,
-            comments: updatedComments
-          };
-        } else {
-          return image;
+            comments: updatedComments,
+          }
         }
-      });
+        return image
+      })
 
     default:
-      return state;
+      return state
   }
-};
+}
 
 export const dateReducer = (state = null, action) => {
   switch (action.type) {
     case TYPES.SET_INITIAL_DATE:
-      return moment().format("YYYY-MM-DD");
+      return moment().format('YYYY-MM-DD')
     case TYPES.UPDATE_DATE:
-      return action.payload.date;
+      return action.payload.date
     default:
-      return state;
+      return state
   }
-};
+}
 
 export const promptsReducer = (state = {}, action) => {
   switch (action.type) {
     case TYPES.SET_INITIAL_PROMPTS:
-      return action.payload.prompts;
+      return action.payload.prompts
     default:
-      return state;
+      return state
   }
-};
+}
 
 export const rootReducer = combineReducers({
   promptsImages: promptImagesReducer,
   date: dateReducer,
-  prompts: promptsReducer
-});
+  prompts: promptsReducer,
+})
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 export const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunkMiddleware))
-);
+  composeEnhancers(applyMiddleware(thunkMiddleware)),
+)

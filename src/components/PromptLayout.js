@@ -1,10 +1,18 @@
-import { connect } from 'react-redux';
-import React from 'react';
-import PromptButton from './PromptButton.js'
-import Prompt from './Prompt.js'
-import {updateNextDateAction, updatePreviousDateAction} from '../store/dispatchFunctions'
+import { connect } from 'react-redux'
+import React from 'react'
+import PromptButton from './PromptButton'
+import Prompt from './Prompt'
+import {
+  updateNextDateAction,
+  updatePreviousDateAction,
+} from '../store/dispatchFunctions'
 
-export const PromptLayout = ({ prompts, date, updateNextDate, updatePreviousDate }) =>
+export const PromptLayout = ({
+  prompts,
+  date,
+  updateNextDate,
+  updatePreviousDate,
+}) => (
   <div data-testid="mainContentContainer" className="prompt-row">
     <PromptButton
       data-testid="previousButton"
@@ -12,13 +20,9 @@ export const PromptLayout = ({ prompts, date, updateNextDate, updatePreviousDate
       text="Previous"
     />
 
-      {
-          (Object.keys(prompts).length > 0 && prompts[date]) &&
-              (<Prompt
-                data-testid="prompt"
-                prompt={prompts[date]}
-              />)
-      }
+    {Object.keys(prompts).length > 0 && prompts[date] && (
+      <Prompt data-testid="prompt" prompt={prompts[date]} />
+    )}
 
     <PromptButton
       data-testid="nextButton"
@@ -26,16 +30,16 @@ export const PromptLayout = ({ prompts, date, updateNextDate, updatePreviousDate
       text="Next"
     />
   </div>
+)
 
-export const mapStateToProps = (state) => ({
+export const mapStateToProps = state => ({
   date: state.date,
-  prompts: state.prompts
+  prompts: state.prompts,
 })
 
 export const dispatchFunctions = {
   updateNextDate: updateNextDateAction,
-  updatePreviousDate: updatePreviousDateAction
+  updatePreviousDate: updatePreviousDateAction,
 }
 
-export default connect(mapStateToProps, dispatchFunctions)(PromptLayout);
-
+export default connect(mapStateToProps, dispatchFunctions)(PromptLayout)

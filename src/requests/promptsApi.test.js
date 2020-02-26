@@ -1,50 +1,50 @@
-import { getPromptsAction } from "./promptsApi";
-import axios from "axios";
-import * as TYPES from "../store/actions";
+import axios from 'axios'
+import { getPromptsAction } from './promptsApi'
+import * as TYPES from '../store/actions'
 
-jest.mock("axios");
+jest.mock('axios')
 
-jest.mock("../EntryScreen");
+jest.mock('../EntryScreen')
 
-const dispatch = jest.fn();
+const dispatch = jest.fn()
 
 const DAP_SERVICE = process.env.REACT_APP_DAP_SERVICE
 
 const response = {
   data: {
-    prompts: "array of prompt objects"
-  }
-};
+    prompts: 'array of prompt objects',
+  },
+}
 
-describe("getPromptsAction", () => {
+describe('getPromptsAction', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-  });
+    jest.clearAllMocks()
+  })
 
-  it("should call api with correct params", () => {
-    axios.get.mockResolvedValue(response);
-    getPromptsAction()(dispatch);
-    expect(axios.get).toHaveBeenCalledWith(`${DAP_SERVICE}/prompt/all`);
-  });
-});
+  it('should call api with correct params', () => {
+    axios.get.mockResolvedValue(response)
+    getPromptsAction()(dispatch)
+    expect(axios.get).toHaveBeenCalledWith(`${DAP_SERVICE}/prompt/all`)
+  })
+})
 
-describe("when api response is resolved", () => {
-  it("should call dispatch with correct parameters", () => {
-    axios.get.mockResolvedValue(response);
-    getPromptsAction()(dispatch);
+describe('when api response is resolved', () => {
+  it('should call dispatch with correct parameters', () => {
+    axios.get.mockResolvedValue(response)
+    getPromptsAction()(dispatch)
     expect(dispatch).toHaveBeenCalledWith({
       type: TYPES.SET_INITIAL_PROMPTS,
       payload: {
-        prompts: response.data
-      }
-    });
-  });
-});
-describe("when api response is rejected", () => {
-  it("should not call dispatch", () => {
-    jest.clearAllMocks();
-    axios.get.mockRejectedValue();
-    getPromptsAction()(dispatch);
-    expect(dispatch).not.toHaveBeenCalled();
-  });
-});
+        prompts: response.data,
+      },
+    })
+  })
+})
+describe('when api response is rejected', () => {
+  it('should not call dispatch', () => {
+    jest.clearAllMocks()
+    axios.get.mockRejectedValue()
+    getPromptsAction()(dispatch)
+    expect(dispatch).not.toHaveBeenCalled()
+  })
+})

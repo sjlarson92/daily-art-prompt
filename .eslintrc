@@ -1,0 +1,63 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/react"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "require-yield": "off",
+    "func-names": "off",
+    "curly": 2,
+    "camelcase": 2,
+    "react/jsx-props-no-spreading": "off",
+    "react/button-has-type": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-unused-vars": [
+      "error",
+      { "vars": "all", "args": "none", "ignoreRestSiblings": true }
+    ],
+    "no-use-before-define": "off",
+    "react/prop-types": [0, { "ignore": ["children"] }],
+    "import/prefer-default-export": "off",
+    "no-console": "off",
+    "import/no-unresolved": [2, { "ignore": [".png"] }],
+    "react/require-default-props": "off",
+    "react/no-unescaped-entities": "off",
+    "no-multi-spaces": "off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "react/no-array-index-key": "off",
+    "no-nested-ternary": 2,
+    "prefer-promise-reject-errors": "off",
+    "no-underscore-dangle": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "all",
+        "semi": false
+      }
+    ],
+    "import/no-named-as-default": "off",
+    "import/first": "off"
+  },
+  "globals": {
+    "document": false,
+    "fetch": false,
+    "$PropertyType": true,
+    "syncPromise": true,
+    "createPromise": true,
+    "mount": true,
+    "snapshot": true,
+    "text": true,
+    "suppressErrorLogs": true,
+    "__DEV__": true
+  },
+  "env": {
+    "jest": true,
+    "browser": true,
+    "node": true
+  },
+  "plugins": ["react", "prettier"]
+}
