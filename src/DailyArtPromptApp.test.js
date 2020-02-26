@@ -1,7 +1,6 @@
 import React from 'react';
-import { DailyArtPromptApp, mapDispatchToProps, mapStateToProps } from './DailyArtPromptApp.js'
-import { shallow } from 'enzyme';
-import * as TYPES from './store/actions'
+import {DailyArtPromptApp, mapStateToProps} from './DailyArtPromptApp.js'
+import {shallow} from 'enzyme';
 
 const defaultProps = {
   promptsImages: [
@@ -68,33 +67,6 @@ describe('<DailyArtPromptApp>', () => {
             liked: false
           })
         })
-
-        describe('when image is double clicked', () => {
-          it('should call updatePromptImages with correct params', () => {
-            const wrapper = shallow(<DailyArtPromptApp {...defaultProps} />);
-            wrapper.find({ 'data-testid': 'image-1' }).simulate('doubleClick', 1)
-            expect(defaultProps.updatePromptImages).toHaveBeenCalledWith(1)
-          })
-        })
-
-        describe('when user clicks key in comment input box', () => {
-          describe('when user clicks enter', () => {
-            it('should call addComment with correct params', () => {
-              const wrapper = shallow(<DailyArtPromptApp {...defaultProps} />);
-              wrapper.find({ 'data-testid': 'image-1' }).simulate('keyDown', { keyCode: 13, target: { value: 'text' } })
-              expect(defaultProps.addComment).toHaveBeenCalledWith('text', 1)
-            })
-          })
-
-          describe('when user does not click enter', () => {
-            it('should not call addComment', () => {
-              const wrapper = shallow(<DailyArtPromptApp {...defaultProps} />);
-              wrapper.find({ 'data-testid': 'image-1' }).simulate('keyDown', { keyCode: 10 })
-              expect(defaultProps.addComment).not.toHaveBeenCalled()
-            })
-          })
-
-        })
       })
     })
   })
@@ -107,34 +79,6 @@ describe('mapStateToProps', () => {
     }
     const result = mapStateToProps(state)
     expect(result.promptsImages).toEqual('promptsImages')
-  })
-
-})
-
-describe('mapDispatchToProps', () => {
-  const dispatch = jest.fn()
-  describe('updatePromptImages', () => {
-    it('should dispatch type: UPDATE_PROMPT_IMAGE and correct payload ', () => {
-      const imageId = 2
-      mapDispatchToProps(dispatch).updatePromptImages(imageId)
-      expect(dispatch).toHaveBeenCalledWith({
-        type: TYPES.UPDATE_PROMPT_IMAGES,
-        payload: { imageId }
-      })
-    })
-  })
-
-  describe('addComment', () => {
-    it('should call dispatch with type: ADD_COMMENT and correct payload', () => {
-      mapDispatchToProps(dispatch).addComment('text', 1)
-      expect(dispatch).toHaveBeenCalledWith({
-        type: TYPES.ADD_COMMENT,
-        payload: {
-          imageId: 1,
-          value: 'text'
-        }
-      })
-    })
   })
 })
 

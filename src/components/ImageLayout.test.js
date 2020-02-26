@@ -1,15 +1,14 @@
 import React from 'react';
-import { ImageLayout, mapDispatchToProps } from './ImageLayout'
-import { shallow } from 'enzyme';
+import {ImageLayout, mapDispatchToProps} from './ImageLayout'
+import {shallow} from 'enzyme';
 import * as TYPES from '../store/actions'
 
 
 const defaultProps = {
-  onDoubleClick: jest.fn(),
-  onKeyDown: jest.fn(),
   deleteComment: jest.fn(),
   updateCommentEditing: jest.fn(),
   editComment: jest.fn(),
+  addComment: jest.fn(),
   image: {
     id: 1,
     liked: true,
@@ -30,19 +29,14 @@ const defaultProps = {
 describe('<ImageLayout />', () => {
   let wrapper
   beforeEach(() => {
+    jest.clearAllMocks()
     wrapper = shallow(<ImageLayout {...defaultProps} />)
   })
 
-  describe('<Image />', () => {
+  describe('Image', () => {
     it('should render with correct image', () => {
-      expect(wrapper.find('Image').prop('image')).toEqual(defaultProps.image)
+      expect(wrapper.find({'data-testid':'image'}).prop('image')).toEqual(defaultProps.image)
     })
-
-    it('should call onDoubleClick with imageId when image is doubleClicked', () => {
-      wrapper.find('Image').simulate('doubleClick')
-      expect(defaultProps.onDoubleClick).toHaveBeenCalledWith(defaultProps.image.id)
-    })
-
   })
 
   describe('<div> LikedDiv', () => {
@@ -130,22 +124,52 @@ describe('<ImageLayout />', () => {
           wrapper.find({ 'data-testid': 'comment-1' }).simulate('submit', { keyCode: 10 })
           expect(defaultProps.editComment).not.toHaveBeenCalledWith()
         })
-
-      })
-
-
-
-    })
-
-    describe('<Input>', () => {
-      it('should call onKeyDown when user clicks a key with correct params', () => {
-        const wrapper = shallow(<ImageLayout {...defaultProps} />)
-        wrapper.find({ 'data-testid': 'inputBox' }).simulate('keyDown', 'event')
-        expect(defaultProps.onKeyDown).toHaveBeenCalledWith('event', 1)
       })
     })
   })
+
+  describe('input', () => {
+    it('should have correct type prop', () => {
+      expect(wrapper.find({'data-testid': 'inputBox'}).prop('type')).toEqual('text')
+    });
+
+    describe('when onChange is called', () => {
+      it('should update value to user input', () => {
+        wrapper.find({'data-testid': 'inputBox'}).simulate('change', {target: {value: 'new comment'}})
+        expect(wrapper.find({'data-testid':'inputBox'}).prop('value')).toEqual('new comment')
+      });
+    });
+
+    describe('when onKeyDown is called', () => {
+      describe('when user clicks enter', () => {
+        it('should call addComment with correct params', () => {
+          wrapper.find({'data-testid': 'inputBox'}).simulate('keyDown', { keyCode: 13, target: {value: 'new comment'}})
+          expect(defaultProps.addComment).toHaveBeenCalledWith('new comment', 1)
+        });
+
+        it('should set input value to an empty string', () => {
+          wrapper.find({'data-testid': 'inputBox'}).simulate('keyDown', { keyCode: 13, target: {value: 'new comment'}})
+          expect(wrapper.find({'data-testid':'inputBox'}).prop('value')).toEqual('')
+        });
+      });
+
+      describe('when user clicks a key that does not equal to enter', () => {
+        it('should not call addComment', () => {
+          wrapper.find({'data-testid':'inputBox'}).simulate('keyDown', {keyCode: 4})
+          expect(defaultProps.addComment).not.toHaveBeenCalled()
+        });
+      });
+    });
+
+    describe('placeholder', () => {
+      it('should equal correct text', () => {
+        expect(wrapper.find({'data-testid':'inputBox'}).prop('placeholder')).toEqual('Add Comment...')
+      });
+    });
+  });
 })
+
+
 
 describe('mapDispatchToProps', () => {
   const dispatch = jest.fn()
@@ -190,6 +214,19 @@ describe('mapDispatchToProps', () => {
       })
     })
   })
+
+  describe('addComment', () => {
+    it('should call dispatch with correct TYPE and payload', () => {
+      mapDispatchToProps(dispatch).addComment("comment", 1)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: TYPES.ADD_COMMENT,
+        payload: {
+          imageId: 1,
+          value: "comment"
+        }
+      })
+    });
+  });
 })
 
 
