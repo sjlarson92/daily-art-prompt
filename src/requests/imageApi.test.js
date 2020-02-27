@@ -28,7 +28,7 @@ describe('getImagesAction', () => {
       data: 'are you suggesting that coconuts migrate?',
     })
     getImagesAction()(dispatch)
-    expect(axios.get).toHaveBeenCalledWith(`${DAP_SERVICE}/image`)
+    expect(axios.get).toHaveBeenCalledWith(`${DAP_SERVICE}/images/1`)
   })
 
   describe('when api response is resolved', () => {

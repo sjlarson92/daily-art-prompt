@@ -5,7 +5,7 @@ export const getPromptsAction = () => dispatch => {
   const DAP_SERVICE = process.env.REACT_APP_DAP_SERVICE
   console.log('DAP_SERVICE: ', DAP_SERVICE)
   axios
-    .get(`${DAP_SERVICE}/prompt/all`)
+    .get(`${DAP_SERVICE}/prompts`)
     .then(response => {
       dispatch({
         type: TYPES.SET_INITIAL_PROMPTS,
