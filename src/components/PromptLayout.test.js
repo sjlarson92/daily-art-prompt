@@ -9,7 +9,6 @@ import {
   updateNextDateAction,
   updatePreviousDateAction,
 } from '../store/dispatchFunctions'
-import PromptButton from './PromptButton'
 
 describe('<PromptLayout>', () => {
   const defaultProps = {
@@ -105,19 +104,6 @@ describe('<PromptLayout>', () => {
         wrapper.find({ 'data-testid': 'nextButton' }).simulate('click')
         expect(defaultProps.updateNextDate).toHaveBeenCalledWith()
       })
-    })
-  })
-
-  describe('lucas', () => {
-    it('says lucas', () => {
-      expect(
-        shallow(<PromptButton {...defaultProps} />)
-          .find({
-            'data-testid': 'LUCAS',
-          })
-          .childAt(0)
-          .text(),
-      ).toEqual('HELLO')
     })
   })
 })

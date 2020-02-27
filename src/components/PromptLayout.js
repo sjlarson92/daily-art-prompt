@@ -32,7 +32,6 @@ export const PromptLayout = ({
       onClick={() => updateNextDate()}
       text="Next"
     />
-    <div data-testid="LUCAS">HELLO</div>
   </div>
 )
 
