@@ -1,16 +1,16 @@
-import React from 'react';
-import Prompt from './Prompt.js'
-import { shallow } from 'enzyme';
+import React from 'react'
+import { shallow } from 'enzyme'
+import Prompt from './Prompt'
 
 const defaultProps = {
   prompt: {
-    date: "November 2",
+    date: 'November 2',
     id: 1,
-    text: "Hi"
+    text: 'Hi',
   },
   onClick: jest.fn(),
   somethingElse: 2,
-  antherTHing: 'a'
+  antherTHing: 'a',
 }
 
 describe('<Prompt>', () => {
@@ -21,7 +21,9 @@ describe('<Prompt>', () => {
   })
 
   it('should render correct date from prompt', () => {
-    expect(wrapper.find({ 'data-testid': 'promptDate' }).text()).toEqual(defaultProps.prompt.date)
+    expect(wrapper.find({ 'data-testid': 'promptDate' }).text()).toEqual(
+      defaultProps.prompt.date,
+    )
   })
 
   // it('should render COOL DATE when prompt does not have a date', () => {
@@ -43,10 +45,14 @@ describe('<Prompt>', () => {
   // })
 
   it('should render correct id from prompt', () => {
-    expect(wrapper.find({ 'data-testid': 'promptId' }).text()).toEqual(`Prompt #${defaultProps.prompt.id}`)
+    expect(wrapper.find({ 'data-testid': 'promptId' }).text()).toEqual(
+      `Prompt #${defaultProps.prompt.id}`,
+    )
   })
 
   it('should render correct text from prompt', () => {
-    expect(wrapper.find({ 'data-testid': 'promptText' }).text()).toEqual(defaultProps.prompt.text)
+    expect(wrapper.find({ 'data-testid': 'promptText' }).text()).toEqual(
+      defaultProps.prompt.text,
+    )
   })
 })
