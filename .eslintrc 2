@@ -1,0 +1,52 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/react"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "curly": 2,
+    "camelcase": 2,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
+    "no-use-before-define": "off",
+    "react/prop-types": [0, { "ignore": ["children"] }],
+    "import/prefer-default-export": "off",
+    "no-console": "warn",
+    "import/no-unresolved": [2, { "ignore" : [".png"]} ],
+    "react/require-default-props": "off",
+    "react/no-unescaped-entities": "off",
+    "react/forbid-prop-types": "off",
+    "no-multi-spaces": "off",
+    "react/no-array-index-key": "off",
+    "no-nested-ternary": 2,
+    "no-underscore-dangle": "off",
+    "max-len": ["error", { "code": 100 }],
+    "prettier/prettier": ["error", {
+      "printWidth": 100,
+      "singleQuote": true,
+      "trailingComma": "all",
+      "semi": false
+    }],
+    "import/no-named-as-default": "off",
+    "no-plusplus": "off",
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "to", "hrefLeft", "hrefRight" ],
+      "aspects": [ "noHref", "invalidHref", "preferButton" ]
+    }]
+  },
+  "globals": {
+    "fetch": true,
+    "window": true,
+    "navigator": true,
+    "URL": true,
+    "document": true
+  },
+  "plugins": [
+    "react",
+    "prettier"
+  ]
+}
