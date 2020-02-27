@@ -13,11 +13,7 @@ export const PromptLayout = ({
   updateNextDate,
   updatePreviousDate,
 }) => (
-  <div
-    data-testid="mainContentContainer"
-    id="i-am-a-muffin"
-    className="prompt-row"
-  >
+  <div data-testid="mainContentContainer" className="prompt-row">
     <PromptButton
       data-testid="previousButton"
       onClick={() => updatePreviousDate()}
