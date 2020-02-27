@@ -19,7 +19,6 @@ export const PromptLayout = ({
       onClick={() => updatePreviousDate()}
       text="Previous"
     />
-
     {Object.keys(prompts).length > 0 && prompts[date] && (
       <Prompt data-testid="prompt" prompt={prompts[date]} />
     )}
