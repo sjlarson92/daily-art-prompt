@@ -24,7 +24,7 @@ describe('getPromptsAction', () => {
   it('should call api with correct params', () => {
     axios.get.mockResolvedValue(response)
     getPromptsAction()(dispatch)
-    expect(axios.get).toHaveBeenCalledWith(`${DAP_SERVICE}/prompt/all`)
+    expect(axios.get).toHaveBeenCalledWith(`${DAP_SERVICE}/prompts`)
   })
 })
 
