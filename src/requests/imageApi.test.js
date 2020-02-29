@@ -8,7 +8,7 @@ jest.mock('../EntryScreen')
 
 const dispatch = jest.fn()
 
-const DAP_SERVICE = process.env.REACT_APP_DAP_SERVICE
+const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
 
 describe('getImagesAction', () => {
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe('getImagesAction', () => {
       data: 'are you suggesting that coconuts migrate?',
     })
     getImagesAction()(dispatch)
-    expect(axios.get).toHaveBeenCalledWith(`${DAP_SERVICE}/images/1`)
+    expect(axios.get).toHaveBeenCalledWith(`${GATEWAY_URL}/api/images/1`)
   })
 
   describe('when api response is resolved', () => {
