@@ -8,7 +8,7 @@ jest.mock('../EntryScreen')
 
 const dispatch = jest.fn()
 
-const DAP_SERVICE = process.env.REACT_APP_DAP_SERVICE
+const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
 
 const response = {
   data: {
@@ -24,7 +24,7 @@ describe('getPromptsAction', () => {
   it('should call api with correct params', () => {
     axios.get.mockResolvedValue(response)
     getPromptsAction()(dispatch)
-    expect(axios.get).toHaveBeenCalledWith(`${DAP_SERVICE}/prompts`)
+    expect(axios.get).toHaveBeenCalledWith(`${GATEWAY_URL}/api/prompts`)
   })
 })
 

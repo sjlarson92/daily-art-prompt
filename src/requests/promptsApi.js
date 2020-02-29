@@ -2,10 +2,10 @@ import axios from 'axios'
 import * as TYPES from '../store/actions'
 
 export const getPromptsAction = () => dispatch => {
-  const DAP_SERVICE = process.env.REACT_APP_DAP_SERVICE
-  console.log('DAP_SERVICE: ', DAP_SERVICE)
+  const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
+  console.log('GATEWAY_URL: ', GATEWAY_URL)
   axios
-    .get(`${DAP_SERVICE}/prompts`)
+    .get(`${GATEWAY_URL}/api/prompts`)
     .then(response => {
       dispatch({
         type: TYPES.SET_INITIAL_PROMPTS,
