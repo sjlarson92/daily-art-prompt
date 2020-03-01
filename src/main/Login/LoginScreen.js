@@ -12,9 +12,10 @@ const LoginScreen = () => {
   const checkLogin = () => {
     if (email === userEmail && password === userPassword) {
       console.log('login successful')
-      history.push('/dap')
+      history.push('/')
+    } else {
+      console.log('login failed!')
     }
-    console.log('login failed!')
   }
 
   return (
