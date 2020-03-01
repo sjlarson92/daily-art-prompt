@@ -1,12 +1,15 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import { dispatchFunctions, EntryScreen } from './EntryScreen'
-import { getImagesAction } from './requests/imageApi'
-import { getPromptsAction } from './requests/promptsApi'
+import {
+  dispatchFunctions,
+  EntryScreen,
+} from '../../main/DailyArtPromptApp/EntryScreen'
+import { getImagesAction } from '../../main/Image/imageApi'
+import { getPromptsAction } from '../../main/Prompt/promptsApi'
 
-import * as TYPES from './store/actions'
+import * as TYPES from '../../main/store/actions'
 
-jest.mock('./DailyArtPromptApp')
+jest.mock('../../main/DailyArtPromptApp/DailyArtPromptApp')
 
 const defaultProps = {
   getImages: jest.fn(),

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import DailyArtPromptApp from './DailyArtPromptApp'
-import { getImagesAction } from './requests/imageApi'
-import { getPromptsAction } from './requests/promptsApi'
-import * as TYPES from './store/actions'
+import { getImagesAction } from '../Image/imageApi'
+import { getPromptsAction } from '../Prompt/promptsApi'
+import * as TYPES from '../store/actions'
 
 export const EntryScreen = ({ getImages, getPrompts, getDate }) => {
   useEffect(() => {

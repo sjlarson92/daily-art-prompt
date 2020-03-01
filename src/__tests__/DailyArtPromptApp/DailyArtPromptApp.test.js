@@ -1,9 +1,12 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { DailyArtPromptApp, mapStateToProps } from './DailyArtPromptApp'
+import {
+  DailyArtPromptApp,
+  mapStateToProps,
+} from '../../main/DailyArtPromptApp/DailyArtPromptApp'
 
 const defaultProps = {
-  promptsImages: [
+  images: [
     {
       id: 1,
       liked: false,
@@ -85,9 +88,9 @@ describe('<DailyArtPromptApp>', () => {
 describe('mapStateToProps', () => {
   it('should map promptImages', () => {
     const state = {
-      promptsImages: 'promptsImages',
+      images: 'images',
     }
     const result = mapStateToProps(state)
-    expect(result.promptsImages).toEqual('promptsImages')
+    expect(result.images).toEqual('images')
   })
 })

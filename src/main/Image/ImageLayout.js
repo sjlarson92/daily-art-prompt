@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import Image from './Image'
-import CommentLayout from './CommentLayout'
+import CommentLayout from '../Comment/CommentLayout'
 import * as TYPES from '../store/actions'
 
 export const ImageLayout = ({
@@ -119,6 +119,4 @@ export const mapDispatchToProps = dispatch => ({
     }),
 })
 
-const ConnectedImageLayout = connect(null, mapDispatchToProps)(ImageLayout)
-
-export default ConnectedImageLayout
+export default connect(null, mapDispatchToProps)(ImageLayout)

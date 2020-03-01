@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import PromptButton from './PromptButton'
+import PromptButton from '../../main/Prompt/PromptButton'
 
 const defaultProps = {
   text: 'hello',

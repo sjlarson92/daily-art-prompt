@@ -1,8 +1,7 @@
-import moment from 'moment'
-import { dateReducer, promptImagesReducer, promptsReducer } from './rootReducer'
-import * as TYPES from './actions'
+import * as TYPES from '../../main/store/actions'
+import { imagesReducer } from '../../main/Image/imagesReducer'
 
-describe('promptImagesReducer', () => {
+describe('imagesReducer', () => {
   describe('when action.type equals SET_INITIAL_IMAGES', () => {
     describe('when there is no images in state', () => {
       it('should return new images', () => {
@@ -13,7 +12,7 @@ describe('promptImagesReducer', () => {
             image: 'some image',
           },
         }
-        expect(promptImagesReducer(state, action)).toEqual(['some image'])
+        expect(imagesReducer(state, action)).toEqual(['some image'])
       })
     })
     describe('when there are images in state', () => {
@@ -32,10 +31,7 @@ describe('promptImagesReducer', () => {
             image: 'apiCall',
           },
         }
-        expect(promptImagesReducer(state, action)).toEqual([
-          ...state,
-          'apiCall',
-        ])
+        expect(imagesReducer(state, action)).toEqual([...state, 'apiCall'])
       })
     })
     describe('when image received is null or undefined', () => {
@@ -51,7 +47,7 @@ describe('promptImagesReducer', () => {
             image: null,
           },
         }
-        expect(promptImagesReducer(state, action)).toEqual(state)
+        expect(imagesReducer(state, action)).toEqual(state)
       })
     })
   })
@@ -71,7 +67,7 @@ describe('promptImagesReducer', () => {
             imageId: 1,
           },
         }
-        expect(promptImagesReducer(state, action)).toEqual([
+        expect(imagesReducer(state, action)).toEqual([
           {
             id: 1,
             liked: true,
@@ -93,7 +89,7 @@ describe('promptImagesReducer', () => {
             imageId: 1,
           },
         }
-        expect(promptImagesReducer(state, action)).toEqual([
+        expect(imagesReducer(state, action)).toEqual([
           {
             id: 1,
             liked: false,
@@ -116,7 +112,7 @@ describe('promptImagesReducer', () => {
             imageId: 2,
           },
         }
-        expect(promptImagesReducer(state, action)).toEqual([
+        expect(imagesReducer(state, action)).toEqual([
           {
             id: 1,
             liked: true,
@@ -143,7 +139,7 @@ describe('promptImagesReducer', () => {
               value: 'new comment',
             },
           }
-          expect(promptImagesReducer(state, action)).toEqual([
+          expect(imagesReducer(state, action)).toEqual([
             {
               id: 1,
               comments: [
@@ -171,7 +167,7 @@ describe('promptImagesReducer', () => {
               value: 'new comment',
             },
           }
-          expect(promptImagesReducer(state, action)).toEqual([
+          expect(imagesReducer(state, action)).toEqual([
             {
               id: 1,
               comments: [
@@ -203,7 +199,7 @@ describe('promptImagesReducer', () => {
             value: 'new comment',
           },
         }
-        expect(promptImagesReducer(state, action)).toEqual(state)
+        expect(imagesReducer(state, action)).toEqual(state)
       })
     })
   })
@@ -229,7 +225,7 @@ describe('promptImagesReducer', () => {
               commentId: 1,
             },
           }
-          const result = promptImagesReducer(state, action)
+          const result = imagesReducer(state, action)
           expect(result[0].comments[0].deleted).toEqual(true)
         })
       })
@@ -252,7 +248,7 @@ describe('promptImagesReducer', () => {
               commentId: 2,
             },
           }
-          const result = promptImagesReducer(state, action)
+          const result = imagesReducer(state, action)
           expect(result[0].comments[0]).toEqual(state[0].comments[0])
         })
       })
@@ -276,7 +272,7 @@ describe('promptImagesReducer', () => {
             commentId: 1,
           },
         }
-        const result = promptImagesReducer(state, action)
+        const result = imagesReducer(state, action)
         expect(result[0]).toEqual(state[0])
       })
     })
@@ -304,7 +300,7 @@ describe('promptImagesReducer', () => {
               editing: false,
             },
           }
-          const result = promptImagesReducer(state, action)
+          const result = imagesReducer(state, action)
           expect(result[0].comments[0].editing).toEqual(!action.payload.editing)
         })
       })
@@ -327,7 +323,7 @@ describe('promptImagesReducer', () => {
               commentId: 2,
             },
           }
-          const result = promptImagesReducer(state, action)
+          const result = imagesReducer(state, action)
           expect(result[0].comments[0]).toEqual(state[0].comments[0])
         })
       })
@@ -351,7 +347,7 @@ describe('promptImagesReducer', () => {
             commentId: 1,
           },
         }
-        const result = promptImagesReducer(state, action)
+        const result = imagesReducer(state, action)
         expect(result[0]).toEqual(state[0])
       })
     })
@@ -379,7 +375,7 @@ describe('promptImagesReducer', () => {
               value: 'updated comment',
             },
           }
-          const result = promptImagesReducer(state, action)
+          const result = imagesReducer(state, action)
           expect(result[0].comments[0]).toEqual({
             id: 1,
             text: 'updated comment',
@@ -406,7 +402,7 @@ describe('promptImagesReducer', () => {
               commentId: 2,
             },
           }
-          const result = promptImagesReducer(state, action)
+          const result = imagesReducer(state, action)
           expect(result[0].comments[0]).toEqual(state[0].comments[0])
         })
       })
@@ -430,7 +426,7 @@ describe('promptImagesReducer', () => {
             commentId: 1,
           },
         }
-        const result = promptImagesReducer(state, action)
+        const result = imagesReducer(state, action)
         expect(result[0]).toEqual(state[0])
       })
     })
@@ -443,64 +439,8 @@ describe('promptImagesReducer', () => {
         const action = {
           type: '',
         }
-        expect(promptImagesReducer(state, action)).toEqual(state)
+        expect(imagesReducer(state, action)).toEqual(state)
       })
-    })
-  })
-})
-
-describe('dateReducer', () => {
-  describe('when action.type is SET_INITIAL_DATE', () => {
-    it('should return correct date with correct format', () => {
-      const action = {
-        type: TYPES.SET_INITIAL_DATE,
-      }
-      expect(dateReducer(null, action)).toEqual(moment().format('YYYY-MM-DD'))
-    })
-  })
-  describe('when action.type is UPDATE_DATE', () => {
-    it('should return the date from action payload', () => {
-      const action = {
-        type: TYPES.UPDATE_DATE,
-        payload: {
-          date: '2020-01-12',
-        },
-      }
-      expect(dateReducer(null, action)).toEqual('2020-01-12')
-    })
-  })
-
-  describe('when default case occurs', () => {
-    it('should return state', () => {
-      const state = '2020-01-11'
-      const action = {
-        type: '',
-      }
-      expect(dateReducer(state, action)).toEqual(state)
-    })
-  })
-})
-
-describe('promptsReducer', () => {
-  describe('when action.type is SET_INITIAL_PROMPTS', () => {
-    it('should return initial prompts', () => {
-      const state = []
-      const action = {
-        type: TYPES.SET_INITIAL_PROMPTS,
-        payload: {
-          prompts: 'NOT an array of prompts',
-        },
-      }
-      expect(promptsReducer(state, action)).toEqual('NOT an array of prompts')
-    })
-  })
-  describe('when action.type is default', () => {
-    it('should return state', () => {
-      const state = []
-      const action = {
-        type: '',
-      }
-      expect(promptsReducer(state, action)).toEqual(state)
     })
   })
 })

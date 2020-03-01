@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { ImageLayout, mapDispatchToProps } from './ImageLayout'
-import * as TYPES from '../store/actions'
+import { ImageLayout, mapDispatchToProps } from '../../main/Image/ImageLayout'
+import * as TYPES from '../../main/store/actions'
 
 const defaultProps = {
   deleteComment: jest.fn(),

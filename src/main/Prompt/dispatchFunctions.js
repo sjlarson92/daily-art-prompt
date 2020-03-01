@@ -1,5 +1,5 @@
 import moment from 'moment'
-import * as TYPES from './actions'
+import * as TYPES from '../store/actions'
 
 export const updateNextDateAction = () => (dispatch, getState) => {
   const nextDate = moment(getState().date)

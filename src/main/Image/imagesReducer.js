@@ -1,9 +1,6 @@
-import thunkMiddleware from 'redux-thunk'
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
-import moment from 'moment'
-import * as TYPES from './actions'
+import * as TYPES from '../store/actions'
 
-export const promptImagesReducer = (state = [], action) => {
+export const imagesReducer = (state = [], action) => {
   switch (action.type) {
     case TYPES.SET_INITIAL_IMAGES: {
       const { image } = action.payload
@@ -107,35 +104,3 @@ export const promptImagesReducer = (state = [], action) => {
       return state
   }
 }
-
-export const dateReducer = (state = null, action) => {
-  switch (action.type) {
-    case TYPES.SET_INITIAL_DATE:
-      return moment().format('YYYY-MM-DD')
-    case TYPES.UPDATE_DATE:
-      return action.payload.date
-    default:
-      return state
-  }
-}
-
-export const promptsReducer = (state = {}, action) => {
-  switch (action.type) {
-    case TYPES.SET_INITIAL_PROMPTS:
-      return action.payload.prompts
-    default:
-      return state
-  }
-}
-
-export const rootReducer = combineReducers({
-  promptsImages: promptImagesReducer,
-  date: dateReducer,
-  prompts: promptsReducer,
-})
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-export const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(thunkMiddleware)),
-)
