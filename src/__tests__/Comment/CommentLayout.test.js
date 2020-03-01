@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import CommentLayout from './CommentLayout'
+import CommentLayout from '../../main/Comment/CommentLayout'
 
 const defaultProps = {
   comment: {

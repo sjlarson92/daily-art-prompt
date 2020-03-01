@@ -1,8 +1,8 @@
-import * as TYPES from './actions'
+import * as TYPES from '../../main/store/actions'
 import {
   updateNextDateAction,
   updatePreviousDateAction,
-} from './dispatchFunctions'
+} from '../../main/Prompt/dispatchFunctions'
 
 const dispatch = jest.fn()
 

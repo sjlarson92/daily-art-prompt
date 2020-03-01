@@ -4,11 +4,11 @@ import {
   dispatchFunctions,
   mapStateToProps,
   PromptLayout,
-} from './PromptLayout'
+} from '../../main/Prompt/PromptLayout'
 import {
   updateNextDateAction,
   updatePreviousDateAction,
-} from '../store/dispatchFunctions'
+} from '../../main/Prompt/dispatchFunctions'
 
 describe('<PromptLayout>', () => {
   const defaultProps = {

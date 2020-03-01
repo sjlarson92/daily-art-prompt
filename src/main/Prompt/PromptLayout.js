@@ -5,7 +5,7 @@ import Prompt from './Prompt'
 import {
   updateNextDateAction,
   updatePreviousDateAction,
-} from '../store/dispatchFunctions'
+} from './dispatchFunctions'
 
 export const PromptLayout = ({
   prompts,

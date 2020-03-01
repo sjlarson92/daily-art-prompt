@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import './DailyArtPromptApp.css'
-import ImageLayout from './components/ImageLayout'
+import './main.css'
+import PromptLayout from '../Prompt/PromptLayout'
+import ImageLayout from '../Image/ImageLayout'
 
-import PromptLayout from './components/PromptLayout'
-
-export const DailyArtPromptApp = ({ promptsImages }) => {
+export const DailyArtPromptApp = ({ images }) => {
   return (
     <div data-testid="appContainer" className="app">
       <div className="header">
@@ -21,7 +20,7 @@ export const DailyArtPromptApp = ({ promptsImages }) => {
         Art Gallery
       </h1>
       <div className="row">
-        {promptsImages.map(image => (
+        {images.map(image => (
           <ImageLayout
             data-className="imageLayout"
             data-testid={`image-${image.id}`}
@@ -35,7 +34,7 @@ export const DailyArtPromptApp = ({ promptsImages }) => {
 }
 
 export const mapStateToProps = state => ({
-  promptsImages: state.promptsImages,
+  images: state.images,
 })
 
 export default connect(mapStateToProps)(DailyArtPromptApp)

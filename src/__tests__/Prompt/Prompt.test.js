@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Prompt from './Prompt'
+import Prompt from '../../main/Prompt/Prompt'
 
 const defaultProps = {
   prompt: {

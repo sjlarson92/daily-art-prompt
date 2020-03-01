@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { getImagesAction } from './imageApi'
-import * as TYPES from '../store/actions'
+import { getImagesAction } from '../../main/Image/imageApi'
+import * as TYPES from '../../main/store/actions'
 
 jest.mock('axios')
 
-jest.mock('../EntryScreen')
+jest.mock('../../main/DailyArtPromptApp/EntryScreen')
 
 const dispatch = jest.fn()
 
