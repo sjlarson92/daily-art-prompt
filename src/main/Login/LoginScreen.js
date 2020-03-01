@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const history = useHistory()
 
   const userEmail = 'sjlarson92@gmail.com'
   const userPassword = '123'
 
-  const checkLogin = e => {
+  const checkLogin = () => {
     if (email === userEmail && password === userPassword) {
       console.log('login successful')
-      // route to EntryScreen
-    } else {
-      console.log('login failed!')
+      history.push('/dap')
     }
+    console.log('login failed!')
   }
 
   return (
