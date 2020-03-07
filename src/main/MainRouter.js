@@ -1,16 +1,11 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-} from 'react-router-dom'
-import React, { useState } from 'react'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 import LoginScreen from './Login/LoginScreen'
 import EntryScreen from './DailyArtPromptApp/EntryScreen'
 
-const MainRouter = () => {
+export const MainRouter = () => {
   return (
     <Router>
       <Link to="/">Daily Art Prompt</Link>
@@ -28,9 +23,7 @@ const MainRouter = () => {
 }
 
 const PrivateRoute = () => {
-  // TODO: put loggedIn in redux
-  const [loggedIn, setLoggedIn] = useState(false)
-
+  const loggedIn = useSelector(state => state.loggedIn)
   if (loggedIn) {
     return <EntryScreen />
   }

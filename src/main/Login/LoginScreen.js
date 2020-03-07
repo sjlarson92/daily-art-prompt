@@ -1,16 +1,20 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import * as TYPES from '../store/actions'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const history = useHistory()
+  const dispatch = useDispatch()
 
   const userEmail = 'sjlarson92@gmail.com'
   const userPassword = '123'
 
   const checkLogin = () => {
     if (email === userEmail && password === userPassword) {
+      dispatch({ type: TYPES.SUCCESSFUL_LOGIN })
       console.log('login successful')
       history.push('/')
     } else {
