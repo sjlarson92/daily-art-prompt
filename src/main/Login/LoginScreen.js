@@ -4,8 +4,9 @@ import { useHistory } from 'react-router-dom'
 import * as TYPES from '../store/actions'
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState(null)
+  const [password, setPassword] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -18,6 +19,7 @@ const LoginScreen = () => {
       console.log('login successful')
       history.push('/')
     } else {
+      setErrorMessage('Login Failed. Please try again.')
       console.log('login failed!')
     }
   }
@@ -25,6 +27,7 @@ const LoginScreen = () => {
   return (
     <div>
       <h1>Login Screen</h1>
+      {errorMessage}
       <input
         name="email"
         type="text"

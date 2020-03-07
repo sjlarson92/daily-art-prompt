@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { store } from './store/rootReducer'
 import LoginScreen from './Login/LoginScreen'
 import EntryScreen from './DailyArtPromptApp/EntryScreen'
+import ErrorScreen from './Login/ErrorScreen'
 
 export const App = () => {
   return (
@@ -12,6 +13,7 @@ export const App = () => {
         <Switch>
           <Route exact path="/" component={EntryScreen} />
           <Route path="/login" component={LoginScreen} />
+          <Route component={ErrorScreen} />
         </Switch>
       </Router>
     </Provider>
