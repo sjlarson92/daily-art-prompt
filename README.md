@@ -158,3 +158,56 @@ axios.get('https://dog.ceo/api/breeds/image/random')
                 console.log("Error fetching picsture", error)
             })
 ```
+
+## Local Storage
+
+```javascript
+// rootReducer.js
+import { loadState, saveState } from './localStorage'
+
+export const rootReducer = combineReducers({
+  //...reducers
+})
+
+const persistedState = loadState() 
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+export const store = createStore(
+  rootReducer,
+  persistedState, // calls loadState
+  composeEnhancers(applyMiddleware(thunkMiddleware)),
+)
+
+store.subscribe(() => {
+  saveState(store.getState()) // saves state to local storage
+})
+
+```
+
+```javascript
+// localStorage.js
+
+export const loadState = () => {
+  try {
+    const serializedState = localStorage.getItem('state') // fetches data saved in local storage
+    if (serializedState === null) {
+      return undefined
+    }
+    return JSON.parse(serializedState)
+  } catch (err) {
+    return undefined
+  }
+}
+
+export const saveState = state => {
+  try {
+    const serializedState = JSON.stringify(state)
+    localStorage.setItem('state', serializedState)
+  } catch {
+    // ignore write errors
+  }
+}
+
+
+```
