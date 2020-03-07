@@ -19,101 +19,7 @@ return (
 }
 ```
 
-- run javascript from terminal with ` node filename.js`
 
-## Arrow Function:
-
-```js
-// const functionName = parameter => return
-const functionName = () => "Hello"
-
-const addNumbers = (x, y) => x + y
-```
-
-## String Literals
-
-```js
-`You can use a variable inside a string by ${variable}`
-// Must use single ticks for this
-```
-
-## Ternary
-
-- Shorthand for an If/ Else statements
-
-```js
-
-const something = (1 === 2) ? 'return if true' : 'return if false'
-
-// if (1 === 2) {
-// return 'They are equal'
-// } else {
-// return 'They are not equal'
-// }
-
-```
-
-## Inline Logical && Operator
-
-- Logical operators allow you to define a statement and then if that statement is true it will execute the following code after &&
-
-```js
-return randomVariable === anotherVariable && true;
-/*
-if (randomVariable === anotherVariable){
-return true
-} else {
- return false
-}
-*/
-```
-
-or 
-
-```js
-image.comments && image.comments.map(comment =>
-          !comment.deleted && (
-            <CommentLayout
-              key={`comment-${comment.id}-${image.id}`}
-              comment={comment}
-              onClick={() => deleteComment(image.id, comment.id)}
-            />
-          )
-        )
-```
-
-## Promises
-
-- Promises are a way to combat asynchronous functions by allowing code to run and then return to the promise and execute after
-
-- Promises can either be resolved or rejected. If a promise is resolved it can continue to the .then . If the promise is rejected then it goes to the .catch block
-
-```js
-axios.get('https://dog.ceo/api/breeds/image/random')
-            .then((response) => {
-                console.log('inside the then()')
-                setDogImage(response.data.message)
-            })
-            .catch((error) => {
-                console.log("Error fetching picsture", error)
-            })
-```
-
-## Setting up react app with Create React App
-
-1. Create an js app with Create React App with command:
-
-`yarn create react-app app-name`
-
-2. To install dependencies:
-
-`yarn add dependencyName`
-
-3. Start app (you must be in the app folder)
-
-`yarn start`
-
-NOTE: do not push dependencies to gitHub, these are installed by using `yarn` or `yarn install` and looking at the yarn.lock file
 
 ## Testing with Jest:
 
@@ -154,7 +60,7 @@ ReactDOM.render(
 );
 ```
 
-- Connect your store to the compenents that will be need it
+- Connect your store to the components that will be need it
 
 ```js
 const mapStateToProps = (state) => ({
@@ -197,7 +103,6 @@ const reducer = (state, action) => {
 }
 ```
 
-
 # Hooks
 
 - Allows developer to use state and lifecycle methods in a functional component.
@@ -207,50 +112,9 @@ const reducer = (state, action) => {
 const [stateVar, setStateVar] = useState(initialValue)
 ```
 
-## Notes
 
-1. JSX
 
-JSX in a react app should utilize just one div within the body tags.
-
-2. Components
-
-- render always takes a component NOT a function
-
-```js
-// YES
-ReactDOM.render(<App/>, document.getElementById('root'));
-
-// NO
-ReactDOM.render(App(), document.getElementById('root'));
-```
-
-- (Only for React and also because we are using it to return JSX)
-
-```js
-// const FuntionName = parameter => return
-const FunctionName = () => <h1>Return</h1>
-```
-
-3. Add Image with React:
-
-- You need to first import the Image and then use the var you imported to use it as a source for the image component
-
-```js
-import image from './imageName.jpg'
-
-<img src={image}/>
-```
-
-4. Classes and Ids
-
-- use the keyterms of className and id to add classes and ids to components
-
-```js
-<div className="class" id="id">
-```
-
-## Deconstructing from state
+# Deconstructing from state
 
 ```js
 const CommentLayout = ({ comment, onDelete, onCancel, onEdit, onSubmit }) => (
@@ -316,4 +180,45 @@ describe('<Comment />', () => {
     ).toEqual(defaultProps.comment)
   })
 })
+```
+
+## JSX
+
+JSX in a react app should utilize just one div within the body tags.
+
+## Components
+
+- render always takes a component NOT a function
+
+```js
+// YES
+ReactDOM.render(<App/>, document.getElementById('root'));
+
+// NO
+ReactDOM.render(App(), document.getElementById('root'));
+```
+
+- (Only for React and also because we are using it to return JSX)
+
+```js
+// const FuntionName = parameter => return
+const FunctionName = () => <h1>Return</h1>
+```
+
+## Add Image in React:
+
+- You need to first import the Image and then use the var you imported to use it as a source for the image component
+
+```js
+import image from './imageName.jpg'
+
+<img src={image}/>
+```
+
+4. Classes and Ids
+
+- use the keyterms of className and id to add classes and ids to components
+
+```js
+<div className="class" id="id">
 ```
