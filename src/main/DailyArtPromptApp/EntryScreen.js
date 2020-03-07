@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import DailyArtPromptApp from './DailyArtPromptApp'
 import { getImagesAction } from '../Image/imageApi'
 import { getPromptsAction } from '../Prompt/promptsApi'
@@ -12,11 +13,12 @@ export const EntryScreen = ({ getImages, getPrompts, getDate }) => {
     getDate()
   }, [getImages, getPrompts, getDate])
 
-  return (
-    <div>
-      <DailyArtPromptApp data-testid="dailyArtPromptApp" />
-    </div>
-  )
+  const history = useHistory()
+  const loggedIn = useSelector(state => state.loggedIn)
+  if (!loggedIn) {
+    history.push('/login')
+  }
+  return <DailyArtPromptApp data-testid="dailyArtPromptApp" />
 }
 
 export const dispatchFunctions = {
