@@ -8,6 +8,8 @@ yarn add enzyme # install dependencies
 yarn start # Start app must be in root
 yarn # install dependencies from package.json
 yarn install # same as yarn
+yarn test # runs all tests
+yarn test --testFile.test.js # runs specific test file
 ```
 
 ## Router
@@ -163,20 +165,29 @@ describe('add', () => {
 ```
 
 ```javascript
+// LoginScreen.test.js
+ let wrapper // define wrapper to undefined so that it can be changed in the beforeEach()
+  
+  beforeEach(() => {
+    wrapper = shallow(<LoginScreen />)
+  })
+```
+
+```javascript
 // HomeScreen.test
 import React from 'react'
 import { shallow } from 'enzyme'
-import { useHistory } from 'react-router-dom' // import methods to mock
+import { useHistory } from 'react-router-dom' // 1. import methods & files to be mocked
 import { useSelector } from 'react-redux'
 import HomeScreen from '../../main/Home/HomeScreen'
 import { MainFeedScreen } from '../../main/Home/MainFeedScreen'
 
-jest.mock('react-router-dom', () => ({ // mocks library
+jest.mock('react-router-dom', () => ({ // 2. mocks library / file
   useHistory: jest.fn(),
 }))
 jest.mock('react-redux', () => ({
-  ...require.requireActual('react-redux'), // do not mock anything in this file
-  useSelector: jest.fn(), // except this key: set to mock function
+  ...require.requireActual('react-redux'), // stops from mocking everything in file
+  useSelector: jest.fn(), // set key for function we want mocked
 }))
 
 describe('<HomeScreen>', () => {
@@ -185,7 +196,7 @@ describe('<HomeScreen>', () => {
       push: jest.fn(),
     }
     useHistory.mockReturnValue(history)
-    useSelector.mockReturnValue(false) // mock return value for function
+    useSelector.mockReturnValue(false) // 3. mock return value for function
     shallow(<HomeScreen />)
     expect(history.push).toHaveBeenCalledWith('/login')
   })
@@ -197,7 +208,18 @@ describe('<HomeScreen>', () => {
   }) // connected components can not be called directly / use a test-id instead
 })
 ```
+ ### Environment
+ 
+ - Can test environmental variables by setting them in the setupTests.js
+ 
+ ```javascript
+// setupTests.js
 
+process.env = {
+  REACT_APP_GATEWAY_URL: 'http://somehost:someport', //set variable
+}
+
+```
 
 ## Promises
 

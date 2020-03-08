@@ -26,21 +26,28 @@ const LoginScreen = () => {
 
   return (
     <div>
-      <h1>Login Screen</h1>
-      {errorMessage}
+      <h1 data-testid="header">Login Screen</h1>
+      <div data-testid="errorMessage">{errorMessage}</div>
       <input
+        data-testid="emailInput"
         name="email"
         type="text"
         placeholder="Email"
         onChange={e => setEmail(e.target.value)}
       />
       <input
+        data-testid="passwordInput"
         name="password"
         type="text"
         placeholder="Password"
         onChange={e => setPassword(e.target.value)}
       />
-      <button type="button" name="loginButton" onClick={checkLogin}>
+      <button
+        data-testid="loginButton"
+        type="button"
+        name="loginButton"
+        onClick={checkLogin}
+      >
         Login
       </button>
     </div>

@@ -3,7 +3,6 @@ import { shallow } from 'enzyme'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import HomeScreen from '../../main/Home/HomeScreen'
-import { MainFeedScreen } from '../../main/Home/MainFeedScreen'
 
 jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(),

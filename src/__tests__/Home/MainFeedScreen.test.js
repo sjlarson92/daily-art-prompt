@@ -1,6 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { MainFeedScreen, mapStateToProps } from '../../main/Home/MainFeedScreen'
+import {
+  dispatchFunctions,
+  MainFeedScreen,
+  mapStateToProps,
+} from '../../main/Home/MainFeedScreen'
 import { getImagesAction } from '../../main/Image/imageApi'
 import { getPromptsAction } from '../../main/Prompt/promptsApi'
 import * as TYPES from '../../main/storage/actions'
@@ -22,12 +26,9 @@ const defaultProps = {
   ],
   updatePromptImages: jest.fn(),
   addComment: jest.fn(),
-  getImages: jest.fn(),
-  getPrompts: jest.fn(),
-  getDate: jest.fn(),
 }
 
-describe('<DailyArtPromptApp>', () => {
+describe('<MainFeedScreen>', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
