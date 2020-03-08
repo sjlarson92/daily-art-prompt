@@ -74,5 +74,31 @@ describe('LoginScreen', () => {
         'Login Failed. Please try again.',
       )
     })
+
+    it('should NOT call dispatch', () => {
+      const email = 'wrong@incorrect.com'
+      const password = 'incorrectPassword'
+      wrapper
+        .find({ 'data-testid': 'emailInput' })
+        .simulate('change', { target: { value: email } })
+      wrapper
+        .find({ 'data-testid': 'passwordInput' })
+        .simulate('change', { target: { value: password } })
+      wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
+      expect(dispatch).not.toHaveBeenCalled()
+    })
+
+    it('should NOT redirect user to /', () => {
+      const email = 'wrong@incorrect.com'
+      const password = 'incorrectPassword'
+      wrapper
+        .find({ 'data-testid': 'emailInput' })
+        .simulate('change', { target: { value: email } })
+      wrapper
+        .find({ 'data-testid': 'passwordInput' })
+        .simulate('change', { target: { value: password } })
+      wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
+      expect(history.push).not.toHaveBeenCalled()
+    })
   })
 })
