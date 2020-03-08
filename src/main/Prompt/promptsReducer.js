@@ -1,4 +1,4 @@
-import * as TYPES from '../store/actions'
+import * as TYPES from '../storage/actions'
 
 export const promptsReducer = (state = {}, action) => {
   switch (action.type) {

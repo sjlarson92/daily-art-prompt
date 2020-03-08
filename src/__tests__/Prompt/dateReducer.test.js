@@ -1,5 +1,5 @@
 import moment from 'moment'
-import * as TYPES from '../../main/store/actions'
+import * as TYPES from '../../main/storage/actions'
 import { dateReducer } from '../../main/Prompt/dateReducer'
 
 describe('dateReducer', () => {

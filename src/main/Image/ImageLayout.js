@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import Image from './Image'
 import CommentLayout from '../Comment/CommentLayout'
-import * as TYPES from '../store/actions'
+import * as TYPES from '../storage/actions'
 
 export const ImageLayout = ({
   image,

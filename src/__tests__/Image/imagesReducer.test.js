@@ -1,4 +1,4 @@
-import * as TYPES from '../../main/store/actions'
+import * as TYPES from '../../main/storage/actions'
 import { imagesReducer } from '../../main/Image/imagesReducer'
 
 describe('imagesReducer', () => {

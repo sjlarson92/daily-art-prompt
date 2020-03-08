@@ -1,10 +1,8 @@
 import axios from 'axios'
 import { getPromptsAction } from '../../main/Prompt/promptsApi'
-import * as TYPES from '../../main/store/actions'
+import * as TYPES from '../../main/storage/actions'
 
 jest.mock('axios')
-
-jest.mock('../../main/DailyArtPromptApp/EntryScreen')
 
 const dispatch = jest.fn()
 
@@ -24,6 +22,7 @@ describe('getPromptsAction', () => {
   it('should call api with correct params', () => {
     axios.get.mockResolvedValue(response)
     getPromptsAction()(dispatch)
+    console.log('Gateway url: ', GATEWAY_URL)
     expect(axios.get).toHaveBeenCalledWith(`${GATEWAY_URL}/api/prompts`)
   })
 })
