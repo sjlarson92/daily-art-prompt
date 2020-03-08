@@ -10,7 +10,7 @@ const HomeScreen = () => {
     history.push('/login')
     return null
   }
-  return <MainFeedScreen data-testid="dailyArtPromptApp" />
+  return <MainFeedScreen data-testid="mainFeedScreen" />
 }
 
 export default HomeScreen

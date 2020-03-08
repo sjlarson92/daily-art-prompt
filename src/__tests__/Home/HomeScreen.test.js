@@ -23,9 +23,28 @@ describe('<HomeScreen>', () => {
     expect(history.push).toHaveBeenCalledWith('/login')
   })
 
+  it('should return null', () => {
+    const history = {
+      push: jest.fn(),
+    }
+    useHistory.mockReturnValue(history)
+    useSelector.mockReturnValue(false)
+    expect(shallow(<HomeScreen />).type()).toBeNull()
+  })
+
+  it('should NOT return MainFeedScreen', () => {
+    const history = {
+      push: jest.fn(),
+    }
+    useHistory.mockReturnValue(history)
+    useSelector.mockReturnValue(false)
+    const wrapper = shallow(<HomeScreen />)
+    expect(wrapper.find({ 'data-testid': 'mainFeedScreen' })).toHaveLength(0)
+  })
+
   it('should return correct component if user is loggedIn', () => {
     useSelector.mockReturnValue(true)
     const wrapper = shallow(<HomeScreen />)
-    expect(wrapper.find({ 'data-testid': 'dailyArtPromptApp' })).toHaveLength(1)
+    expect(wrapper.find({ 'data-testid': 'mainFeedScreen' })).toHaveLength(1)
   })
 })
