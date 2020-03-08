@@ -162,6 +162,42 @@ describe('add', () => {
 })
 ```
 
+```javascript
+// HomeScreen.test
+import React from 'react'
+import { shallow } from 'enzyme'
+import { useHistory } from 'react-router-dom' // import methods to mock
+import { useSelector } from 'react-redux'
+import HomeScreen from '../../main/Home/HomeScreen'
+import { MainFeedScreen } from '../../main/Home/MainFeedScreen'
+
+jest.mock('react-router-dom', () => ({ // mocks library
+  useHistory: jest.fn(),
+}))
+jest.mock('react-redux', () => ({
+  ...require.requireActual('react-redux'), // do not mock anything in this file
+  useSelector: jest.fn(), // except this key: set to mock function
+}))
+
+describe('<HomeScreen>', () => {
+  it('should redirect user to /login when not loggedIn', () => {
+    const history = {
+      push: jest.fn(),
+    }
+    useHistory.mockReturnValue(history)
+    useSelector.mockReturnValue(false) // mock return value for function
+    shallow(<HomeScreen />)
+    expect(history.push).toHaveBeenCalledWith('/login')
+  })
+
+  it('should return correct component if user is loggedIn', () => {
+    useSelector.mockReturnValue(true)
+    const wrapper = shallow(<HomeScreen />)
+    expect(wrapper.find({ 'data-testid': 'dailyArtPromptApp' })).toHaveLength(1)
+  }) // connected components can not be called directly / use a test-id instead
+})
+```
+
 
 ## Promises
 

@@ -8,6 +8,7 @@ const HomeScreen = () => {
   const loggedIn = useSelector(state => state.loggedIn)
   if (!loggedIn) {
     history.push('/login')
+    return null
   }
   return <MainFeedScreen data-testid="dailyArtPromptApp" />
 }

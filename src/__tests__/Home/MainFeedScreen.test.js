@@ -1,6 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { MainFeedScreen, mapStateToProps } from '../../main/Home/MainFeedScreen'
+import { getImagesAction } from '../../main/Image/imageApi'
+import { getPromptsAction } from '../../main/Prompt/promptsApi'
+import * as TYPES from '../../main/storage/actions'
 
 const defaultProps = {
   images: [
@@ -19,6 +22,9 @@ const defaultProps = {
   ],
   updatePromptImages: jest.fn(),
   addComment: jest.fn(),
+  getImages: jest.fn(),
+  getPrompts: jest.fn(),
+  getDate: jest.fn(),
 }
 
 describe('<DailyArtPromptApp>', () => {
@@ -89,5 +95,20 @@ describe('mapStateToProps', () => {
     }
     const result = mapStateToProps(state)
     expect(result.images).toEqual('images')
+  })
+})
+
+describe('dispatchFunctions', () => {
+  it('should have getImages equal to getImagesAction', () => {
+    expect(dispatchFunctions.getImages).toEqual(getImagesAction)
+  })
+  it('should have getPrompts equal to getPromptsAction', () => {
+    expect(dispatchFunctions.getPrompts).toEqual(getPromptsAction)
+  })
+  it('should dispatch when getDate is called with correct params', () => {
+    const dispatch = jest.fn()
+    const anonymousFunction2 = dispatchFunctions.getDate()
+    anonymousFunction2(dispatch)
+    expect(dispatch).toHaveBeenCalledWith({ type: TYPES.SET_INITIAL_DATE })
   })
 })
