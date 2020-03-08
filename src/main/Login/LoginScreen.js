@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import * as TYPES from '../store/actions'
+import * as TYPES from '../storage/actions'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState(null)

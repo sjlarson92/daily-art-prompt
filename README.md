@@ -142,6 +142,27 @@ image.comments && image.comments.map(comment =>
         )
 ```
 
+## Test (with Jest)
+
+```javascript
+// Unit tests will test a pure function and are meant to test only one thing
+describe('add', () => {
+  it('returns the sum of two positive variables given', () => {
+      const result = add(1, 2);
+      expect(result).toEqual(3)
+  })
+  it('returns the sum of two negative values given', () => {
+    const result = add(-1, -5)
+    expect(result).toEqual(-6);
+  });
+  it('return undefined when given 2 strings', () => {
+    const result = add('lucas', 'sasha')
+    expect(result).toEqual(undefined);
+  })
+})
+```
+
+
 ## Promises
 
 - Promises are a way to combat asynchronous functions by allowing code to run and then return to the promise and execute after

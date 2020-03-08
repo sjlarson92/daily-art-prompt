@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getPromptsAction } from '../../main/Prompt/promptsApi'
-import * as TYPES from '../../main/store/actions'
+import * as TYPES from '../../main/storage/actions'
 
 jest.mock('axios')
 

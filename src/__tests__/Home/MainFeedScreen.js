@@ -1,9 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import {
-  DailyArtPromptApp,
-  mapStateToProps,
-} from '../../main/DailyArtPromptApp/DailyArtPromptApp'
+import { MainFeedScreen, mapStateToProps } from '../../main/Home/MainFeedScreen'
 
 const defaultProps = {
   images: [
@@ -31,14 +28,14 @@ describe('<DailyArtPromptApp>', () => {
   describe('<div> for app', () => {
     describe('header', () => {
       it('renders with the correct text', () => {
-        const wrapper = shallow(<DailyArtPromptApp {...defaultProps} />)
+        const wrapper = shallow(<MainFeedScreen {...defaultProps} />)
         expect(wrapper.find({ 'data-testid': 'header' }).text()).toEqual(
           'Daily Art Prompt',
         )
       })
 
       it('is red', () => {
-        const wrapper = shallow(<DailyArtPromptApp {...defaultProps} />)
+        const wrapper = shallow(<MainFeedScreen {...defaultProps} />)
         expect(
           wrapper.find({ 'data-testid': 'header' }).prop('style'),
         ).toEqual({ color: 'red' })
@@ -47,14 +44,14 @@ describe('<DailyArtPromptApp>', () => {
 
     describe('<PromptLayout>', () => {
       it('should exist', () => {
-        const wrapper = shallow(<DailyArtPromptApp {...defaultProps} />)
+        const wrapper = shallow(<MainFeedScreen {...defaultProps} />)
         expect(wrapper.find({ 'data-testid': 'promptLayout' })).toHaveLength(1)
       })
     })
 
     describe('<div> header for Art Gallery', () => {
       it('should render header text', () => {
-        const wrapper = shallow(<DailyArtPromptApp {...defaultProps} />)
+        const wrapper = shallow(<MainFeedScreen {...defaultProps} />)
         const result = wrapper
           .find({ 'data-testid': 'artGalleryHeader' })
           .text()
@@ -64,7 +61,7 @@ describe('<DailyArtPromptApp>', () => {
 
     describe('<ImageLayout>', () => {
       it('should renders imageLayout for each image in array', () => {
-        const wrapper = shallow(<DailyArtPromptApp {...defaultProps} />)
+        const wrapper = shallow(<MainFeedScreen {...defaultProps} />)
         expect(wrapper.find({ 'data-className': 'imageLayout' })).toHaveLength(
           3,
         )
@@ -72,7 +69,7 @@ describe('<DailyArtPromptApp>', () => {
 
       describe('image prop', () => {
         it('should pass image obj to component', () => {
-          const wrapper = shallow(<DailyArtPromptApp {...defaultProps} />)
+          const wrapper = shallow(<MainFeedScreen {...defaultProps} />)
           expect(
             wrapper.find({ 'data-testid': 'image-1' }).prop('image'),
           ).toEqual({

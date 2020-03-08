@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Image, mapDispatchToProps } from '../../main/Image/Image'
-import * as TYPES from '../../main/store/actions'
+import * as TYPES from '../../main/storage/actions'
 
 const defaultProps = {
   image: {

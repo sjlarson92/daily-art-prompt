@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as TYPES from '../store/actions'
+import * as TYPES from '../storage/actions'
 
 export const Image = ({ image, updatePromptImages }) => (
   <img

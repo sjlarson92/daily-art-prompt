@@ -1,5 +1,5 @@
 import moment from 'moment'
-import * as TYPES from '../store/actions'
+import * as TYPES from '../storage/actions'
 
 export const dateReducer = (state = null, action) => {
   switch (action.type) {

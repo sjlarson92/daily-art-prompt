@@ -24,5 +24,9 @@ export const store = createStore(
 )
 
 store.subscribe(() => {
-  saveState(store.getState())
+  saveState({
+    loggedIn: store.getState().loggedIn,
+  })
 })
+
+export default store

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import * as TYPES from '../store/actions'
+import * as TYPES from '../storage/actions'
 
 export const getPromptsAction = () => dispatch => {
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL

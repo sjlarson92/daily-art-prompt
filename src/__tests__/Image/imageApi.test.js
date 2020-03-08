@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getImagesAction } from '../../main/Image/imageApi'
-import * as TYPES from '../../main/store/actions'
+import * as TYPES from '../../main/storage/actions'
 
 jest.mock('axios')
 

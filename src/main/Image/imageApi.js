@@ -1,6 +1,6 @@
 import axios from 'axios'
 import _ from 'lodash'
-import * as TYPES from '../store/actions'
+import * as TYPES from '../storage/actions'
 
 export const getImagesAction = () => dispatch => {
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL

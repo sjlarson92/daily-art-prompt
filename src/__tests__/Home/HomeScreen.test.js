@@ -1,13 +1,10 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import {
-  dispatchFunctions,
-  EntryScreen,
-} from '../../main/DailyArtPromptApp/EntryScreen'
+import { HomeScreen } from '../../main/Home/HomeScreen'
 import { getImagesAction } from '../../main/Image/imageApi'
 import { getPromptsAction } from '../../main/Prompt/promptsApi'
 
-import * as TYPES from '../../main/store/actions'
+import * as TYPES from '../../main/storage/actions'
 
 jest.mock('../../main/DailyArtPromptApp/DailyArtPromptApp')
 
@@ -17,23 +14,23 @@ const defaultProps = {
   getDate: jest.fn(),
 }
 
-describe('<EntryScreen>', () => {
+describe('<HomeScreen>', () => {
   it('should call getImages upon initial render', () => {
-    mount(<EntryScreen {...defaultProps} />)
+    mount(<HomeScreen {...defaultProps} />)
     expect(defaultProps.getImages).toHaveBeenCalledWith()
   })
 
   it('should call getPrompts upon initial render', () => {
-    mount(<EntryScreen {...defaultProps} />)
+    mount(<HomeScreen {...defaultProps} />)
     expect(defaultProps.getPrompts).toHaveBeenCalledWith()
   })
   it('should call getDate upon initial render', () => {
-    mount(<EntryScreen {...defaultProps} />)
+    mount(<HomeScreen {...defaultProps} />)
     expect(defaultProps.getDate).toHaveBeenCalledWith()
   })
 
   it('should render <DailyArtPromptApp>', () => {
-    const wrapper = shallow(<EntryScreen />)
+    const wrapper = shallow(<HomeScreen />)
     expect(wrapper.find({ 'data-testid': 'dailyArtPromptApp' })).toHaveLength(1)
   })
 })
