@@ -55,7 +55,7 @@ describe('LoginScreen', () => {
         .find({ 'data-testid': 'passwordInput' })
         .simulate('change', { target: { value: password } })
       wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
-      expect(dispatch).toHaveBeenCalledWith({ type: TYPES.SUCCESSFUL_LOGIN })
+      expect(dispatch).toHaveBeenCalledWith({ type: TYPES.LOGIN })
     })
   })
 
@@ -99,6 +99,13 @@ describe('LoginScreen', () => {
         .simulate('change', { target: { value: password } })
       wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
       expect(history.push).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('Sign Up Button', () => {
+    it('should redirect user to /sign-up when clicked', () => {
+      wrapper.find({ 'data-testid': 'signUpButton' }).simulate('click')
+      expect(history.push).toHaveBeenCalledWith('/sign-up')
     })
   })
 })

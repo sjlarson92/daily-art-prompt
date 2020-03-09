@@ -15,7 +15,7 @@ const LoginScreen = () => {
 
   const checkLogin = () => {
     if (email === userEmail && password === userPassword) {
-      dispatch({ type: TYPES.SUCCESSFUL_LOGIN })
+      dispatch({ type: TYPES.LOGIN })
       console.log('login successful')
       history.push('/')
     } else {
@@ -49,6 +49,12 @@ const LoginScreen = () => {
         onClick={checkLogin}
       >
         Login
+      </button>
+      <button
+        data-testid="signUpButton"
+        onClick={() => history.push('/sign-up')}
+      >
+        Sign Up
       </button>
     </div>
   )

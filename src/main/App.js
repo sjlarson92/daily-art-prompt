@@ -5,6 +5,7 @@ import LoginScreen from './Login/LoginScreen'
 import HomeScreen from './Home/HomeScreen'
 import ErrorScreen from './Login/ErrorScreen'
 import store from './storage/store'
+import SignUpScreen from './SignUp/SignUpScreen'
 
 export const App = () => {
   return (
@@ -13,6 +14,7 @@ export const App = () => {
         <Switch>
           <Route exact path="/" component={HomeScreen} />
           <Route path="/login" component={LoginScreen} />
+          <Route path="/sign-up" component={SignUpScreen} />
           <Route component={ErrorScreen} />
         </Switch>
       </Router>

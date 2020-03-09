@@ -287,6 +287,12 @@ export const saveState = state => {
     // ignore write errors
   }
 }
+```
 
+# Notes
 
+- Urls that are multiple words should use dashes NOT camel case
+```javascript
+'/sign-up' // YES
+'/signUp' // NO
 ```

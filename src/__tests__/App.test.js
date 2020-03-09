@@ -4,6 +4,7 @@ import App from '../main/App'
 import HomeScreen from '../main/Home/HomeScreen'
 import LoginScreen from '../main/Login/LoginScreen'
 import ErrorScreen from '../main/Login/ErrorScreen'
+import SignUpScreen from '../main/SignUp/SignUpScreen'
 
 describe('<App>', () => {
   let wrapper
@@ -57,6 +58,24 @@ describe('<App>', () => {
     })
   })
   describe('<Route> at 2', () => {
+    it('has correct path prop', () => {
+      expect(
+        wrapper
+          .find('Route')
+          .at(2)
+          .prop('path'),
+      ).toEqual('/sign-up')
+    })
+    it('has correct component prop', () => {
+      expect(
+        wrapper
+          .find('Route')
+          .at(2)
+          .prop('component'),
+      ).toEqual(SignUpScreen)
+    })
+  })
+  describe('<Route> at 3', () => {
     it('should have correct component', () => {
       expect(
         wrapper

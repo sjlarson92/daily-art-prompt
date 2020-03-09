@@ -16,4 +16,6 @@ export const SET_INITIAL_PROMPTS = 'SET_INITIAL_PROMPTS'
 
 export const SET_INITIAL_DATE = 'SET_INITIAL_DATE'
 
-export const SUCCESSFUL_LOGIN = 'SUCCESSFUL_LOGIN'
+export const LOGIN = 'LOGIN'
+
+export const LOGOUT = 'LOGOUT'
