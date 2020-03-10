@@ -15,7 +15,7 @@ const MainFeedScreen = () => {
     dispatch(getImagesAction())
     dispatch(getPromptsAction())
     dispatch({ type: TYPES.SET_INITIAL_DATE })
-  }, [])
+  }, [dispatch])
   return (
     <div data-testid="appContainer" className="app">
       <button
