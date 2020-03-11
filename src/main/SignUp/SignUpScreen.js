@@ -16,18 +16,22 @@ const SignUpScreen = () => {
     <div>
       <h1 data-testid="header">Sign Up</h1>
       <input
+        data-testid="emailInput"
         name="email"
         type="text"
         placeholder="Email"
         onChange={e => setEmail(e.target.value)}
       />
       <input
+        data-testid="passwordInput"
         name="password"
         type="text"
         placeholder="Password"
         onChange={e => setPassword(e.target.value)}
       />
-      <button onClick={() => handleOnClick()}>Submit</button>
+      <button data-testid="submitButton" onClick={() => handleOnClick()}>
+        Submit
+      </button>
     </div>
   )
 }
