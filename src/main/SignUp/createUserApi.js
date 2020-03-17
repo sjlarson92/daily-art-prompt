@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const createUser = (dispatch, email, password) => {
+export const createUser = (dispatch, history, email, password) => {
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
   console.log('GATEWAY_URL: ', GATEWAY_URL)
   axios
@@ -11,6 +11,9 @@ export const createUser = (dispatch, email, password) => {
       },
     })
     .then(response => {
-      console.log('response returned!')
+      console.log('response: ', response)
+      history.push('/login')
+      // TODO: render successfully created account message
     })
+  // TODO: create catch block
 }

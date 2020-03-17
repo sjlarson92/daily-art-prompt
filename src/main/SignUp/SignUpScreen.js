@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { createUser } from './createUserApi'
 
 const SignUpScreen = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
 
   const handleOnClick = () => {
     console.log('email: ', email)
     console.log('password: ', password)
-    createUser(dispatch, email, password)
+    createUser(dispatch, history, email, password)
   }
   return (
     <div>

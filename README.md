@@ -296,3 +296,5 @@ export const saveState = state => {
 '/sign-up' // YES
 '/signUp' // NO
 ```
+
+- The point of a component is to render!!
