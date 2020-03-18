@@ -13,7 +13,9 @@ export const createUser = (dispatch, history, email, password) => {
     .then(response => {
       console.log('response: ', response)
       history.push('/login', { message: 'Successfully Created New Account' })
-      // TODO: render successfully created account message
     })
-  // TODO: create catch block
+    .catch(error => {
+      console.log('FAIL: Failed to create new user with error: ', error)
+      // TODO: dispatch action to save error message in redux
+    })
 }
