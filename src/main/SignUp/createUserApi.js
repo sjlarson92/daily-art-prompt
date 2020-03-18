@@ -12,7 +12,7 @@ export const createUser = (dispatch, history, email, password) => {
     })
     .then(response => {
       console.log('response: ', response)
-      history.push('/login')
+      history.push('/login', { message: 'Successfully Created New Account' })
       // TODO: render successfully created account message
     })
   // TODO: create catch block

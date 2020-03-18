@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import * as TYPES from '../storage/actions'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const location = useLocation()
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -27,6 +28,9 @@ const LoginScreen = () => {
   return (
     <div>
       <h1 data-testid="header">Login Screen</h1>
+      {location?.state?.message && (
+        <div data-testid="message">{location.state.message}</div>
+      )}
       <div data-testid="errorMessage">{errorMessage}</div>
       <input
         data-testid="emailInput"
