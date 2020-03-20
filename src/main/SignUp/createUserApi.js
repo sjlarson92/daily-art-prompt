@@ -13,6 +13,12 @@ export const createUser = (dispatch, history, email, password) => {
     })
     .then(response => {
       console.log('response: ', response)
+      dispatch({
+        type: TYPES.SET_ERROR_MESSAGE,
+        payload: {
+          error: '',
+        },
+      })
       history.push('/login', { message: 'Successfully Created New Account' })
     })
     .catch(error => {
