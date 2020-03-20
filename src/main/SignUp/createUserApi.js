@@ -1,4 +1,5 @@
 import axios from 'axios'
+import * as TYPES from '../storage/actions'
 
 export const createUser = (dispatch, history, email, password) => {
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
@@ -15,7 +16,12 @@ export const createUser = (dispatch, history, email, password) => {
       history.push('/login', { message: 'Successfully Created New Account' })
     })
     .catch(error => {
-      console.log('FAIL: Failed to create new user with error: ', error)
-      // TODO: dispatch action to save error message in redux
+      console.log('FAIL: Failed to create new user with error: ', error.message)
+      dispatch({
+        type: TYPES.SET_ERROR_MESSAGE,
+        payload: {
+          error: 'Email already in use. Please try again',
+        },
+      })
     })
 }

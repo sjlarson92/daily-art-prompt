@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createUser } from './createUserApi'
 
 const SignUpScreen = () => {
@@ -8,6 +8,7 @@ const SignUpScreen = () => {
   const history = useHistory()
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
+  const errorMessage = useSelector(state => state.errorMessage)
 
   const handleOnClick = () => {
     console.log('email: ', email)
@@ -17,6 +18,7 @@ const SignUpScreen = () => {
   return (
     <div>
       <h1 data-testid="header">Sign Up</h1>
+      <div data-testid="errorMessage">{errorMessage}</div>
       <input
         data-testid="emailInput"
         name="email"
