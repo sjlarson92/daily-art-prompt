@@ -15,12 +15,7 @@ describe('SignUpScreen', () => {
   let wrapper
   beforeEach(() => {
     jest.clearAllMocks()
-    const dispatch = jest.fn()
-    useDispatch.mockReturnValue(dispatch)
-    const history = jest.fn()
-    useHistory.mockReturnValue(history)
     wrapper = shallow(<SignUpScreen />)
-    // TODO: Fix issue with async mockReturnValue!
   })
 
   it('render header with correct text', () => {
@@ -31,6 +26,7 @@ describe('SignUpScreen', () => {
       it('should not render errorMessage', () => {
         const errorMessage = ''
         useSelector.mockReturnValueOnce(errorMessage)
+        wrapper = shallow(<SignUpScreen />)
         expect(wrapper.find({ 'data-testid': 'errorMessage' }).text()).toEqual(
           '',
         )
@@ -40,6 +36,7 @@ describe('SignUpScreen', () => {
       it('should render errorMessage', () => {
         const errorMessage = 'errorMessage'
         useSelector.mockReturnValueOnce(errorMessage)
+        wrapper = shallow(<SignUpScreen />)
         expect(wrapper.find({ 'data-testid': 'errorMessage' }).text()).toEqual(
           'errorMessage',
         )
@@ -49,6 +46,10 @@ describe('SignUpScreen', () => {
 
   describe('when submit is clicked', () => {
     it('should call createUser with correct params', () => {
+      const dispatch = jest.fn()
+      useDispatch.mockReturnValue(dispatch)
+      const history = jest.fn()
+      useHistory.mockReturnValue(history)
       const email = 'sjlarson92@gmail.com'
       const password = '123'
       wrapper
@@ -58,7 +59,12 @@ describe('SignUpScreen', () => {
         .find({ 'data-testid': 'passwordInput' })
         .simulate('change', { target: { value: password } })
       wrapper.find({ 'data-testid': 'submitButton' }).simulate('click')
-      expect(createUser).toHaveBeenCalledWith(dispatch, email, password)
+      expect(createUser).toHaveBeenCalledWith(
+        dispatch,
+        history,
+        email,
+        password,
+      )
     })
   })
 })

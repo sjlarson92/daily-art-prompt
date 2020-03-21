@@ -1,10 +1,10 @@
 import axios from 'axios'
 import * as TYPES from '../storage/actions'
 
-export const createUser = (dispatch, history, email, password) => {
+export const createUser = async (dispatch, history, email, password) => {
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
   console.log('GATEWAY_URL: ', GATEWAY_URL)
-  axios
+  return axios
     .post(`${GATEWAY_URL}/api/users`, null, {
       headers: {
         email,
