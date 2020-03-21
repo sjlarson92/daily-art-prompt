@@ -50,8 +50,11 @@ describe('createUser', () => {
   describe('when api response is rejected', () => {
     it('dispatch action with correct type and payload', async () => {
       axios.post.mockRejectedValue({ message: 'Mayday! We are out of wine!' })
-      await createUser(dispatch, history, email, password)
-      expect(dispatch).toHaveBeenCalled()
+      try {
+        await createUser(dispatch, history, email, password)
+      } catch (e) {
+        expect(dispatch).toHaveBeenCalled()
+      }
     })
   })
 })

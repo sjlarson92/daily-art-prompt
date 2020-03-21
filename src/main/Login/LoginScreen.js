@@ -13,7 +13,6 @@ const LoginScreen = () => {
 
   const userEmail = 'sjlarson92@gmail.com'
   const userPassword = '123'
-
   const checkLogin = () => {
     if (email === userEmail && password === userPassword) {
       dispatch({ type: TYPES.LOGIN })

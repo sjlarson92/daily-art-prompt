@@ -80,7 +80,7 @@ describe('<App>', () => {
       expect(
         wrapper
           .find('Route')
-          .at(2)
+          .at(3)
           .prop('component'),
       ).toEqual(ErrorScreen)
     })
