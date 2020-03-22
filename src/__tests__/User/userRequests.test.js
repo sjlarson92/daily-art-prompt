@@ -41,12 +41,10 @@ describe('userRequests', () => {
     describe('with status code 409', () => {
       it('dispatch action with correct type and payload', async () => {
         const error = {
-          error: {
-            response: {
-              status: 409,
-              headers: {
-                message: 'Can you believe its snowing in April?',
-              },
+          response: {
+            status: 409,
+            headers: {
+              message: 'Can you believe its snowing in April?',
             },
           },
         }
@@ -66,12 +64,10 @@ describe('userRequests', () => {
     describe('with any unsuccessful code not 409', () => {
       it('dispatch action with correct type and payload', async () => {
         const error = {
-          error: {
-            response: {
-              status: 400,
-              headers: {
-                message: 'The end is nigh!',
-              },
+          response: {
+            status: 400,
+            headers: {
+              message: 'The end is nigh!',
             },
           },
         }
