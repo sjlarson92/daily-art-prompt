@@ -1,5 +1,5 @@
-import { loginReducer } from '../../main/Login/loginReducer'
-import * as TYPES from '../../main/storage/actions'
+import { loginReducer } from '../../../main/User/Login/loginReducer'
+import * as TYPES from '../../../main/storage/actions'
 
 describe('loginReducer', () => {
   describe('when action is LOGIN', () => {

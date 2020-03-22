@@ -3,7 +3,7 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import { imagesReducer } from '../Image/imagesReducer'
 import { promptsReducer } from '../Prompt/promptsReducer'
 import { dateReducer } from '../Prompt/dateReducer'
-import { loginReducer } from '../Login/loginReducer'
+import { loginReducer } from '../User/Login/loginReducer'
 import { loadState, saveState } from './localStorage'
 import { errorMessageReducer } from './errorMessageReducer'
 

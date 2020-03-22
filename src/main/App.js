@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import React from 'react'
 import { Provider } from 'react-redux'
-import LoginScreen from './Login/LoginScreen'
+import LoginScreen from './User/Login/LoginScreen'
 import HomeScreen from './Home/HomeScreen'
-import ErrorScreen from './Login/ErrorScreen'
+import ErrorScreen from './User/Login/ErrorScreen'
 import store from './storage/store'
-import SignUpScreen from './SignUp/SignUpScreen'
+import SignUpScreen from './User/SignUp/SignUpScreen'
 
 export const App = () => {
   return (

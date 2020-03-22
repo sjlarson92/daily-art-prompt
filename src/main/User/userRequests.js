@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as TYPES from '../storage/actions'
 
-export const createUser = async (dispatch, history, email, password) => {
+export const createUser = (dispatch, history, email, password) => {
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
   console.log('GATEWAY_URL: ', GATEWAY_URL)
   axios
@@ -13,12 +13,6 @@ export const createUser = async (dispatch, history, email, password) => {
     })
     .then(response => {
       console.log('response: ', response)
-      dispatch({
-        type: TYPES.SET_ERROR_MESSAGE,
-        payload: {
-          error: '',
-        },
-      })
       history.push('/login', { message: 'Successfully Created New Account' })
     })
     .catch(error => {

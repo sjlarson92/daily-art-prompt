@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { createUser } from '../../main/SignUp/createUserApi'
+import { createUser } from '../../main/User/userRequests'
 import * as TYPES from '../../main/storage/actions'
 
 jest.mock('axios')
 
-describe('createUser', () => {
+describe('userRequests', () => {
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
   const email = 'someEmail@testing.com'
   const password = 'fakePassword'
@@ -28,16 +28,6 @@ describe('createUser', () => {
   })
 
   describe('when api response is resolved', () => {
-    it('dispatch action with correct type and payload', async () => {
-      axios.post.mockResolvedValue(response)
-      await createUser(dispatch, history, email, password)
-      expect(dispatch).toHaveBeenCalledWith({
-        type: TYPES.SET_ERROR_MESSAGE,
-        payload: {
-          error: '',
-        },
-      })
-    })
     it('call history.push with correct params', async () => {
       axios.post.mockResolvedValue(response)
       await createUser(dispatch, history, email, password)
@@ -53,7 +43,12 @@ describe('createUser', () => {
       try {
         await createUser(dispatch, history, email, password)
       } catch (e) {
-        expect(dispatch).toHaveBeenCalled()
+        expect(dispatch).toHaveBeenCalledWith({
+          type: TYPES.SET_ERROR_MESSAGE,
+          payload: {
+            error: 'Email already in use. Please try again',
+          },
+        })
       }
     })
   })

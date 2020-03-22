@@ -2,9 +2,9 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import App from '../main/App'
 import HomeScreen from '../main/Home/HomeScreen'
-import LoginScreen from '../main/Login/LoginScreen'
-import ErrorScreen from '../main/Login/ErrorScreen'
-import SignUpScreen from '../main/SignUp/SignUpScreen'
+import LoginScreen from '../main/User/Login/LoginScreen'
+import ErrorScreen from '../main/User/Login/ErrorScreen'
+import SignUpScreen from '../main/User/SignUp/SignUpScreen'
 
 describe('<App>', () => {
   let wrapper

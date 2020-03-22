@@ -2,8 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import LoginScreen from '../../main/Login/LoginScreen'
-import * as TYPES from '../../main/storage/actions'
+import LoginScreen from '../../../main/User/Login/LoginScreen'
+import * as TYPES from '../../../main/storage/actions'
 
 jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(),
@@ -47,7 +47,7 @@ describe('LoginScreen', () => {
       })
     })
     describe('where there is not a message', () => {
-      it('not render message', () => {
+      it('does not render message', () => {
         const location = {
           state: {
             message: '',

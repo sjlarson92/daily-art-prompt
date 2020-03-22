@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { createUser } from './createUserApi'
+import { createUser } from '../userRequests'
+import * as TYPES from '../../storage/actions'
 
 const SignUpScreen = () => {
   const dispatch = useDispatch()
@@ -13,6 +14,12 @@ const SignUpScreen = () => {
   const handleOnClick = () => {
     console.log('email: ', email)
     console.log('password: ', password)
+    dispatch({
+      type: TYPES.SET_ERROR_MESSAGE,
+      payload: {
+        error: '',
+      },
+    })
     createUser(dispatch, history, email, password)
   }
   return (
