@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import ErrorScreen from '../../main/Login/ErrorScreen'
+import ErrorScreen from '../../../main/User/Login/ErrorScreen'
 
 describe('ErrorScreen', () => {
   it('return correct error div', () => {

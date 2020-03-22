@@ -2,8 +2,9 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import App from '../main/App'
 import HomeScreen from '../main/Home/HomeScreen'
-import LoginScreen from '../main/Login/LoginScreen'
-import ErrorScreen from '../main/Login/ErrorScreen'
+import LoginScreen from '../main/User/Login/LoginScreen'
+import ErrorScreen from '../main/User/Login/ErrorScreen'
+import SignUpScreen from '../main/User/SignUp/SignUpScreen'
 
 describe('<App>', () => {
   let wrapper
@@ -57,11 +58,29 @@ describe('<App>', () => {
     })
   })
   describe('<Route> at 2', () => {
-    it('should have correct component', () => {
+    it('has correct path prop', () => {
       expect(
         wrapper
           .find('Route')
           .at(2)
+          .prop('path'),
+      ).toEqual('/sign-up')
+    })
+    it('has correct component prop', () => {
+      expect(
+        wrapper
+          .find('Route')
+          .at(2)
+          .prop('component'),
+      ).toEqual(SignUpScreen)
+    })
+  })
+  describe('<Route> at 3', () => {
+    it('should have correct component', () => {
+      expect(
+        wrapper
+          .find('Route')
+          .at(3)
           .prop('component'),
       ).toEqual(ErrorScreen)
     })

@@ -1,12 +1,13 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import LoginScreen from '../../main/Login/LoginScreen'
-import * as TYPES from '../../main/storage/actions'
+import LoginScreen from '../../../main/User/Login/LoginScreen'
+import * as TYPES from '../../../main/storage/actions'
 
 jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(),
+  useLocation: jest.fn(),
 }))
 jest.mock('react-redux')
 
@@ -28,6 +29,34 @@ describe('LoginScreen', () => {
       expect(wrapper.find({ 'data-testid': 'header' }).text()).toEqual(
         'Login Screen',
       )
+    })
+  })
+  describe('message', () => {
+    describe('when there is a message', () => {
+      it('render message', () => {
+        const location = {
+          state: {
+            message: 'I am a message, render me!',
+          },
+        }
+        useLocation.mockReturnValue(location)
+        const newWrapper = shallow(<LoginScreen />)
+        expect(newWrapper.find({ 'data-testid': 'message' }).text()).toEqual(
+          'I am a message, render me!',
+        )
+      })
+    })
+    describe('where there is not a message', () => {
+      it('does not render message', () => {
+        const location = {
+          state: {
+            message: '',
+          },
+        }
+        useLocation.mockReturnValue(location)
+        wrapper = shallow(<LoginScreen />)
+        expect(wrapper.find({ 'data-testid': 'message' })).toHaveLength(0)
+      })
     })
   })
 
@@ -55,7 +84,7 @@ describe('LoginScreen', () => {
         .find({ 'data-testid': 'passwordInput' })
         .simulate('change', { target: { value: password } })
       wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
-      expect(dispatch).toHaveBeenCalledWith({ type: TYPES.SUCCESSFUL_LOGIN })
+      expect(dispatch).toHaveBeenCalledWith({ type: TYPES.LOGIN })
     })
   })
 
@@ -99,6 +128,13 @@ describe('LoginScreen', () => {
         .simulate('change', { target: { value: password } })
       wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
       expect(history.push).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('Sign Up Button', () => {
+    it('should redirect user to /sign-up when clicked', () => {
+      wrapper.find({ 'data-testid': 'signUpButton' }).simulate('click')
+      expect(history.push).toHaveBeenCalledWith('/sign-up')
     })
   })
 })

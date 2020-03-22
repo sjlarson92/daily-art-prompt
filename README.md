@@ -11,7 +11,11 @@ yarn install # same as yarn
 yarn test # runs all tests
 yarn test --testFile.test.js # runs specific test file
 ```
+## Useful Commands
 
+```shell script
+yarn add @types/react-router-dom // adds types for react-router-dom library and gets rid of type Error
+```
 ## Router
 
 ```shell script
@@ -287,6 +291,14 @@ export const saveState = state => {
     // ignore write errors
   }
 }
-
-
 ```
+
+# Notes
+
+- Urls that are multiple words should use dashes NOT camel case
+```javascript
+'/sign-up' // YES
+'/signUp' // NO
+```
+
+- The point of a component is to render!!

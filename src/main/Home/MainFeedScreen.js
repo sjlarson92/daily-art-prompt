@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './main.css'
 import PromptLayout from '../Prompt/PromptLayout'
 import ImageLayout from '../Image/ImageLayout'
@@ -7,14 +7,23 @@ import { getImagesAction } from '../Image/imageApi'
 import { getPromptsAction } from '../Prompt/promptsApi'
 import * as TYPES from '../storage/actions'
 
-export const MainFeedScreen = ({ getImages, getPrompts, getDate, images }) => {
+const MainFeedScreen = () => {
+  const images = useSelector(state => state.images)
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    getImages()
-    getPrompts()
-    getDate()
-  }, [getImages, getPrompts, getDate])
+    dispatch(getImagesAction())
+    dispatch(getPromptsAction())
+    dispatch({ type: TYPES.SET_INITIAL_DATE })
+  }, [dispatch])
   return (
     <div data-testid="appContainer" className="app">
+      <button
+        data-testid="logoutButton"
+        onClick={() => dispatch({ type: TYPES.LOGOUT })}
+      >
+        Logout
+      </button>
       <div className="header">
         <div className="title">
           <h1 data-testid="header" style={{ color: 'red' }}>
@@ -42,18 +51,4 @@ export const MainFeedScreen = ({ getImages, getPrompts, getDate, images }) => {
   )
 }
 
-export const mapStateToProps = state => ({
-  images: state.images,
-})
-
-export const dispatchFunctions = {
-  getImages: getImagesAction,
-  getPrompts: getPromptsAction,
-  getDate: () => dispatch => {
-    dispatch({
-      type: TYPES.SET_INITIAL_DATE,
-    })
-  },
-}
-
-export default connect(mapStateToProps, dispatchFunctions)(MainFeedScreen)
+export default MainFeedScreen
