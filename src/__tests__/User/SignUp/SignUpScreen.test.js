@@ -63,7 +63,7 @@ describe('SignUpScreen', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: TYPES.SET_ERROR_MESSAGE,
         payload: {
-          error: '',
+          error: null,
         },
       })
     })

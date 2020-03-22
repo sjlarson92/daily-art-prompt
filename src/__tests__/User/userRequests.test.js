@@ -38,18 +38,55 @@ describe('userRequests', () => {
   })
 
   describe('when api response is rejected', () => {
-    it('dispatch action with correct type and payload', async () => {
-      axios.post.mockRejectedValue({ message: 'Mayday! We are out of wine!' })
-      try {
-        await createUser(dispatch, history, email, password)
-      } catch (e) {
-        expect(dispatch).toHaveBeenCalledWith({
-          type: TYPES.SET_ERROR_MESSAGE,
-          payload: {
-            error: 'Email already in use. Please try again',
+    describe('with status code 409', () => {
+      it('dispatch action with correct type and payload', async () => {
+        const error = {
+          error: {
+            response: {
+              status: 409,
+              headers: {
+                message: 'Can you believe its snowing in April?',
+              },
+            },
           },
-        })
-      }
+        }
+        axios.post.mockRejectedValue(error)
+        try {
+          await createUser(dispatch, history, email, password)
+        } catch (e) {
+          expect(dispatch).toHaveBeenCalledWith({
+            type: TYPES.SET_ERROR_MESSAGE,
+            payload: {
+              error: error.response.headers.message,
+            },
+          })
+        }
+      })
+    })
+    describe('with any unsuccessful code not 409', () => {
+      it('dispatch action with correct type and payload', async () => {
+        const error = {
+          error: {
+            response: {
+              status: 400,
+              headers: {
+                message: 'The end is nigh!',
+              },
+            },
+          },
+        }
+        axios.post.mockRejectedValue(error)
+        try {
+          await createUser(dispatch, history, email, password)
+        } catch (e) {
+          expect(dispatch).toHaveBeenCalledWith({
+            type: TYPES.SET_ERROR_MESSAGE,
+            payload: {
+              error: 'An error occurred. Please try again.',
+            },
+          })
+        }
+      })
     })
   })
 })

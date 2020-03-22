@@ -17,7 +17,7 @@ const SignUpScreen = () => {
     dispatch({
       type: TYPES.SET_ERROR_MESSAGE,
       payload: {
-        error: '',
+        error: null,
       },
     })
     createUser(dispatch, history, email, password)
