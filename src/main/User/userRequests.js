@@ -17,20 +17,14 @@ export const createUser = (dispatch, history, email, password) => {
     })
     .catch(error => {
       console.log('FAIL: Failed to create new user with error: ', error.message)
-      if (error.response.status === 409) {
-        dispatch({
-          type: TYPES.SET_ERROR_MESSAGE,
-          payload: {
-            error: 'Email already in use. Please try again',
-          },
-        })
-      } else {
-        dispatch({
-          type: TYPES.SET_ERROR_MESSAGE,
-          payload: {
-            error: 'An error has occurred. Please try again',
-          },
-        })
-      }
+      dispatch({
+        type: TYPES.SET_ERROR_MESSAGE,
+        payload: {
+          error:
+            error.response.status === 409
+              ? error.response.headers.message
+              : 'An error occurred. Please try again.',
+        },
+      })
     })
 }
