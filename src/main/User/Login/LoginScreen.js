@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
-import * as TYPES from '../../storage/actions'
+import { validateLogin } from './authRequests'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState(null)
@@ -11,17 +11,8 @@ const LoginScreen = () => {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const userEmail = 'sjlarson92@gmail.com'
-  const userPassword = '123'
-  const checkLogin = () => {
-    if (email === userEmail && password === userPassword) {
-      dispatch({ type: TYPES.LOGIN })
-      console.log('login successful')
-      history.push('/')
-    } else {
-      setErrorMessage('Login Failed. Please try again.')
-      console.log('login failed!')
-    }
+  const handleOnClick = () => {
+    validateLogin(dispatch, history, email, password)
   }
 
   return (
@@ -49,7 +40,7 @@ const LoginScreen = () => {
         data-testid="loginButton"
         type="button"
         name="loginButton"
-        onClick={checkLogin}
+        onClick={handleOnClick}
       >
         Login
       </button>
