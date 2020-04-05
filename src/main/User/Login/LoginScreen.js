@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { validateLogin } from './authRequests'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const errorMessage = useSelector(state => state.errorMessage)
   const location = useLocation()
   const history = useHistory()
   const dispatch = useDispatch()
