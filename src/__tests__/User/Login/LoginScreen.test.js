@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { useHistory, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import LoginScreen from '../../../main/User/Login/LoginScreen'
 import { validateLogin } from '../../../main/User/Login/authRequests'
 
@@ -57,6 +57,28 @@ describe('LoginScreen', () => {
         useLocation.mockReturnValue(location)
         wrapper = shallow(<LoginScreen />)
         expect(wrapper.find({ 'data-testid': 'message' })).toHaveLength(0)
+      })
+    })
+  })
+
+  describe('errorMessage', () => {
+    describe('when there is an errorMessage', () => {
+      it('should render errorMessage', () => {
+        const errorMessage = 'error message'
+        useSelector.mockReturnValue(errorMessage)
+        const newWrapper = shallow(<LoginScreen />)
+        expect(
+          newWrapper.find({ 'data-testid': 'errorMessage' }).text(),
+        ).toEqual('error message')
+      })
+    })
+    describe('when there is not an errorMessage', () => {
+      it('should not render errorMessage', () => {
+        useSelector.mockReturnValue('')
+        const newWrapper = shallow(<LoginScreen />)
+        expect(
+          newWrapper.find({ 'data-testid': 'errorMessage' }).text(),
+        ).toEqual('')
       })
     })
   })
