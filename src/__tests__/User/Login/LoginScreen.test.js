@@ -74,11 +74,12 @@ describe('LoginScreen', () => {
     })
     describe('when there is not an errorMessage', () => {
       it('should not render errorMessage', () => {
-        useSelector.mockReturnValue('')
+        jest.clearAllMocks()
+        useSelector.mockReturnValue(null)
         const newWrapper = shallow(<LoginScreen />)
         expect(
-          newWrapper.find({ 'data-testid': 'errorMessage' }).text(),
-        ).toEqual('')
+          newWrapper.find({ 'data-testid': 'errorMessage' }).childAt(0),
+        ).toHaveLength(0)
       })
     })
   })
