@@ -242,6 +242,24 @@ axios.get('https://dog.ceo/api/breeds/image/random')
             })
 ```
 
+## Axios - Making Api Calls
+
+```javascript
+// authRequests
+import axios from 'axios'
+
+export const validateLogin = (dispatch, history, email, password) => {
+  console.log('email: ', email)
+  const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
+  axios.post(`${GATEWAY_URL}/api/login`, null, {
+    auth: { // use auth to pass authorization headers (this encrypts the headers automatically
+      username: email, // auth headers must be: username and password
+      password,
+    },
+  })
+}
+```
+
 ## Local Storage
 
 ```javascript

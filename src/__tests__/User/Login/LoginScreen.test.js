@@ -1,15 +1,16 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { useHistory, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import LoginScreen from '../../../main/User/Login/LoginScreen'
-import * as TYPES from '../../../main/storage/actions'
+import { validateLogin } from '../../../main/User/Login/authRequests'
 
 jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(),
   useLocation: jest.fn(),
 }))
 jest.mock('react-redux')
+jest.mock('../../../main/User/Login/authRequests')
 
 describe('LoginScreen', () => {
   let wrapper
@@ -60,74 +61,48 @@ describe('LoginScreen', () => {
     })
   })
 
-  describe('when email and password are correct', () => {
-    it('should redirect user to /', () => {
-      const email = 'sjlarson92@gmail.com'
-      const password = '123'
-      wrapper
-        .find({ 'data-testid': 'emailInput' })
-        .simulate('change', { target: { value: email } })
-      wrapper
-        .find({ 'data-testid': 'passwordInput' })
-        .simulate('change', { target: { value: password } })
-      wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
-      expect(history.push).toHaveBeenCalledWith('/')
+  describe('errorMessage', () => {
+    describe('when there is an errorMessage', () => {
+      it('should render errorMessage', () => {
+        const errorMessage = 'error message'
+        useSelector.mockReturnValue(errorMessage)
+        const newWrapper = shallow(<LoginScreen />)
+        expect(
+          newWrapper.find({ 'data-testid': 'errorMessage' }).text(),
+        ).toEqual('error message')
+      })
     })
-
-    it('should call dispatch with correct params', () => {
-      const email = 'sjlarson92@gmail.com'
-      const password = '123'
-      wrapper
-        .find({ 'data-testid': 'emailInput' })
-        .simulate('change', { target: { value: email } })
-      wrapper
-        .find({ 'data-testid': 'passwordInput' })
-        .simulate('change', { target: { value: password } })
-      wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
-      expect(dispatch).toHaveBeenCalledWith({ type: TYPES.LOGIN })
+    describe('when there is not an errorMessage', () => {
+      it('should not render errorMessage', () => {
+        jest.clearAllMocks()
+        useSelector.mockReturnValue(null)
+        const newWrapper = shallow(<LoginScreen />)
+        expect(
+          newWrapper.find({ 'data-testid': 'errorMessage' }).childAt(0),
+        ).toHaveLength(0)
+      })
     })
   })
 
-  describe('when email or password are incorrect', () => {
-    it('should set ErrorMessage to render', () => {
-      const email = 'wrong@incorrect.com'
-      const password = 'incorrectPassword'
-      wrapper
-        .find({ 'data-testid': 'emailInput' })
-        .simulate('change', { target: { value: email } })
-      wrapper
-        .find({ 'data-testid': 'passwordInput' })
-        .simulate('change', { target: { value: password } })
-      wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
-      expect(wrapper.find({ 'data-testid': 'errorMessage' }).text()).toEqual(
-        'Login Failed. Please try again.',
-      )
-    })
-
-    it('should NOT call dispatch', () => {
-      const email = 'wrong@incorrect.com'
-      const password = 'incorrectPassword'
-      wrapper
-        .find({ 'data-testid': 'emailInput' })
-        .simulate('change', { target: { value: email } })
-      wrapper
-        .find({ 'data-testid': 'passwordInput' })
-        .simulate('change', { target: { value: password } })
-      wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
-      expect(dispatch).not.toHaveBeenCalled()
-    })
-
-    it('should NOT redirect user to /', () => {
-      const email = 'wrong@incorrect.com'
-      const password = 'incorrectPassword'
-      wrapper
-        .find({ 'data-testid': 'emailInput' })
-        .simulate('change', { target: { value: email } })
-      wrapper
-        .find({ 'data-testid': 'passwordInput' })
-        .simulate('change', { target: { value: password } })
-      wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
-      expect(history.push).not.toHaveBeenCalled()
+  describe('Login Button', () => {
+    describe('when clicked', () => {
+      it('should call validateLogin with correct params', () => {
+        const email = 'someEmail'
+        const password = 'this is def not my password'
+        wrapper
+          .find({ 'data-testid': 'emailInput' })
+          .simulate('change', { target: { value: email } })
+        wrapper
+          .find({ 'data-testid': 'passwordInput' })
+          .simulate('change', { target: { value: password } })
+        wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
+        expect(validateLogin).toHaveBeenCalledWith(
+          dispatch,
+          history,
+          email,
+          password,
+        )
+      })
     })
   })
 
