@@ -30,13 +30,17 @@ const images = [
     liked: false,
   },
 ]
+
+const user = {
+  email: 'SomeUser',
+}
 const dispatch = jest.fn()
 
 describe('<MainFeedScreen>', () => {
   let wrapper
   beforeEach(() => {
     jest.clearAllMocks()
-    useSelector.mockReturnValue(images)
+    useSelector.mockReturnValueOnce(images).mockReturnValueOnce(user)
     useDispatch.mockReturnValue(dispatch)
     wrapper = shallow(<MainFeedScreen />)
   })
@@ -56,6 +60,13 @@ describe('<MainFeedScreen>', () => {
   })
 
   describe('<div> for app', () => {
+    describe('user', () => {
+      it('should render user email', () => {
+        expect(wrapper.find({ 'data-testid': 'user' }).text()).toEqual(
+          'SomeUser',
+        )
+      })
+    })
     describe('Logout Button', () => {
       it('should render with correct text', () => {
         expect(wrapper.find({ 'data-testid': 'logoutButton' }).text()).toEqual(

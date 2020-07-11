@@ -28,15 +28,29 @@ describe('authRequests', () => {
 
   describe('when api response is resolved', () => {
     it('dispatch action with correct type', async () => {
-      const response = 'successful response'
+      const response = {
+        data: {
+          email: 'someEmail',
+          id: 2,
+        },
+      }
       axios.post.mockResolvedValue(response)
       await validateLogin(dispatch, history, email, password)
       expect(dispatch).toHaveBeenCalledWith({
         type: TYPES.LOGIN,
+        payload: {
+          email: response.data.email,
+          id: response.data.id,
+        },
       })
     })
     it('calls history.push with correct params', async () => {
-      const response = 'successful response'
+      const response = {
+        data: {
+          email: 'someEmail',
+          id: 2,
+        },
+      }
       axios.post.mockResolvedValue(response)
       await validateLogin(dispatch, history, email, password)
       expect(history.push).toHaveBeenCalledWith('/')

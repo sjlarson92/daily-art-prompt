@@ -23,3 +23,7 @@ export const LOGOUT = 'LOGOUT'
 export const SIGN_UP = 'SIGN_UP'
 
 export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
+
+export const SET_USER = 'SET_USER'
+
+export const CLEAR_USER = 'CLEAR_USER'

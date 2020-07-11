@@ -6,6 +6,7 @@ import { dateReducer } from '../Prompt/dateReducer'
 import { loginReducer } from '../User/Login/loginReducer'
 import { loadState, saveState } from './localStorage'
 import { errorMessageReducer } from './errorMessageReducer'
+import { userReducer } from '../User/userReducer'
 
 export const rootReducer = combineReducers({
   images: imagesReducer,
@@ -13,6 +14,7 @@ export const rootReducer = combineReducers({
   prompts: promptsReducer,
   loggedIn: loginReducer,
   errorMessage: errorMessageReducer,
+  user: userReducer,
 })
 
 const persistedState = loadState()
@@ -28,6 +30,7 @@ export const store = createStore(
 store.subscribe(() => {
   saveState({
     loggedIn: store.getState().loggedIn,
+    user: store.getState().user,
   })
 })
 

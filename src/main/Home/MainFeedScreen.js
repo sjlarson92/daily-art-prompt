@@ -9,6 +9,7 @@ import * as TYPES from '../storage/actions'
 
 const MainFeedScreen = () => {
   const images = useSelector(state => state.images)
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -18,6 +19,7 @@ const MainFeedScreen = () => {
   }, [dispatch])
   return (
     <div data-testid="appContainer" className="app">
+      <div data-testid="user">{user?.email}</div>
       <button
         data-testid="logoutButton"
         onClick={() => dispatch({ type: TYPES.LOGOUT })}
@@ -37,7 +39,7 @@ const MainFeedScreen = () => {
         Art Gallery
       </h1>
       <div className="row">
-        {images.length > 0 &&
+        {images?.length > 0 &&
           images.map(image => (
             <ImageLayout
               data-className="imageLayout"
