@@ -13,6 +13,10 @@ export const validateLogin = (dispatch, history, email, password) => {
     .then(response => {
       dispatch({
         type: TYPES.LOGIN,
+        payload: {
+          email: response.data.email,
+          id: response.data.id,
+        },
       })
       history.push('/')
     })
