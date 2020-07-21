@@ -3,7 +3,6 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import { imagesReducer } from '../Image/imagesReducer'
 import { promptsReducer } from '../Prompt/promptsReducer'
 import { dateReducer } from '../Prompt/dateReducer'
-import { loginReducer } from '../User/Login/loginReducer'
 import { loadState, saveState } from './localStorage'
 import { errorMessageReducer } from './errorMessageReducer'
 import { userReducer } from '../User/userReducer'
@@ -12,7 +11,6 @@ export const rootReducer = combineReducers({
   images: imagesReducer,
   date: dateReducer,
   prompts: promptsReducer,
-  loggedIn: loginReducer,
   errorMessage: errorMessageReducer,
   user: userReducer,
 })
@@ -29,7 +27,6 @@ export const store = createStore(
 
 store.subscribe(() => {
   saveState({
-    loggedIn: store.getState().loggedIn,
     user: store.getState().user,
   })
 })

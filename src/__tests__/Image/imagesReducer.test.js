@@ -432,6 +432,17 @@ describe('imagesReducer', () => {
     })
   })
 
+  describe('when action is LOGOUT', () => {
+    it('should return empty array', () => {
+      const state = ['image', 'image2']
+      const action = {
+        type: TYPES.LOGOUT,
+      }
+      const result = imagesReducer(state, action)
+      expect(result).toEqual([])
+    })
+  })
+
   describe('when action.type does not equal any of the cases', () => {
     describe('when goes to the default case', () => {
       it('should return the state unchanged', () => {

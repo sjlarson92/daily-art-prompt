@@ -100,6 +100,9 @@ export const imagesReducer = (state = [], action) => {
         return image
       })
 
+    case TYPES.LOGOUT:
+      return []
+
     default:
       return state
   }
