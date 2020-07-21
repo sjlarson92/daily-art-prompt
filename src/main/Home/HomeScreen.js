@@ -5,8 +5,8 @@ import MainFeedScreen from './MainFeedScreen'
 
 const HomeScreen = () => {
   const history = useHistory()
-  const loggedIn = useSelector(state => state.loggedIn) // pulls variable from redux
-  if (!loggedIn) {
+  const user = useSelector(state => state.user) // pulls variable from redux
+  if (!user.isLoggedIn) {
     history.push('/login')
     return null
   }

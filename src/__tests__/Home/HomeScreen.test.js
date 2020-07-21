@@ -43,7 +43,7 @@ describe('<HomeScreen>', () => {
   })
 
   it('should return correct component if user is loggedIn', () => {
-    useSelector.mockReturnValue(true)
+    useSelector.mockReturnValue({ isLoggedIn: true })
     const wrapper = shallow(<HomeScreen />)
     expect(wrapper.find({ 'data-testid': 'mainFeedScreen' })).toHaveLength(1)
   })
