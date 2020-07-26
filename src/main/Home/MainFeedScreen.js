@@ -13,7 +13,7 @@ const MainFeedScreen = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getImagesAction())
+    dispatch(getImagesAction(user.id))
     dispatch(getPromptsAction())
     dispatch({ type: TYPES.SET_INITIAL_DATE })
   }, [dispatch])
