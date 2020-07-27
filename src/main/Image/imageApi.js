@@ -6,9 +6,9 @@ export const getImagesAction = id => dispatch => {
   console.log(`making request with id: ${id}`)
   axios.get(`${GATEWAY_URL}/api/users/${id}/images`).then(response => {
     dispatch({
-      type: TYPES.SET_INITIAL_IMAGES,
+      type: TYPES.SET_USER_IMAGES,
       payload: {
-        image: response.data,
+        images: response.data,
       },
     })
   })

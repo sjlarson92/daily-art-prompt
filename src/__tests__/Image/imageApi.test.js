@@ -36,9 +36,9 @@ describe('getImagesAction', () => {
         })
       await getImagesAction(id)(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
-        type: TYPES.SET_INITIAL_IMAGES,
+        type: TYPES.SET_USER_IMAGES,
         payload: {
-          image: images,
+          images,
         },
       })
     })

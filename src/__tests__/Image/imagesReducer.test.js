@@ -7,7 +7,7 @@ describe('imagesReducer', () => {
       it('should return new images', () => {
         const state = []
         const action = {
-          type: TYPES.SET_INITIAL_IMAGES,
+          type: TYPES.SET_USER_IMAGES,
           payload: {
             image: 'some image',
           },
@@ -26,7 +26,7 @@ describe('imagesReducer', () => {
           },
         ]
         const action = {
-          type: TYPES.SET_INITIAL_IMAGES,
+          type: TYPES.SET_USER_IMAGES,
           payload: {
             image: 'apiCall',
           },
@@ -42,7 +42,7 @@ describe('imagesReducer', () => {
           },
         ]
         const action = {
-          type: TYPES.SET_INITIAL_IMAGES,
+          type: TYPES.SET_USER_IMAGES,
           payload: {
             image: null,
           },

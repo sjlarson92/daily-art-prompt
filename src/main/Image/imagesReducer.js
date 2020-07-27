@@ -2,7 +2,7 @@ import * as TYPES from '../storage/actions'
 
 export const imagesReducer = (state = [], action) => {
   switch (action.type) {
-    case TYPES.SET_INITIAL_IMAGES: {
+    case TYPES.SET_USER_IMAGES: {
       const { image } = action.payload
       if (image === null || undefined) {
         return state
