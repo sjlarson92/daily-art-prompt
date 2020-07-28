@@ -16,7 +16,7 @@ const MainFeedScreen = () => {
     dispatch(getImagesAction(user.id))
     dispatch(getPromptsAction())
     dispatch({ type: TYPES.SET_INITIAL_DATE })
-  }, [dispatch])
+  }, [dispatch, user.id])
   return (
     <div data-testid="appContainer" className="app">
       <div data-testid="user">{user?.email}</div>
