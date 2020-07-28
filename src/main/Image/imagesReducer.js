@@ -1,13 +1,23 @@
 import * as TYPES from '../storage/actions'
 
-export const imagesReducer = (state = [], action) => {
+const initialImages = [
+  {
+    id: null,
+    userId: null,
+    src: null,
+  },
+]
+
+export const imagesReducer = (state = initialImages, action) => {
   switch (action.type) {
     case TYPES.SET_USER_IMAGES: {
-      const { image } = action.payload
-      if (image === null || undefined) {
-        return state
+      const { images } = action.payload
+      if (images != null) {
+        images.forEach(image => {
+          state.push(image)
+        })
       }
-      return [...state, image]
+      return state
     }
 
     case TYPES.UPDATE_PROMPT_IMAGES:

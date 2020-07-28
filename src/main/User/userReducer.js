@@ -1,8 +1,8 @@
 import * as TYPES from '../storage/actions'
 
 const User = {
-  email: '',
   id: null,
+  email: '',
   isLoggedIn: false,
 }
 
