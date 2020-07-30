@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { useSelector, useDispatch } from 'react-redux'
-import { when } from 'jest-when'
 import MainFeedScreen from '../../main/Home/MainFeedScreen'
 import { getImagesAction } from '../../main/Image/imageApi'
 import { getPromptsAction } from '../../main/Prompt/promptsApi'
