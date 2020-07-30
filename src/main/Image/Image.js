@@ -8,7 +8,7 @@ export const Image = ({ image, updatePromptImages }) => (
   //   alt={image.name}
   //   onDoubleClick={() => updatePromptImages(image.id)}
   // />
-  <div>
+  <div data-testid="image" onDoubleClick={() => updatePromptImages(image.id)}>
     <h1>{image.src}</h1>
   </div>
 )
