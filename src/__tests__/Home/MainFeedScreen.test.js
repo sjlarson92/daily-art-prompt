@@ -32,6 +32,7 @@ const images = [
 ]
 
 const user = {
+  id: 'some id',
   email: 'SomeUser',
 }
 const dispatch = jest.fn()
@@ -45,17 +46,25 @@ describe('<MainFeedScreen>', () => {
     wrapper = shallow(<MainFeedScreen />)
   })
   describe('On Initial Render', () => {
-    it('dispatches SET_INITIAL_DATE', () => {
+    it('getImagesAction gets called with the correct param', () => {
+      useSelector.mockReturnValueOnce(images).mockReturnValueOnce(user)
       mount(<MainFeedScreen />)
-      expect(dispatch).toHaveBeenCalledWith({ type: TYPES.SET_INITIAL_DATE })
+      expect(getImagesAction).toHaveBeenCalledWith(user.id)
     })
     it('dispatches getImagesAction', () => {
+      useSelector.mockReturnValueOnce(images).mockReturnValueOnce(user)
       mount(<MainFeedScreen />)
       expect(dispatch).toHaveBeenCalledWith(getImagesAction())
     })
     it('dispatches getPromptsAction', () => {
+      useSelector.mockReturnValueOnce(images).mockReturnValueOnce(user)
       mount(<MainFeedScreen />)
       expect(dispatch).toHaveBeenCalledWith(getPromptsAction())
+    })
+    it('dispatches SET_INITIAL_DATE', () => {
+      useSelector.mockReturnValueOnce(images).mockReturnValueOnce(user)
+      mount(<MainFeedScreen />)
+      expect(dispatch).toHaveBeenCalledWith({ type: TYPES.SET_INITIAL_DATE })
     })
   })
 

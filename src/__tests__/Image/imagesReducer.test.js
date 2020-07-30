@@ -2,49 +2,69 @@ import * as TYPES from '../../main/storage/actions'
 import { imagesReducer } from '../../main/Image/imagesReducer'
 
 describe('imagesReducer', () => {
-  describe('when action.type equals SET_INITIAL_IMAGES', () => {
+  describe(`when action.type equals ${TYPES.SET_USER_IMAGES}`, () => {
     describe('when there is no images in state', () => {
       it('should return new images', () => {
+        const images = [
+          {
+            id: '1',
+            userId: '1',
+            src: 'someSrc',
+          },
+          {
+            id: '2',
+            userId: '1',
+            src: 'diffSrc',
+          },
+        ]
+
         const state = []
         const action = {
-          type: TYPES.SET_INITIAL_IMAGES,
+          type: TYPES.SET_USER_IMAGES,
           payload: {
-            image: 'some image',
+            images,
           },
         }
-        expect(imagesReducer(state, action)).toEqual(['some image'])
+        expect(imagesReducer(state, action)).toEqual(images)
       })
     })
     describe('when there are images in state', () => {
       it('should return updatedImages with previous state and new Image', () => {
-        const state = [
-          {
-            id: 2,
-            src: 'firstImage',
-            liked: false,
-            comments: [],
-          },
-        ]
+        const newImage = {
+          id: 'some id 1',
+          userId: 'some user id',
+          src: 'someSrc',
+        }
+        const oldImage = {
+          id: 2,
+          src: 'firstImage',
+          liked: false,
+          comments: [],
+        }
+
         const action = {
-          type: TYPES.SET_INITIAL_IMAGES,
+          type: TYPES.SET_USER_IMAGES,
           payload: {
-            image: 'apiCall',
+            images: [newImage],
           },
         }
-        expect(imagesReducer(state, action)).toEqual([...state, 'apiCall'])
+        const expectedResult = [oldImage, newImage]
+        expect(imagesReducer([oldImage], action)).toEqual(expectedResult)
       })
     })
     describe('when image received is null or undefined', () => {
       it('should return state unchanged', () => {
         const state = [
           {
-            image: 'shake it like a polaroid picture!',
+            id: 'some id 1',
+            userId: 'some user id',
+            src: 'someSrc',
           },
         ]
         const action = {
-          type: TYPES.SET_INITIAL_IMAGES,
+          type: TYPES.SET_USER_IMAGES,
           payload: {
-            image: null,
+            images: null,
           },
         }
         expect(imagesReducer(state, action)).toEqual(state)
