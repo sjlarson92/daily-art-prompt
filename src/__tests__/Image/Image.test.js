@@ -1,46 +1,45 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Image, mapDispatchToProps } from '../../main/Image/Image'
+import { useDispatch } from 'react-redux'
+import Image from '../../main/Image/Image'
 import * as TYPES from '../../main/storage/actions'
+
+jest.mock('react-redux', () => ({
+  useDispatch: jest.fn(),
+}))
 
 const defaultProps = {
   image: {
     id: 1,
-    src: 'source',
-    name: 'name',
+    url: 'url',
+    description: 'i am an image',
   },
-  updatePromptImages: jest.fn(),
 }
 describe('Image', () => {
   describe('img', () => {
-    // it('renders with correct src prop', () => {
-    //   const wrapper = shallow(<Image {...defaultProps} />)
-    //   expect(wrapper.find('img').prop('src')).toEqual(defaultProps.image.src)
-    // })
-
-    // it('render with correct alt prop', () => {
-    //   const wrapper = shallow(<Image {...defaultProps} />)
-    //   expect(wrapper.find('img').prop('alt')).toEqual(defaultProps.image.name)
-    // })
-
-    it('should call onDoubleClick from props when image is doubleClicked', () => {
+    it('renders with correct src prop', () => {
       const wrapper = shallow(<Image {...defaultProps} />)
-      wrapper.find({ 'data-testid': 'image' }).simulate('doubleClick')
-      expect(defaultProps.updatePromptImages).toHaveBeenCalled()
+      expect(wrapper.find('img').prop('src')).toEqual(defaultProps.image.url)
     })
-  })
-})
 
-describe('mapDispatchToProps', () => {
-  const dispatch = jest.fn()
+    it('render with correct alt prop', () => {
+      const wrapper = shallow(<Image {...defaultProps} />)
+      expect(wrapper.find('img').prop('alt')).toEqual(
+        defaultProps.image.description,
+      )
+    })
 
-  describe('updatePromptImages', () => {
-    it('should call dispatch with type: UPDATE_PROMPT_IMAGES and correct payload', () => {
-      mapDispatchToProps(dispatch).updatePromptImages(1)
+    it('dispatches the correct type/payload when image is doubleClicked', () => {
+      const dispatch = jest.fn()
+      useDispatch.mockReturnValue(dispatch)
+
+      const wrapper = shallow(<Image {...defaultProps} />)
+      wrapper.find('img').simulate('doubleClick')
+
       expect(dispatch).toHaveBeenCalledWith({
         type: TYPES.UPDATE_PROMPT_IMAGES,
         payload: {
-          imageId: 1,
+          imageId: defaultProps.image.id,
         },
       })
     })
