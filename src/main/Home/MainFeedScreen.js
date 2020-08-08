@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './main.css'
+import axios from 'axios'
 import PromptLayout from '../Prompt/PromptLayout'
 import ImageLayout from '../Image/ImageLayout'
 import { getImagesAction } from '../Image/imageApi'
@@ -11,12 +12,22 @@ const MainFeedScreen = () => {
   const images = useSelector(state => state.images)
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
+  const [insertedImage, setInsertedImage] = useState(null)
 
   useEffect(() => {
     dispatch(getImagesAction(user.id))
     dispatch(getPromptsAction())
     dispatch({ type: TYPES.SET_INITIAL_DATE })
   }, [dispatch, user.id])
+
+  const handleChange = files => {
+    setInsertedImage(files[0])
+  }
+  const handleClick = () => {
+    if (insertedImage != null) {
+      axios.post('url', insertedImage)
+    }
+  }
   return (
     <div data-testid="appContainer" className="app">
       <div data-testid="user">{user?.email}</div>
@@ -38,6 +49,14 @@ const MainFeedScreen = () => {
       <h1 data-testid="artGalleryHeader" className="title">
         Art Gallery
       </h1>
+      <div data-testid="uploadImageDiv">
+        <h1>Upload Image</h1>
+        <input type="file" onChange={e => handleChange(e.target.files)} />
+        <button data-testid="uploadButton" onClick={handleClick}>
+          Upload Image
+        </button>
+        <div />
+      </div>
       <div className="row">
         {images?.length > 0 &&
           images.map(image => (

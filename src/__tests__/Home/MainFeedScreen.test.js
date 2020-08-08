@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { useSelector, useDispatch } from 'react-redux'
+import axios from 'axios'
 import MainFeedScreen from '../../main/Home/MainFeedScreen'
 import { getImagesAction } from '../../main/Image/imageApi'
 import { getPromptsAction } from '../../main/Prompt/promptsApi'
@@ -15,6 +16,7 @@ jest.mock('../../main/Image/imageApi')
 jest.mock('../../main/Prompt/promptsApi')
 jest.mock('../../main/Prompt/PromptLayout')
 jest.mock('../../main/Image/ImageLayout')
+jest.mock('axios')
 
 const images = [
   {
@@ -41,7 +43,11 @@ describe('<MainFeedScreen>', () => {
   let wrapper
   beforeEach(() => {
     jest.clearAllMocks()
-    useSelector.mockReturnValueOnce(images).mockReturnValueOnce(user)
+    useSelector
+      .mockReturnValueOnce(images)
+      .mockReturnValueOnce(user)
+      .mockReturnValueOnce(images)
+      .mockReturnValueOnce(user)
     useDispatch.mockReturnValue(dispatch)
     wrapper = shallow(<MainFeedScreen />)
   })
@@ -114,6 +120,56 @@ describe('<MainFeedScreen>', () => {
         expect(result).toEqual('Art Gallery')
       })
     })
+    describe('<div> for image upload', () => {
+      describe('<input> Upload Image', () => {
+        let inputTag
+        const image = 'some image...'
+        const event = {
+          target: {
+            files: [image],
+          },
+        }
+
+        beforeEach(() => {
+          inputTag = wrapper.find('input')
+        })
+        it('has type file', () => {
+          expect(inputTag.prop('type')).toEqual('file')
+        })
+
+        describe('when changed', () => {
+          describe('when upload button is clicked', () => {
+            it('sends the image over HTTP', () => {
+              inputTag.simulate('change', event)
+              const uploadButton = wrapper
+                .find('button')
+                .find({ 'data-testid': 'uploadButton' })
+              uploadButton.simulate('click')
+              expect(axios.post).toHaveBeenCalledWith('url', image)
+            })
+          })
+
+          describe('when upload button is not clicked', () => {
+            it('does not send the image over HTTP', () => {
+              inputTag.simulate('change', event)
+
+              expect(axios.post).not.toHaveBeenCalled()
+            })
+          })
+        })
+        describe('when not changed', () => {
+          describe('when upload button is clicked', () => {
+            it('does not send the image over HTTP', () => {
+              const uploadButton = wrapper
+                .find('button')
+                .find({ 'data-testid': 'uploadButton' })
+              uploadButton.simulate('click')
+              expect(axios.post).not.toHaveBeenCalled()
+            })
+          })
+        })
+      })
+    })
     describe('<ImageLayout>', () => {
       describe('when there are images', () => {
         it('renders imageLayout for each image in array', () => {
@@ -134,6 +190,7 @@ describe('<MainFeedScreen>', () => {
       })
       describe('when there are NO images', () => {
         it('should not render ImageLayout', () => {
+          jest.resetAllMocks()
           useSelector.mockReturnValue([])
           wrapper = shallow(<MainFeedScreen />)
           expect(
