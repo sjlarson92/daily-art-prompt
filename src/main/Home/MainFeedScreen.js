@@ -20,9 +20,6 @@ const MainFeedScreen = () => {
     dispatch({ type: TYPES.SET_INITIAL_DATE })
   }, [dispatch, user.id])
 
-  const handleChange = files => {
-    setInsertedImage(files[0])
-  }
   const handleClick = () => {
     if (insertedImage != null) {
       axios.post('url', insertedImage)
@@ -51,7 +48,10 @@ const MainFeedScreen = () => {
       </h1>
       <div data-testid="uploadImageDiv">
         <h1>Upload Image</h1>
-        <input type="file" onChange={e => handleChange(e.target.files)} />
+        <input
+          type="file"
+          onChange={e => setInsertedImage(e.target.files[0])}
+        />
         <button data-testid="uploadButton" onClick={handleClick}>
           Upload Image
         </button>
