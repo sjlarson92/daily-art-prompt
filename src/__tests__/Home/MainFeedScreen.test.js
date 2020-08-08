@@ -38,6 +38,7 @@ const user = {
   email: 'SomeUser',
 }
 const dispatch = jest.fn()
+const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
 
 describe('<MainFeedScreen>', () => {
   let wrapper
@@ -74,7 +75,7 @@ describe('<MainFeedScreen>', () => {
     })
   })
 
-  describe('<div> for app', () => {
+  describe('<div> for appContainer', () => {
     describe('user', () => {
       it('should render user email', () => {
         expect(wrapper.find({ 'data-testid': 'user' }).text()).toEqual(
@@ -120,56 +121,98 @@ describe('<MainFeedScreen>', () => {
         expect(result).toEqual('Art Gallery')
       })
     })
-    describe('<div> for image upload', () => {
+
+    describe('<div> for uploadImageDiv', () => {
       describe('<input> Upload Image', () => {
         let inputTag
+        let imageDescription
         const image = 'some image...'
-        const event = {
+        const description = 'blah blah image desc'
+        const fileInputEvent = {
           target: {
             files: [image],
+          },
+        }
+        const imageDescEvent = {
+          target: {
+            value: description,
           },
         }
 
         beforeEach(() => {
           inputTag = wrapper.find('input')
+          imageDescription = wrapper
+            .find('textarea')
+            .find({ id: 'imageDescription' })
         })
         it('has type file', () => {
           expect(inputTag.prop('type')).toEqual('file')
         })
 
-        describe('when changed', () => {
-          describe('when upload button is clicked', () => {
-            it('sends the image over HTTP', () => {
-              inputTag.simulate('change', event)
-              const uploadButton = wrapper
-                .find('button')
-                .find({ 'data-testid': 'uploadButton' })
-              uploadButton.simulate('click')
-              expect(axios.post).toHaveBeenCalledWith('url', image)
+        describe('<div> Image description', () => {
+          it('should have textarea with correct placeholder', () => {
+            expect(imageDescription.prop('placeholder')).toEqual(
+              'Add image description here...',
+            )
+          })
+        })
+        describe('when fileInput changed', () => {
+          describe('when imageDescription is entered', () => {
+            describe('when upload button is clicked', () => {
+              it('makes axios call', () => {
+                const data = {
+                  image,
+                  description,
+                }
+                inputTag.simulate('change', fileInputEvent)
+                imageDescription.simulate('change', imageDescEvent)
+                const uploadButton = wrapper
+                  .find('button')
+                  .find({ 'data-testid': 'uploadButton' })
+                uploadButton.simulate('click')
+                expect(axios.post).toHaveBeenCalledWith(
+                  `${GATEWAY_URL}/api/users/${user.id}/images`,
+                  data,
+                )
+              })
             })
           })
-
+          describe('when imageDescription is not entered', () => {
+            describe('when upload button is clicked', () => {
+              it('should not make axios call', () => {
+                inputTag.simulate('change', fileInputEvent)
+                const uploadButton = wrapper
+                  .find('button')
+                  .find({ 'data-testid': 'uploadButton' })
+                uploadButton.simulate('click')
+                expect(axios.post).not.toHaveBeenCalled()
+              })
+            })
+          })
           describe('when upload button is not clicked', () => {
             it('does not send the image over HTTP', () => {
-              inputTag.simulate('change', event)
-
+              inputTag.simulate('change', fileInputEvent)
               expect(axios.post).not.toHaveBeenCalled()
             })
           })
         })
-        describe('when not changed', () => {
-          describe('when upload button is clicked', () => {
-            it('does not send the image over HTTP', () => {
-              const uploadButton = wrapper
-                .find('button')
-                .find({ 'data-testid': 'uploadButton' })
-              uploadButton.simulate('click')
-              expect(axios.post).not.toHaveBeenCalled()
+        describe('when fileInput not changed', () => {
+          describe('when imageDescription is not null', () => {
+            describe('when upload button is clicked', () => {
+              it('does not send the image over HTTP', () => {
+                const uploadButton = wrapper
+                  .find('button')
+                  .find({ 'data-testid': 'uploadButton' })
+                imageDescription.simulate('change', imageDescEvent)
+                uploadButton.simulate('click')
+                expect(axios.post).not.toHaveBeenCalled()
+              })
             })
           })
         })
       })
     })
+
     describe('<ImageLayout>', () => {
       describe('when there are images', () => {
         it('renders imageLayout for each image in array', () => {

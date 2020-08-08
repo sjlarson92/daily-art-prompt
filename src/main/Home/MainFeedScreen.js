@@ -13,6 +13,8 @@ const MainFeedScreen = () => {
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
   const [insertedImage, setInsertedImage] = useState(null)
+  const [imageDescription, setImageDescription] = useState(null)
+  const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
 
   useEffect(() => {
     dispatch(getImagesAction(user.id))
@@ -21,8 +23,11 @@ const MainFeedScreen = () => {
   }, [dispatch, user.id])
 
   const handleClick = () => {
-    if (insertedImage != null) {
-      axios.post('url', insertedImage)
+    if (insertedImage != null && imageDescription != null) {
+      axios.post(`${GATEWAY_URL}/api/users/${user.id}/images`, {
+        description: imageDescription,
+        image: insertedImage,
+      })
     }
   }
   return (
@@ -49,11 +54,17 @@ const MainFeedScreen = () => {
       <div data-testid="uploadImageDiv">
         <h1>Upload Image</h1>
         <input
+          data-testid="fileInput"
           type="file"
           onChange={e => setInsertedImage(e.target.files[0])}
         />
+        <textarea
+          id="imageDescription"
+          placeholder="Add image description here..."
+          onChange={e => setImageDescription(e.target.value)}
+        />
         <button data-testid="uploadButton" onClick={handleClick}>
-          Upload Image
+          Upload
         </button>
         <div />
       </div>
