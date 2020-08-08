@@ -24,10 +24,15 @@ const MainFeedScreen = () => {
 
   const handleClick = () => {
     if (insertedImage != null && imageDescription != null) {
-      axios.post(`${GATEWAY_URL}/api/users/${user.id}/images`, {
-        description: imageDescription,
-        image: insertedImage,
-      })
+      console.log('insertedImage: ', insertedImage)
+      axios
+        .post(`${GATEWAY_URL}/api/users/${user.id}/images`, {
+          description: imageDescription,
+          image: insertedImage,
+        })
+        .then(sasha => {
+          console.log('returned data: ', sasha.data)
+        })
     }
   }
   return (
@@ -56,7 +61,7 @@ const MainFeedScreen = () => {
         <input
           data-testid="fileInput"
           type="file"
-          onChange={e => setInsertedImage(e.target.files[0])}
+          onChange={e => setInsertedImage(e.target.files[0])} // TODO: This is the wrong thing to pass! Where is the raw image?
         />
         <textarea
           id="imageDescription"
