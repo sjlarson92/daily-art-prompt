@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
+import { when } from 'jest-when'
 import MainFeedScreen from '../../main/Home/MainFeedScreen'
 import { getImagesAction } from '../../main/Image/imageApi'
 import { getPromptsAction } from '../../main/Prompt/promptsApi'
@@ -160,10 +161,20 @@ describe('<MainFeedScreen>', () => {
           describe('when imageDescription is entered', () => {
             describe('when upload button is clicked', () => {
               it('makes axios call', () => {
-                const data = {
-                  image,
-                  description,
-                }
+                const formData = new FormData()
+                formData.append('description', description)
+                formData.append('file', image)
+                when(axios.post)
+                  .calledWith(
+                    `${GATEWAY_URL}/api/users/${user.id}/images`,
+                    formData,
+                  )
+                  .mockResolvedValue({ data: 'some data' })
+                wrapper = shallow(<MainFeedScreen />)
+                inputTag = wrapper.find('input')
+                imageDescription = wrapper
+                  .find('textarea')
+                  .find({ id: 'imageDescription' })
                 inputTag.simulate('change', fileInputEvent)
                 imageDescription.simulate('change', imageDescEvent)
                 const uploadButton = wrapper
@@ -172,7 +183,7 @@ describe('<MainFeedScreen>', () => {
                 uploadButton.simulate('click')
                 expect(axios.post).toHaveBeenCalledWith(
                   `${GATEWAY_URL}/api/users/${user.id}/images`,
-                  data,
+                  formData,
                 )
               })
             })
