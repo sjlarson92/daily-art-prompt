@@ -26,6 +26,7 @@ const MainFeedScreen = () => {
   }, [dispatch, user.id])
 
   const handleClick = () => {
+    // TODO: pull this method out to imagesApi, what about the alert? discuss w/ lucas. Maybe use modal?
     if (insertedImage != null && imageDescription != null) {
       const formData = new FormData()
       formData.append('description', imageDescription)
@@ -34,23 +35,26 @@ const MainFeedScreen = () => {
         .post(`${GATEWAY_URL}/api/users/${user.id}/images`, formData)
         .then(response => {
           setShowAlert(true)
-          console.log('returned data: ', response.status)
           if (response.status === 201) {
             setAlert({ message: 'Image has been saved', variant: 'success' })
+            dispatch({
+              type: TYPES.ADD_IMAGE,
+              payload: { image: response.data },
+            })
           } else {
             setAlert({
               message: 'Failed to save image. Please try again.',
               variant: 'danger',
             })
           }
-          // refresh page to display new image
-        })
+        }) // TODO: Add catch
     }
   }
   return (
     <div data-testid="appContainer" className="app">
       {showAlert && (
         <Alert
+          testId="alert"
           variant={alert.variant}
           onClose={() => setShowAlert(false)}
           dismissible

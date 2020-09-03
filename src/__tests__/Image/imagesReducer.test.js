@@ -72,6 +72,29 @@ describe('imagesReducer', () => {
     })
   })
 
+  describe(`action is ${TYPES.ADD_IMAGE}`, () => {
+    it('returns state with new image added', () => {
+      const state = [
+        {
+          id: 1,
+        },
+      ]
+      const action = {
+        type: TYPES.ADD_IMAGE,
+        payload: {
+          image: {
+            id: 2,
+          },
+        },
+      }
+      expect(imagesReducer(state, action)).toEqual([
+        ...state,
+        {
+          id: 2,
+        },
+      ])
+    })
+  })
   describe('when the action.type equals UPDATE_PROMPT_IMAGES', () => {
     describe('when image.id equals payload.imageId and image.liked is false', () => {
       it('should update image.liked to true', () => {

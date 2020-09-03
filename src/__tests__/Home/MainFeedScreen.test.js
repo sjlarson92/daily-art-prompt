@@ -186,6 +186,33 @@ describe('<MainFeedScreen>', () => {
                   formData,
                 )
               })
+              describe('when response is 201', () => {
+                it('renders successful alert with correct text', () => {
+                  const formData = new FormData()
+                  formData.append('description', description)
+                  formData.append('file', image)
+                  when(axios.post)
+                    .calledWith(
+                      `${GATEWAY_URL}/api/users/${user.id}/images`,
+                      formData,
+                    )
+                    .mockResolvedValue({ data: 'some data', status: 201 })
+                  wrapper = shallow(<MainFeedScreen />)
+                  inputTag = wrapper.find('input')
+                  imageDescription = wrapper
+                    .find('textarea')
+                    .find({ id: 'imageDescription' })
+                  inputTag.simulate('change', fileInputEvent)
+                  imageDescription.simulate('change', imageDescEvent)
+                  const uploadButton = wrapper
+                    .find('button')
+                    .find({ 'data-testid': 'uploadButton' })
+                  uploadButton.simulate('click')
+                  expect(wrapper.find({ testId: 'alert' }).text()).toEqual(
+                    'Image has been saved',
+                  )
+                })
+              })
             })
           })
           describe('when imageDescription is not entered', () => {

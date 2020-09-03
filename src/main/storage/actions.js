@@ -1,4 +1,4 @@
-export const UPDATE_IMAGE_LIKED = 'UPDATE_PROMPT_IMAGES'
+export const UPDATE_IMAGE_LIKED = 'UPDATE_IMAGE_LIKED'
 
 export const UPDATE_DATE = 'UPDATE_DATE'
 
@@ -27,3 +27,5 @@ export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
 export const SET_USER = 'SET_USER'
 
 export const CLEAR_USER = 'CLEAR_USER'
+
+export const ADD_IMAGE = 'ADD_IMAGE'

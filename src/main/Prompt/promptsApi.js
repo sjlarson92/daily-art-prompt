@@ -3,7 +3,6 @@ import * as TYPES from '../storage/actions'
 
 export const getPromptsAction = () => dispatch => {
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
-  console.log('GATEWAY_URL: ', GATEWAY_URL)
   axios
     .get(`${GATEWAY_URL}/api/prompts`)
     .then(response => {
