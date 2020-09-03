@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Alert from 'react-bootstrap/Alert'
 import './main.css'
 import axios from 'axios'
 import PromptLayout from '../Prompt/PromptLayout'
@@ -12,6 +13,8 @@ const MainFeedScreen = () => {
   const images = useSelector(state => state.images)
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
+  const [alert, setAlert] = useState({ message: '', variant: '' })
+  const [showAlert, setShowAlert] = useState(false)
   const [insertedImage, setInsertedImage] = useState(null)
   const [imageDescription, setImageDescription] = useState(null)
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
@@ -30,12 +33,31 @@ const MainFeedScreen = () => {
       axios
         .post(`${GATEWAY_URL}/api/users/${user.id}/images`, formData)
         .then(response => {
-          console.log('returned data: ', response.data)
+          setShowAlert(true)
+          console.log('returned data: ', response.status)
+          if (response.status === 201) {
+            setAlert({ message: 'Image has been saved', variant: 'success' })
+          } else {
+            setAlert({
+              message: 'Failed to save image. Please try again.',
+              variant: 'danger',
+            })
+          }
+          // refresh page to display new image
         })
     }
   }
   return (
     <div data-testid="appContainer" className="app">
+      {showAlert && (
+        <Alert
+          variant={alert.variant}
+          onClose={() => setShowAlert(false)}
+          dismissible
+        >
+          {alert.message}
+        </Alert>
+      )}
       <div data-testid="user">{user?.email}</div>
       <button
         data-testid="logoutButton"

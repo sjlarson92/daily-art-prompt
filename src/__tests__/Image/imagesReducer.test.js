@@ -82,7 +82,7 @@ describe('imagesReducer', () => {
           },
         ]
         const action = {
-          type: TYPES.UPDATE_PROMPT_IMAGES,
+          type: TYPES.UPDATE_IMAGE_LIKED,
           payload: {
             imageId: 1,
           },
@@ -104,7 +104,7 @@ describe('imagesReducer', () => {
           },
         ]
         const action = {
-          type: TYPES.UPDATE_PROMPT_IMAGES,
+          type: TYPES.UPDATE_IMAGE_LIKED,
           payload: {
             imageId: 1,
           },
@@ -127,7 +127,7 @@ describe('imagesReducer', () => {
           },
         ]
         const action = {
-          type: TYPES.UPDATE_PROMPT_IMAGES,
+          type: TYPES.UPDATE_IMAGE_LIKED,
           payload: {
             imageId: 2,
           },
