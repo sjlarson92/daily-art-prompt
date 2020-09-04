@@ -95,6 +95,7 @@ describe('imagesReducer', () => {
       ])
     })
   })
+
   describe('when the action.type equals UPDATE_PROMPT_IMAGES', () => {
     describe('when image.id equals payload.imageId and image.liked is false', () => {
       it('should update image.liked to true', () => {
