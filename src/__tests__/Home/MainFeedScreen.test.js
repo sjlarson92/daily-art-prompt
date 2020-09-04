@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 import { when } from 'jest-when'
 import MainFeedScreen from '../../main/Home/MainFeedScreen'
-import { getImagesAction } from '../../main/Image/imageApi'
+import { getImagesAction, uploadImageAction } from '../../main/Image/imageApi'
 import { getPromptsAction } from '../../main/Prompt/promptsApi'
 import * as TYPES from '../../main/storage/actions'
 
@@ -39,7 +39,6 @@ const user = {
   email: 'SomeUser',
 }
 const dispatch = jest.fn()
-const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
 
 describe('<MainFeedScreen>', () => {
   let wrapper
@@ -126,7 +125,7 @@ describe('<MainFeedScreen>', () => {
     describe('<div> for uploadImageDiv', () => {
       describe('<input> Upload Image', () => {
         let inputTag
-        let imageDescription
+        let imageDescriptionTextArea
         const image = 'some image...'
         const description = 'blah blah image desc'
         const fileInputEvent = {
@@ -142,9 +141,9 @@ describe('<MainFeedScreen>', () => {
 
         beforeEach(() => {
           inputTag = wrapper.find('input')
-          imageDescription = wrapper
+          imageDescriptionTextArea = wrapper
             .find('textarea')
-            .find({ id: 'imageDescription' })
+            .find({ testid: 'imageDescriptionTextArea' })
         })
         it('has type file', () => {
           expect(inputTag.prop('type')).toEqual('file')
@@ -152,7 +151,7 @@ describe('<MainFeedScreen>', () => {
 
         describe('<div> Image description', () => {
           it('should have textarea with correct placeholder', () => {
-            expect(imageDescription.prop('placeholder')).toEqual(
+            expect(imageDescriptionTextArea.prop('placeholder')).toEqual(
               'Add image description here...',
             )
           })
@@ -160,57 +159,68 @@ describe('<MainFeedScreen>', () => {
         describe('when fileInput changed', () => {
           describe('when imageDescription is entered', () => {
             describe('when upload button is clicked', () => {
-              it('makes axios call', () => {
-                const formData = new FormData()
-                formData.append('description', description)
-                formData.append('file', image)
-                when(axios.post)
-                  .calledWith(
-                    `${GATEWAY_URL}/api/users/${user.id}/images`,
-                    formData,
-                  )
-                  .mockResolvedValue({ data: 'some data' })
+              it('calls uploadImageAction with correct params', () => {
+                jest.clearAllMocks()
+                useSelector
+                  .mockReturnValueOnce(images)
+                  .mockReturnValueOnce(user)
+                  .mockReturnValueOnce(images)
+                  .mockReturnValueOnce(user)
+                when(uploadImageAction)
+                  .calledWith(user.id, description, image, dispatch)
+                  .mockResolvedValue({
+                    message: 'Image has been saved',
+                    variant: 'success',
+                  })
                 wrapper = shallow(<MainFeedScreen />)
                 inputTag = wrapper.find('input')
-                imageDescription = wrapper
-                  .find('textarea')
-                  .find({ id: 'imageDescription' })
+                imageDescriptionTextArea = wrapper.find({
+                  testid: 'imageDescriptionTextArea',
+                })
                 inputTag.simulate('change', fileInputEvent)
-                imageDescription.simulate('change', imageDescEvent)
+                imageDescriptionTextArea.simulate('change', imageDescEvent)
                 const uploadButton = wrapper
                   .find('button')
                   .find({ 'data-testid': 'uploadButton' })
                 uploadButton.simulate('click')
-                expect(axios.post).toHaveBeenCalledWith(
-                  `${GATEWAY_URL}/api/users/${user.id}/images`,
-                  formData,
+                expect(uploadImageAction).toHaveBeenCalledWith(
+                  user.id,
+                  description,
+                  image,
+                  dispatch,
                 )
               })
-              describe('when response is 201', () => {
-                it('renders successful alert with correct text', () => {
-                  const formData = new FormData()
-                  formData.append('description', description)
-                  formData.append('file', image)
-                  when(axios.post)
-                    .calledWith(
-                      `${GATEWAY_URL}/api/users/${user.id}/images`,
-                      formData,
-                    )
-                    .mockResolvedValue({ data: 'some data', status: 201 })
+              describe('when uploadImageAction returns promise', () => {
+                it('renders alert with correct props', async () => {
+                  jest.clearAllMocks()
+                  useSelector
+                    .mockReturnValueOnce(images)
+                    .mockReturnValueOnce(user)
+                    .mockReturnValueOnce(images)
+                    .mockReturnValueOnce(user)
+                  when(uploadImageAction)
+                    .calledWith(user.id, description, image, dispatch)
+                    .mockResolvedValue({
+                      message: 'Image has been saved',
+                      variant: 'success',
+                    })
                   wrapper = shallow(<MainFeedScreen />)
                   inputTag = wrapper.find('input')
-                  imageDescription = wrapper
-                    .find('textarea')
-                    .find({ id: 'imageDescription' })
+                  imageDescriptionTextArea = wrapper.find({
+                    testid: 'imageDescriptionTextArea',
+                  })
                   inputTag.simulate('change', fileInputEvent)
-                  imageDescription.simulate('change', imageDescEvent)
-                  const uploadButton = wrapper
-                    .find('button')
-                    .find({ 'data-testid': 'uploadButton' })
-                  uploadButton.simulate('click')
-                  expect(wrapper.find({ testId: 'alert' }).text()).toEqual(
+                  imageDescriptionTextArea.simulate('change', imageDescEvent)
+                  const uploadButton = wrapper.find({
+                    'data-testid': 'uploadButton',
+                  })
+                  await uploadButton.simulate('click')
+                  expect(wrapper.find({ testid: 'alert' }).text()).toEqual(
                     'Image has been saved',
                   )
+                  expect(
+                    wrapper.find({ testid: 'alert' }).prop('variant'),
+                  ).toEqual('success')
                 })
               })
             })
@@ -241,7 +251,7 @@ describe('<MainFeedScreen>', () => {
                 const uploadButton = wrapper
                   .find('button')
                   .find({ 'data-testid': 'uploadButton' })
-                imageDescription.simulate('change', imageDescEvent)
+                imageDescriptionTextArea.simulate('change', imageDescEvent)
                 uploadButton.simulate('click')
                 expect(axios.post).not.toHaveBeenCalled()
               })

@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Alert from 'react-bootstrap/Alert'
 import './main.css'
-import axios from 'axios'
 import PromptLayout from '../Prompt/PromptLayout'
 import ImageLayout from '../Image/ImageLayout'
-import { getImagesAction } from '../Image/imageApi'
+import { getImagesAction, uploadImageAction } from '../Image/imageApi'
 import { getPromptsAction } from '../Prompt/promptsApi'
 import * as TYPES from '../storage/actions'
 
@@ -17,7 +16,6 @@ const MainFeedScreen = () => {
   const [showAlert, setShowAlert] = useState(false)
   const [insertedImage, setInsertedImage] = useState(null)
   const [imageDescription, setImageDescription] = useState(null)
-  const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
 
   useEffect(() => {
     dispatch(getImagesAction(user.id))
@@ -25,36 +23,23 @@ const MainFeedScreen = () => {
     dispatch({ type: TYPES.SET_INITIAL_DATE })
   }, [dispatch, user.id])
 
-  const handleClick = () => {
-    // TODO: pull this method out to imagesApi, what about the alert? discuss w/ lucas. Maybe use modal?
+  const handleClick = async () => {
     if (insertedImage != null && imageDescription != null) {
-      const formData = new FormData()
-      formData.append('description', imageDescription)
-      formData.append('file', insertedImage)
-      axios
-        .post(`${GATEWAY_URL}/api/users/${user.id}/images`, formData)
-        .then(response => {
-          setShowAlert(true)
-          if (response.status === 201) {
-            setAlert({ message: 'Image has been saved', variant: 'success' })
-            dispatch({
-              type: TYPES.ADD_IMAGE,
-              payload: { image: response.data },
-            })
-          } else {
-            setAlert({
-              message: 'Failed to save image. Please try again.',
-              variant: 'danger',
-            })
-          }
-        }) // TODO: Add catch
+      const newAlert = await uploadImageAction(
+        user.id,
+        imageDescription,
+        insertedImage,
+        dispatch,
+      )
+      setShowAlert(true)
+      setAlert(newAlert)
     }
   }
   return (
     <div data-testid="appContainer" className="app">
       {showAlert && (
         <Alert
-          testId="alert"
+          testid="alert"
           variant={alert.variant}
           onClose={() => setShowAlert(false)}
           dismissible
@@ -89,6 +74,7 @@ const MainFeedScreen = () => {
           onChange={e => setInsertedImage(e.target.files[0])}
         />
         <textarea
+          testid="imageDescriptionTextArea"
           id="imageDescription"
           placeholder="Add image description here..."
           onChange={e => setImageDescription(e.target.value)}
