@@ -1,8 +1,10 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { useSelector, useDispatch } from 'react-redux'
+import axios from 'axios'
+import { when } from 'jest-when'
 import MainFeedScreen from '../../main/Home/MainFeedScreen'
-import { getImagesAction } from '../../main/Image/imageApi'
+import { getImagesAction, uploadImageAction } from '../../main/Image/imageApi'
 import { getPromptsAction } from '../../main/Prompt/promptsApi'
 import * as TYPES from '../../main/storage/actions'
 
@@ -15,6 +17,7 @@ jest.mock('../../main/Image/imageApi')
 jest.mock('../../main/Prompt/promptsApi')
 jest.mock('../../main/Prompt/PromptLayout')
 jest.mock('../../main/Image/ImageLayout')
+jest.mock('axios')
 
 const images = [
   {
@@ -41,7 +44,11 @@ describe('<MainFeedScreen>', () => {
   let wrapper
   beforeEach(() => {
     jest.clearAllMocks()
-    useSelector.mockReturnValueOnce(images).mockReturnValueOnce(user)
+    useSelector
+      .mockReturnValueOnce(images)
+      .mockReturnValueOnce(user)
+      .mockReturnValueOnce(images)
+      .mockReturnValueOnce(user)
     useDispatch.mockReturnValue(dispatch)
     wrapper = shallow(<MainFeedScreen />)
   })
@@ -68,7 +75,7 @@ describe('<MainFeedScreen>', () => {
     })
   })
 
-  describe('<div> for app', () => {
+  describe('<div> for appContainer', () => {
     describe('user', () => {
       it('should render user email', () => {
         expect(wrapper.find({ 'data-testid': 'user' }).text()).toEqual(
@@ -114,6 +121,146 @@ describe('<MainFeedScreen>', () => {
         expect(result).toEqual('Art Gallery')
       })
     })
+
+    describe('<div> for uploadImageDiv', () => {
+      describe('<input> Upload Image', () => {
+        let inputTag
+        let imageDescriptionTextArea
+        const image = 'some image...'
+        const description = 'blah blah image desc'
+        const fileInputEvent = {
+          target: {
+            files: [image],
+          },
+        }
+        const imageDescEvent = {
+          target: {
+            value: description,
+          },
+        }
+
+        beforeEach(() => {
+          inputTag = wrapper.find('input')
+          imageDescriptionTextArea = wrapper
+            .find('textarea')
+            .find({ testid: 'imageDescriptionTextArea' })
+        })
+        it('has type file', () => {
+          expect(inputTag.prop('type')).toEqual('file')
+        })
+
+        describe('<div> Image description', () => {
+          it('should have textarea with correct placeholder', () => {
+            expect(imageDescriptionTextArea.prop('placeholder')).toEqual(
+              'Add image description here...',
+            )
+          })
+        })
+        describe('when fileInput changed', () => {
+          describe('when imageDescription is entered', () => {
+            describe('when upload button is clicked', () => {
+              it('calls uploadImageAction with correct params', () => {
+                jest.clearAllMocks()
+                useSelector
+                  .mockReturnValueOnce(images)
+                  .mockReturnValueOnce(user)
+                  .mockReturnValueOnce(images)
+                  .mockReturnValueOnce(user)
+                when(uploadImageAction)
+                  .calledWith(user.id, description, image, dispatch)
+                  .mockResolvedValue({
+                    message: 'Image has been saved',
+                    variant: 'success',
+                  })
+                wrapper = shallow(<MainFeedScreen />)
+                inputTag = wrapper.find('input')
+                imageDescriptionTextArea = wrapper.find({
+                  testid: 'imageDescriptionTextArea',
+                })
+                inputTag.simulate('change', fileInputEvent)
+                imageDescriptionTextArea.simulate('change', imageDescEvent)
+                const uploadButton = wrapper
+                  .find('button')
+                  .find({ 'data-testid': 'uploadButton' })
+                uploadButton.simulate('click')
+                expect(uploadImageAction).toHaveBeenCalledWith(
+                  user.id,
+                  description,
+                  image,
+                  dispatch,
+                )
+              })
+              describe('when uploadImageAction returns promise', () => {
+                it('renders alert with correct props', async () => {
+                  jest.clearAllMocks()
+                  useSelector
+                    .mockReturnValueOnce(images)
+                    .mockReturnValueOnce(user)
+                    .mockReturnValueOnce(images)
+                    .mockReturnValueOnce(user)
+                  when(uploadImageAction)
+                    .calledWith(user.id, description, image, dispatch)
+                    .mockResolvedValue({
+                      message: 'Image has been saved',
+                      variant: 'success',
+                    })
+                  wrapper = shallow(<MainFeedScreen />)
+                  inputTag = wrapper.find('input')
+                  imageDescriptionTextArea = wrapper.find({
+                    testid: 'imageDescriptionTextArea',
+                  })
+                  inputTag.simulate('change', fileInputEvent)
+                  imageDescriptionTextArea.simulate('change', imageDescEvent)
+                  const uploadButton = wrapper.find({
+                    'data-testid': 'uploadButton',
+                  })
+                  await uploadButton.simulate('click')
+                  expect(wrapper.find({ testid: 'alert' }).text()).toEqual(
+                    'Image has been saved',
+                  )
+                  expect(
+                    wrapper.find({ testid: 'alert' }).prop('variant'),
+                  ).toEqual('success')
+                })
+              })
+            })
+          })
+          describe('when imageDescription is not entered', () => {
+            describe('when upload button is clicked', () => {
+              it('should not make axios call', () => {
+                inputTag.simulate('change', fileInputEvent)
+                const uploadButton = wrapper
+                  .find('button')
+                  .find({ 'data-testid': 'uploadButton' })
+                uploadButton.simulate('click')
+                expect(axios.post).not.toHaveBeenCalled()
+              })
+            })
+          })
+          describe('when upload button is not clicked', () => {
+            it('does not send the image over HTTP', () => {
+              inputTag.simulate('change', fileInputEvent)
+              expect(axios.post).not.toHaveBeenCalled()
+            })
+          })
+        })
+        describe('when fileInput not changed', () => {
+          describe('when imageDescription is not null', () => {
+            describe('when upload button is clicked', () => {
+              it('does not send the image over HTTP', () => {
+                const uploadButton = wrapper
+                  .find('button')
+                  .find({ 'data-testid': 'uploadButton' })
+                imageDescriptionTextArea.simulate('change', imageDescEvent)
+                uploadButton.simulate('click')
+                expect(axios.post).not.toHaveBeenCalled()
+              })
+            })
+          })
+        })
+      })
+    })
+
     describe('<ImageLayout>', () => {
       describe('when there are images', () => {
         it('renders imageLayout for each image in array', () => {
@@ -134,6 +281,7 @@ describe('<MainFeedScreen>', () => {
       })
       describe('when there are NO images', () => {
         it('should not render ImageLayout', () => {
+          jest.resetAllMocks()
           useSelector.mockReturnValue([])
           wrapper = shallow(<MainFeedScreen />)
           expect(

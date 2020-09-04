@@ -37,7 +37,7 @@ describe('Image', () => {
       wrapper.find('img').simulate('doubleClick')
 
       expect(dispatch).toHaveBeenCalledWith({
-        type: TYPES.UPDATE_PROMPT_IMAGES,
+        type: TYPES.UPDATE_IMAGE_LIKED,
         payload: {
           imageId: defaultProps.image.id,
         },

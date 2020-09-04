@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import React from 'react'
 import { Provider } from 'react-redux'
 import LoginScreen from './User/Login/LoginScreen'
@@ -6,6 +6,7 @@ import HomeScreen from './Home/HomeScreen'
 import ErrorScreen from './User/Login/ErrorScreen'
 import store from './storage/store'
 import SignUpScreen from './User/SignUp/SignUpScreen'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 export const App = () => {
   return (

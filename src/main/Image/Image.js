@@ -10,7 +10,7 @@ const Image = ({ image }) => {
       alt={image.description}
       onDoubleClick={() =>
         dispatch({
-          type: TYPES.UPDATE_PROMPT_IMAGES,
+          type: TYPES.UPDATE_IMAGE_LIKED,
           payload: {
             imageId: image.id,
           },

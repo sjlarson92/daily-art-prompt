@@ -7,7 +7,12 @@ export const imagesReducer = (state = [], action) => {
       return images ? [...state, ...images] : state
     }
 
-    case TYPES.UPDATE_PROMPT_IMAGES:
+    case TYPES.ADD_IMAGE: {
+      const { image } = action.payload
+      return image ? [...state, image] : state
+    }
+
+    case TYPES.UPDATE_IMAGE_LIKED:
       return state.map(image => {
         if (image.id === action.payload.imageId) {
           return {
