@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import Alert from 'react-bootstrap/Alert'
 import './main.css'
@@ -16,6 +17,7 @@ const MainFeedScreen = () => {
   const [showAlert, setShowAlert] = useState(false)
   const [insertedImage, setInsertedImage] = useState(null)
   const [imageDescription, setImageDescription] = useState(null)
+  const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
 
   useEffect(() => {
     dispatch(getImagesAction(user.id))
@@ -53,6 +55,12 @@ const MainFeedScreen = () => {
         onClick={() => dispatch({ type: TYPES.LOGOUT })}
       >
         Logout
+      </button>
+      <button
+        testid="promptButton"
+        onClick={() => axios.post(`${GATEWAY_URL}/api/prompts`)}
+      >
+        Add Prompts
       </button>
       <div className="header">
         <div className="title">

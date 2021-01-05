@@ -40,6 +40,8 @@ const user = {
 }
 const dispatch = jest.fn()
 
+const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
+
 describe('<MainFeedScreen>', () => {
   let wrapper
   beforeEach(() => {
@@ -92,6 +94,17 @@ describe('<MainFeedScreen>', () => {
       it('dispatch with correct param when clicked', () => {
         wrapper.find({ 'data-testid': 'logoutButton' }).simulate('click')
         expect(dispatch).toHaveBeenCalledWith({ type: TYPES.LOGOUT })
+      })
+    })
+    describe('Add Prompts Button', () => {
+      it('should render with correct text', () => {
+        expect(wrapper.find({ testid: 'promptButton' }).text()).toEqual(
+          'Add Prompts',
+        )
+      })
+      it('calls prompts api when clicked', () => {
+        wrapper.find({ testid: 'promptButton' }).simulate('click')
+        expect(axios.post).toHaveBeenCalledWith(`${GATEWAY_URL}/api/prompts`)
       })
     })
     describe('header', () => {
