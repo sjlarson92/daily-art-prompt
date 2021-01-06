@@ -16,6 +16,7 @@ export const validateLogin = (dispatch, history, email, password) => {
         payload: {
           email: response.data.email,
           id: response.data.id,
+          role: response.data.role,
         },
       })
       history.push('/')

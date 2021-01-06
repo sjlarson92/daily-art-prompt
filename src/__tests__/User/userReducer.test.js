@@ -10,12 +10,14 @@ describe('userReducer', () => {
         payload: {
           email: 'someEmail@yourmom.com',
           id: 123,
+          role: 'some role',
         },
       }
       expect(userReducer(state, action)).toEqual({
         email: 'someEmail@yourmom.com',
         id: 123,
         isLoggedIn: true,
+        role: 'some role',
       })
     })
   })
