@@ -32,6 +32,7 @@ describe('authRequests', () => {
         data: {
           email: 'someEmail',
           id: 2,
+          role: 'some role',
         },
       }
       axios.post.mockResolvedValue(response)
@@ -41,6 +42,7 @@ describe('authRequests', () => {
         payload: {
           email: response.data.email,
           id: response.data.id,
+          role: response.data.role,
         },
       })
     })
