@@ -98,13 +98,13 @@ describe('<MainFeedScreen>', () => {
     })
     describe('Add Prompts Button', () => {
       describe('when user has role GODLIKE', () => {
+        const godlikeUser = {
+          id: 'some id',
+          email: 'SomeUser',
+          role: 'GODLIKE',
+        }
         beforeEach(() => {
           jest.resetAllMocks()
-          const godlikeUser = {
-            id: 'some id',
-            email: 'SomeUser',
-            role: 'GODLIKE',
-          }
           useSelector.mockReturnValue(images).mockReturnValue(godlikeUser)
         })
         it('should render with correct text', () => {
@@ -116,7 +116,9 @@ describe('<MainFeedScreen>', () => {
         it('calls prompts api when clicked', () => {
           const newWrapper = shallow(<MainFeedScreen />)
           newWrapper.find({ testid: 'promptButton' }).simulate('click')
-          expect(axios.post).toHaveBeenCalledWith(`${GATEWAY_URL}/api/prompts`)
+          expect(axios.post).toHaveBeenCalledWith(
+            `${GATEWAY_URL}/api/prompts?userId=${godlikeUser.id}`,
+          )
         })
       })
       describe('when user has role FEEDER', () => {

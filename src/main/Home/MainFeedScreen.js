@@ -59,7 +59,9 @@ const MainFeedScreen = () => {
       {user.role === 'GODLIKE' && (
         <button
           testid="promptButton"
-          onClick={() => axios.post(`${GATEWAY_URL}/api/prompts`)}
+          onClick={() =>
+            axios.post(`${GATEWAY_URL}/api/prompts?userId=${user.id}`)
+          }
         >
           Add Prompts
         </button>
