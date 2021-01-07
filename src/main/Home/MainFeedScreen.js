@@ -56,12 +56,16 @@ const MainFeedScreen = () => {
       >
         Logout
       </button>
-      <button
-        testid="promptButton"
-        onClick={() => axios.post(`${GATEWAY_URL}/api/prompts`)}
-      >
-        Add Prompts
-      </button>
+      {user.role === 'GODLIKE' && (
+        <button
+          testid="promptButton"
+          onClick={() =>
+            axios.post(`${GATEWAY_URL}/api/prompts?userId=${user.id}`)
+          }
+        >
+          Add Prompts
+        </button>
+      )}
       <div className="header">
         <div className="title">
           <h1 data-testid="header" style={{ color: 'red' }}>

@@ -97,14 +97,42 @@ describe('<MainFeedScreen>', () => {
       })
     })
     describe('Add Prompts Button', () => {
-      it('should render with correct text', () => {
-        expect(wrapper.find({ testid: 'promptButton' }).text()).toEqual(
-          'Add Prompts',
-        )
+      describe('when user has role GODLIKE', () => {
+        const godlikeUser = {
+          id: 'some id',
+          email: 'SomeUser',
+          role: 'GODLIKE',
+        }
+        beforeEach(() => {
+          jest.resetAllMocks()
+          useSelector.mockReturnValue(images).mockReturnValue(godlikeUser)
+        })
+        it('should render with correct text', () => {
+          const newWrapper = shallow(<MainFeedScreen />)
+          expect(newWrapper.find({ testid: 'promptButton' }).text()).toEqual(
+            'Add Prompts',
+          )
+        })
+        it('calls prompts api when clicked', () => {
+          const newWrapper = shallow(<MainFeedScreen />)
+          newWrapper.find({ testid: 'promptButton' }).simulate('click')
+          expect(axios.post).toHaveBeenCalledWith(
+            `${GATEWAY_URL}/api/prompts?userId=${godlikeUser.id}`,
+          )
+        })
       })
-      it('calls prompts api when clicked', () => {
-        wrapper.find({ testid: 'promptButton' }).simulate('click')
-        expect(axios.post).toHaveBeenCalledWith(`${GATEWAY_URL}/api/prompts`)
+      describe('when user has role FEEDER', () => {
+        it('should not render add prompt button', () => {
+          jest.resetAllMocks()
+          const feederUser = {
+            id: 'some id',
+            email: 'SomeUser',
+            role: 'FEEDER',
+          }
+          useSelector.mockReturnValue(images).mockReturnValue(feederUser)
+          const newWrapper = shallow(<MainFeedScreen />)
+          expect(newWrapper.find({ testid: 'promptButton' })).toHaveLength(0)
+        })
       })
     })
     describe('header', () => {
