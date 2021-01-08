@@ -1,44 +1,45 @@
-import { connect } from 'react-redux'
-import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
 import PromptButton from './PromptButton'
 import Prompt from './Prompt'
 import {
   updateNextDateAction,
   updatePreviousDateAction,
 } from './dispatchFunctions'
+import * as TYPES from '../storage/actions'
 
-export const PromptLayout = ({
-  prompts,
-  date,
-  updateNextDate,
-  updatePreviousDate,
-}) => (
-  <div data-testid="mainContentContainer" className="prompt-row">
-    <PromptButton
-      data-testid="previousButton"
-      onClick={() => updatePreviousDate()}
-      text="Previous"
-    />
-    {Object.keys(prompts).length > 0 && prompts[date] && (
-      <Prompt data-testid="prompt" prompt={prompts[date]} />
-    )}
+const PromptLayout = () => {
+  const prompts = useSelector(state => state.prompts)
+  const date = useSelector(state => state.date)
+  const dispatch = useDispatch()
 
-    <PromptButton
-      data-testid="nextButton"
-      onClick={() => updateNextDate()}
-      text="Next"
-    />
-  </div>
-)
+  useEffect(() => {
+    dispatch({
+      type: TYPES.SET_CURRENT_PROMPT_ID,
+      payload: {
+        promptId: Object.keys(prompts).length > 0 && prompts[date]?.id,
+      },
+    })
+  }, [prompts, date])
 
-export const mapStateToProps = state => ({
-  date: state.date,
-  prompts: state.prompts,
-})
+  return (
+    <div data-testid="mainContentContainer" className="prompt-row">
+      <PromptButton
+        data-testid="previousButton"
+        onClick={() => dispatch(updatePreviousDateAction())}
+        text="Previous"
+      />
+      {Object.keys(prompts).length > 0 && prompts[date] && (
+        <Prompt data-testid="prompt" prompt={prompts[date]} />
+      )}
 
-export const dispatchFunctions = {
-  updateNextDate: updateNextDateAction,
-  updatePreviousDate: updatePreviousDateAction,
+      <PromptButton
+        data-testid="nextButton"
+        onClick={() => dispatch(updateNextDateAction())}
+        text="Next"
+      />
+    </div>
+  )
 }
 
-export default connect(mapStateToProps, dispatchFunctions)(PromptLayout)
+export default PromptLayout
