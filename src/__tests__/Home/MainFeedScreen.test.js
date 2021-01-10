@@ -15,7 +15,7 @@ jest.mock('react-redux', () => ({
 }))
 jest.mock('../../main/Image/imageApi')
 jest.mock('../../main/Prompt/promptsApi')
-jest.mock('../../main/Prompt/PromptLayout')
+jest.mock('../../main/Prompt/PromptLayout', () => () => <div />)
 jest.mock('../../main/Image/ImageLayout')
 jest.mock('axios')
 
@@ -38,6 +38,8 @@ const user = {
   id: 'some id',
   email: 'SomeUser',
 }
+
+const currentPromptId = 1
 const dispatch = jest.fn()
 
 const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
@@ -49,29 +51,27 @@ describe('<MainFeedScreen>', () => {
     useSelector
       .mockReturnValueOnce(images)
       .mockReturnValueOnce(user)
+      .mockReturnValueOnce(currentPromptId)
       .mockReturnValueOnce(images)
       .mockReturnValueOnce(user)
+      .mockReturnValueOnce(currentPromptId)
     useDispatch.mockReturnValue(dispatch)
     wrapper = shallow(<MainFeedScreen />)
   })
   describe('On Initial Render', () => {
     it('getImagesAction gets called with the correct param', () => {
-      useSelector.mockReturnValueOnce(images).mockReturnValueOnce(user)
       mount(<MainFeedScreen />)
       expect(getImagesAction).toHaveBeenCalledWith(user.id)
     })
     it('dispatches getImagesAction', () => {
-      useSelector.mockReturnValueOnce(images).mockReturnValueOnce(user)
       mount(<MainFeedScreen />)
       expect(dispatch).toHaveBeenCalledWith(getImagesAction())
     })
     it('dispatches getPromptsAction', () => {
-      useSelector.mockReturnValueOnce(images).mockReturnValueOnce(user)
       mount(<MainFeedScreen />)
       expect(dispatch).toHaveBeenCalledWith(getPromptsAction())
     })
     it('dispatches SET_INITIAL_DATE', () => {
-      useSelector.mockReturnValueOnce(images).mockReturnValueOnce(user)
       mount(<MainFeedScreen />)
       expect(dispatch).toHaveBeenCalledWith({ type: TYPES.SET_INITIAL_DATE })
     })
@@ -202,11 +202,6 @@ describe('<MainFeedScreen>', () => {
             describe('when upload button is clicked', () => {
               it('calls uploadImageAction with correct params', () => {
                 jest.clearAllMocks()
-                useSelector
-                  .mockReturnValueOnce(images)
-                  .mockReturnValueOnce(user)
-                  .mockReturnValueOnce(images)
-                  .mockReturnValueOnce(user)
                 when(uploadImageAction)
                   .calledWith(user.id, description, image, dispatch)
                   .mockResolvedValue({
@@ -226,6 +221,7 @@ describe('<MainFeedScreen>', () => {
                 uploadButton.simulate('click')
                 expect(uploadImageAction).toHaveBeenCalledWith(
                   user.id,
+                  currentPromptId,
                   description,
                   image,
                   dispatch,
@@ -234,13 +230,14 @@ describe('<MainFeedScreen>', () => {
               describe('when uploadImageAction returns promise', () => {
                 it('renders alert with correct props', async () => {
                   jest.clearAllMocks()
-                  useSelector
-                    .mockReturnValueOnce(images)
-                    .mockReturnValueOnce(user)
-                    .mockReturnValueOnce(images)
-                    .mockReturnValueOnce(user)
                   when(uploadImageAction)
-                    .calledWith(user.id, description, image, dispatch)
+                    .calledWith(
+                      user.id,
+                      currentPromptId,
+                      description,
+                      image,
+                      dispatch,
+                    )
                     .mockResolvedValue({
                       message: 'Image has been saved',
                       variant: 'success',

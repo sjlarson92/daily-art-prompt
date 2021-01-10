@@ -1,27 +1,32 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import {
-  dispatchFunctions,
-  mapStateToProps,
-  PromptLayout,
-} from '../../main/Prompt/PromptLayout'
+import { when } from 'jest-when'
+import { useDispatch, useSelector } from 'react-redux'
+import PromptLayout from '../../main/Prompt/PromptLayout'
 import {
   updateNextDateAction,
   updatePreviousDateAction,
 } from '../../main/Prompt/dispatchFunctions'
 
+jest.mock('react-redux')
+
+jest.mock('../../main/Prompt/dispatchFunctions')
+
+const date = '2021-01-11'
+const prompts = {
+  [date]: 'na na na na na na na na BATMAN!!!',
+}
+const dispatch = jest.fn()
+
 describe('<PromptLayout>', () => {
-  const defaultProps = {
-    prompts: {
-      '2020-01-11': 'na na na na na na na na BATMAN!!!',
-    },
-    date: '2020-01-11',
-    updateNextDate: jest.fn(),
-    updatePreviousDate: jest.fn(),
-  }
+  beforeEach(() => {
+    jest.clearAllMocks()
+    useSelector.mockReturnValueOnce(prompts).mockReturnValueOnce(date)
+    useDispatch.mockReturnValueOnce(dispatch)
+  })
   describe('<div> for mainContentContainer', () => {
     it('should have a prompt-row className', () => {
-      const wrapper = shallow(<PromptLayout {...defaultProps} />)
+      const wrapper = shallow(<PromptLayout />)
       const result = wrapper
         .find({ 'data-testid': 'mainContentContainer' })
         .prop('className')
@@ -30,15 +35,18 @@ describe('<PromptLayout>', () => {
 
     describe('<PromptButton> for previousButton', () => {
       it('renders correct text', () => {
-        const wrapper = shallow(<PromptLayout {...defaultProps} />)
+        const wrapper = shallow(<PromptLayout />)
         expect(
           wrapper.find({ 'data-testid': 'previousButton' }).prop('text'),
         ).toEqual('Previous')
       })
-      it('should call updatePreviousDate when clicked', () => {
-        const wrapper = shallow(<PromptLayout {...defaultProps} />)
+      it('should dispatch with return value of updatePreviousDateAction when clicked', () => {
+        const wrapper = shallow(<PromptLayout />)
+        when(updatePreviousDateAction)
+          .calledWith()
+          .mockReturnValue('hi')
         wrapper.find({ 'data-testid': 'previousButton' }).simulate('click')
-        expect(defaultProps.updatePreviousDate).toHaveBeenCalledWith()
+        expect(dispatch).toHaveBeenCalledWith('hi')
       })
     })
 
@@ -46,34 +54,26 @@ describe('<PromptLayout>', () => {
       describe('when there are prompts', () => {
         describe('when the date in state is in prompts', () => {
           it('should render', () => {
-            const props = {
-              ...defaultProps,
-              prompts: {
-                '2020-01-11': "I'm up all night to get lucky",
-              },
-            }
-            const wrapper = shallow(<PromptLayout {...props} />)
+            const wrapper = shallow(<PromptLayout />)
             const result = wrapper.find({ 'data-testid': 'prompt' })
             expect(result).toHaveLength(1)
           })
           it('should render with correct prompt prop', () => {
-            const wrapper = shallow(<PromptLayout {...defaultProps} />)
+            const wrapper = shallow(<PromptLayout />)
             const result = wrapper
               .find({ 'data-testid': 'prompt' })
               .prop('prompt')
-            expect(result).toEqual(defaultProps.prompts[defaultProps.date])
+            expect(result).toEqual(prompts[date])
           })
         })
       })
       describe('when the date in state is NOT in prompts', () => {
         it('should not render', () => {
-          const props = {
-            ...defaultProps,
-            prompts: {
-              '2020-02-22': 'Had to have high hopes for a living',
-            },
-          }
-          const wrapper = shallow(<PromptLayout {...props} />)
+          jest.resetAllMocks()
+          useSelector
+            .mockReturnValueOnce(prompts)
+            .mockReturnValueOnce('non existing date')
+          const wrapper = shallow(<PromptLayout />)
           const result = wrapper.find({ 'data-testid': 'prompt' })
           expect(result).toHaveLength(0)
         })
@@ -81,11 +81,9 @@ describe('<PromptLayout>', () => {
 
       describe('when there are no prompts', () => {
         it('should not render <Prompt>', () => {
-          const props = {
-            ...defaultProps,
-            prompts: {},
-          }
-          const wrapper = shallow(<PromptLayout {...props} />)
+          jest.resetAllMocks()
+          useSelector.mockReturnValueOnce({}).mockReturnValueOnce(date)
+          const wrapper = shallow(<PromptLayout />)
           const result = wrapper.find({ 'data-testid': 'prompt' })
           expect(result).toHaveLength(0)
         })
@@ -94,46 +92,19 @@ describe('<PromptLayout>', () => {
 
     describe('<PromptButton> for nextButton', () => {
       it('renders correct text', () => {
-        const wrapper = shallow(<PromptLayout {...defaultProps} />)
+        const wrapper = shallow(<PromptLayout />)
         expect(
           wrapper.find({ 'data-testid': 'nextButton' }).prop('text'),
         ).toEqual('Next')
       })
-      it('should call updateNextDate with correct params when clicked', () => {
-        const wrapper = shallow(<PromptLayout {...defaultProps} />)
+      it('should dispatch with return value of updateNextDateAction when clicked', () => {
+        const wrapper = shallow(<PromptLayout />)
+        when(updateNextDateAction)
+          .calledWith()
+          .mockReturnValue('hi')
         wrapper.find({ 'data-testid': 'nextButton' }).simulate('click')
-        expect(defaultProps.updateNextDate).toHaveBeenCalledWith()
+        expect(dispatch).toHaveBeenCalledWith('hi')
       })
-    })
-  })
-})
-
-describe('mapStateToProps', () => {
-  it('should map date to props', () => {
-    const date = 'my favorite dates are when I get to stay home and drink wine'
-    const result = mapStateToProps({
-      date,
-    })
-    expect(result).toEqual({
-      date,
-    })
-  })
-  it('should map prompts to props', () => {
-    const text = "did you know elephants can't jump?"
-    const result = mapStateToProps({
-      prompts: { text },
-    })
-    expect(result).toEqual({
-      prompts: { text },
-    })
-  })
-})
-
-describe('dispatchFunctions', () => {
-  it('should have the correct actions', () => {
-    expect(dispatchFunctions).toEqual({
-      updateNextDate: updateNextDateAction,
-      updatePreviousDate: updatePreviousDateAction,
     })
   })
 })

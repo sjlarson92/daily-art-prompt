@@ -59,6 +59,7 @@ describe('uploadImageAction', () => {
 
   const imageDescription = 'some description'
   const insertedImage = 'some image'
+  const currentPromptId = 1
   const id = 'some id'
   const formData = new FormData()
   formData.append('description', imageDescription)
@@ -69,9 +70,15 @@ describe('uploadImageAction', () => {
       status: 201,
       data: 'some response data',
     })
-    uploadImageAction(id, imageDescription, insertedImage, dispatch)
+    uploadImageAction(
+      id,
+      currentPromptId,
+      imageDescription,
+      insertedImage,
+      dispatch,
+    )
     expect(axios.post).toHaveBeenCalledWith(
-      `${GATEWAY_URL}/api/users/${id}/images`,
+      `${GATEWAY_URL}/api/users/${id}/images?promptId=${currentPromptId}`,
       formData,
     )
   })
@@ -82,7 +89,13 @@ describe('uploadImageAction', () => {
           status: 201,
           data: 'some response data',
         })
-        await uploadImageAction(id, imageDescription, insertedImage, dispatch)
+        await uploadImageAction(
+          id,
+          currentPromptId,
+          imageDescription,
+          insertedImage,
+          dispatch,
+        )
         expect(dispatch).toHaveBeenCalledWith({
           type: TYPES.ADD_IMAGE,
           payload: { image: 'some response data' },
@@ -95,6 +108,7 @@ describe('uploadImageAction', () => {
         })
         const response = await uploadImageAction(
           id,
+          currentPromptId,
           imageDescription,
           insertedImage,
           dispatch,
@@ -112,6 +126,7 @@ describe('uploadImageAction', () => {
         })
         const response = await uploadImageAction(
           id,
+          currentPromptId,
           imageDescription,
           insertedImage,
           dispatch,
@@ -125,7 +140,13 @@ describe('uploadImageAction', () => {
         axios.post.mockResolvedValue({
           status: 400,
         })
-        uploadImageAction(id, imageDescription, insertedImage, dispatch)
+        uploadImageAction(
+          id,
+          currentPromptId,
+          imageDescription,
+          insertedImage,
+          dispatch,
+        )
         expect(dispatch).not.toHaveBeenCalled()
       })
     })
@@ -135,6 +156,7 @@ describe('uploadImageAction', () => {
       axios.post.mockRejectedValue()
       const response = await uploadImageAction(
         id,
+        currentPromptId,
         imageDescription,
         insertedImage,
         dispatch,
