@@ -6,6 +6,7 @@ import { dateReducer } from '../Prompt/dateReducer'
 import { loadState, saveState } from './localStorage'
 import { errorMessageReducer } from './errorMessageReducer'
 import { userReducer } from '../User/userReducer'
+import { currentPromptIdReducer } from '../Prompt/currentPromptIdReducer'
 
 export const rootReducer = combineReducers({
   images: imagesReducer,
@@ -13,6 +14,7 @@ export const rootReducer = combineReducers({
   prompts: promptsReducer,
   errorMessage: errorMessageReducer,
   user: userReducer,
+  currentPromptId: currentPromptIdReducer,
 })
 
 const persistedState = loadState()

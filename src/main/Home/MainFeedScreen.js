@@ -12,6 +12,7 @@ import * as TYPES from '../storage/actions'
 const MainFeedScreen = () => {
   const images = useSelector(state => state.images)
   const user = useSelector(state => state.user)
+  const currentPromptId = useSelector(state => state.currentPromptId)
   const dispatch = useDispatch()
   const [alert, setAlert] = useState({ message: '', variant: '' })
   const [showAlert, setShowAlert] = useState(false)
@@ -29,6 +30,7 @@ const MainFeedScreen = () => {
     if (insertedImage != null && imageDescription != null) {
       const newAlert = await uploadImageAction(
         user.id,
+        currentPromptId,
         imageDescription,
         insertedImage,
         dispatch,

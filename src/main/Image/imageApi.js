@@ -17,6 +17,7 @@ export const getImagesAction = id => dispatch => {
 
 export const uploadImageAction = (
   id,
+  currentPromptId,
   imageDescription,
   insertedImage,
   dispatch,
@@ -25,7 +26,10 @@ export const uploadImageAction = (
   formData.append('description', imageDescription)
   formData.append('file', insertedImage)
   return axios
-    .post(`${GATEWAY_URL}/api/users/${id}/images`, formData)
+    .post(
+      `${GATEWAY_URL}/api/users/${id}/images?promptId=${currentPromptId}`,
+      formData,
+    )
     .then(response => {
       if (response.status === 201) {
         dispatch({
