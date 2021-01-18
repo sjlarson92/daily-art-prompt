@@ -12,8 +12,6 @@ const SignUpScreen = () => {
   const errorMessage = useSelector(state => state.errorMessage)
 
   const handleOnClick = () => {
-    console.log('email: ', email)
-    console.log('password: ', password)
     dispatch({
       type: TYPES.SET_ERROR_MESSAGE,
       payload: {

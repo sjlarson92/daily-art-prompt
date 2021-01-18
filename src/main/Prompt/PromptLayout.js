@@ -20,7 +20,7 @@ const PromptLayout = () => {
         promptId: Object.keys(prompts).length > 0 && prompts[date]?.id,
       },
     })
-  }, [prompts, date])
+  }, [prompts, date, dispatch])
 
   return (
     <div data-testid="mainContentContainer" className="prompt-row">

@@ -32,7 +32,7 @@ const LoginScreen = () => {
       <input
         data-testid="passwordInput"
         name="password"
-        type="text"
+        type="password"
         placeholder="Password"
         onChange={e => setPassword(e.target.value)}
       />
