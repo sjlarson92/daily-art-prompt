@@ -6,7 +6,6 @@ import HomeScreen from './Home/HomeScreen'
 import ErrorScreen from './User/Login/ErrorScreen'
 import store from './storage/store'
 import SignUpScreen from './User/SignUp/SignUpScreen'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 export const App = () => {
   return (

@@ -4,7 +4,6 @@ import * as TYPES from '../storage/actions'
 const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
 
 export const getImagesAction = id => dispatch => {
-  console.log('GATEWAY_URL: ', GATEWAY_URL)
   axios.get(`${GATEWAY_URL}/api/users/${id}/images`).then(response => {
     dispatch({
       type: TYPES.SET_USER_IMAGES,
