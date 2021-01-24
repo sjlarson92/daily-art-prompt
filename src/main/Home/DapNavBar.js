@@ -12,6 +12,7 @@ const DapNavBar = () => {
   return (
     <Navbar fixed="top" expand="sm" variant="dark" bg="dark">
       <Navbar.Brand>Daily Art Prompt</Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse className="justify-content-end">
         <NavDropdown id="nav-user-dropdown" alignRight title={user?.email}>
           {user.role === 'GODLIKE' && (
