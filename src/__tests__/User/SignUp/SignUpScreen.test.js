@@ -19,9 +19,6 @@ describe('SignUpScreen', () => {
     wrapper = shallow(<SignUpScreen />)
   })
 
-  it('render header with correct text', () => {
-    expect(wrapper.find({ 'data-testid': 'header' }).text()).toEqual('Sign Up')
-  })
   describe('errorMessage', () => {
     describe('when errorMessage does NOT exist', () => {
       it('should not render errorMessage', () => {

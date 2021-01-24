@@ -6,6 +6,7 @@ import HomeScreen from './Home/HomeScreen'
 import ErrorScreen from './User/Login/ErrorScreen'
 import store from './storage/store'
 import SignUpScreen from './User/SignUp/SignUpScreen'
+import './Home/main.css'
 
 export const App = () => {
   return (

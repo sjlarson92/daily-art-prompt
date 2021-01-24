@@ -25,13 +25,6 @@ describe('LoginScreen', () => {
     wrapper = shallow(<LoginScreen />)
   })
 
-  describe('header', () => {
-    it('should render correct header', () => {
-      expect(wrapper.find({ 'data-testid': 'header' }).text()).toEqual(
-        'Login Screen',
-      )
-    })
-  })
   describe('message', () => {
     describe('when there is a message', () => {
       it('render message', () => {
@@ -106,10 +99,11 @@ describe('LoginScreen', () => {
     })
   })
 
-  describe('Sign Up Button', () => {
-    it('should redirect user to /sign-up when clicked', () => {
-      wrapper.find({ 'data-testid': 'signUpButton' }).simulate('click')
-      expect(history.push).toHaveBeenCalledWith('/sign-up')
+  describe('Sign Up Link', () => {
+    it('should have link to signUp', () => {
+      expect(wrapper.find({ testid: 'signUpLink' }).prop('to')).toEqual(
+        '/sign-up',
+      )
     })
   })
 })
