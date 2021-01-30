@@ -87,7 +87,7 @@ const SignUpScreen = () => {
 
           <div className="mt-4">
             <div className="d-flex justify-content-center links">
-              Have an account?{' '}
+              Have an account?
               <Link to="/login" className="ml-2">
                 Login
               </Link>
