@@ -1,0 +1,24 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
+
+const DapInput = ({ icon, fieldType, fieldName, handleOnChange }) => {
+  return (
+    <div className="input-group mb-3">
+      <div className="input-group-append">
+        <span className="input-group-text">
+          <FontAwesomeIcon icon={icon} />
+        </span>
+      </div>
+      <input
+        data-testid="emailInput"
+        type={fieldType}
+        name={fieldName}
+        className="form-control"
+        onChange={e => handleOnChange(e.target.value)}
+        placeholder={fieldName}
+      />
+    </div>
+  )
+}
+
+export default DapInput

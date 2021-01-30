@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useLocation, Link } from 'react-router-dom'
-import logo from '../../images/dapLogo.png'
+import { useHistory, useLocation } from 'react-router-dom'
 import { validateLogin } from './authRequests'
 import './login.css'
+import DapInput from '../DapInput'
+import DapLogo from '../DapLogo'
+import UserCardFooter from '../UserCardFooter'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState(null)
@@ -23,49 +24,21 @@ const LoginScreen = () => {
       <div data-testid="errorMessage">{errorMessage}</div>
       <div className="d-flex login-div-container justify-content-center">
         <div className="user-card">
-          <div className="d-flex justify-content-center">
-            <div className="brand-logo-container">
-              <img
-                src={logo}
-                style={{ height: 350 }}
-                className="brand-logo"
-                alt="Logo"
-              />
-            </div>
-          </div>
+          <DapLogo />
           <div className="d-flex justify-content-center">
             <form>
-              <div className="input-group mb-3">
-                <div className="input-group-append">
-                  <span className="input-group-text">
-                    <FontAwesomeIcon icon={faUser} />
-                  </span>
-                </div>
-                <input
-                  data-testid="emailInput"
-                  type="text"
-                  name="email"
-                  className="form-control input-user"
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder="email"
-                />
-              </div>
-              <div className="input-group mb-2">
-                <div className="input-group-append">
-                  <span className="input-group-text">
-                    <FontAwesomeIcon icon={faKey} />
-                    <i className="fas fa-key" />
-                  </span>
-                </div>
-                <input
-                  data-testid="passwordInput"
-                  type="password"
-                  name="password"
-                  className="form-control input-pass"
-                  onChange={e => setPassword(e.target.value)}
-                  placeholder="password"
-                />
-              </div>
+              <DapInput
+                icon={faUser}
+                fieldType="text"
+                fieldName="email"
+                handleOnChange={eventEmail => setEmail(eventEmail)}
+              />
+              <DapInput
+                icon={faKey}
+                fieldType="password"
+                fieldName="password"
+                handleOnChange={eventPassword => setPassword(eventPassword)}
+              />
               <div className="d-flex justify-content-center mt-3 login-container">
                 <button
                   data-testid="loginButton"
@@ -81,15 +54,11 @@ const LoginScreen = () => {
               </div>
             </form>
           </div>
-
-          <div className="mt-4">
-            <div className="d-flex justify-content-center links">
-              Don't have an account?
-              <Link testid="signUpLink" to="/sign-up" className="ml-2">
-                Sign Up
-              </Link>
-            </div>
-          </div>
+          <UserCardFooter
+            linkQuestion="Don't have an account?"
+            linkText="Sign Up"
+            linkTo="/sign-up"
+          />
         </div>
       </div>
     </div>
