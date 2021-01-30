@@ -25,15 +25,15 @@ const SignUpScreen = () => {
   }
   return (
     <div>
-      <div className="d-flex login_div_container justify-content-center">
+      <div className="d-flex login-div-container justify-content-center">
         <div data-testid="errorMessage">{errorMessage}</div>
-        <div className="user_card">
+        <div className="user-card">
           <div className="d-flex justify-content-center">
-            <div className="brand_logo_container">
+            <div className="brand-logo-container">
               <img
                 src={logo}
                 style={{ height: 350 }}
-                className="brand_logo"
+                className="brand-logo"
                 alt="Logo"
               />
             </div>
@@ -50,7 +50,7 @@ const SignUpScreen = () => {
                   data-testid="emailInput"
                   type="text"
                   name="email"
-                  className="form-control input_user"
+                  className="form-control input-user"
                   onChange={e => setEmail(e.target.value)}
                   placeholder="email"
                 />
@@ -66,17 +66,17 @@ const SignUpScreen = () => {
                   data-testid="passwordInput"
                   type="password"
                   name="password"
-                  className="form-control input_pass"
+                  className="form-control input-pass"
                   onChange={e => setPassword(e.target.value)}
                   placeholder="password"
                 />
               </div>
-              <div className="d-flex justify-content-center mt-3 login_container">
+              <div className="d-flex justify-content-center mt-3 login-container">
                 <button
                   data-testid="submitButton"
                   type="button"
                   name="submitButton"
-                  className="btn login_btn"
+                  className="btn login-btn"
                   onClick={handleOnClick}
                 >
                   Sign Up
