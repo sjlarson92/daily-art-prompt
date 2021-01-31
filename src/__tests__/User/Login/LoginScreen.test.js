@@ -82,12 +82,10 @@ describe('LoginScreen', () => {
       it('should call validateLogin with correct params', () => {
         const email = 'someEmail'
         const password = 'this is def not my password'
+        wrapper.find({ testid: 'emailInput' }).simulate('change', email)
         wrapper
-          .find({ 'data-testid': 'emailInput' })
-          .simulate('change', { target: { value: email } })
-        wrapper
-          .find({ 'data-testid': 'passwordInput' })
-          .simulate('change', { target: { value: password } })
+          .find({ testid: 'passwordInput' })
+          .simulate('change', password)
         wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
         expect(validateLogin).toHaveBeenCalledWith(
           dispatch,
@@ -101,7 +99,7 @@ describe('LoginScreen', () => {
 
   describe('Sign Up Link', () => {
     it('should have link to signUp', () => {
-      expect(wrapper.find({ testid: 'signUpLink' }).prop('to')).toEqual(
+      expect(wrapper.find({ testid: 'signUpLink' }).prop('linkTo')).toEqual(
         '/sign-up',
       )
     })

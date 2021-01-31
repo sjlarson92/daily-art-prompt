@@ -14,8 +14,13 @@ jest.mock('react-router-dom', () => ({
 
 describe('SignUpScreen', () => {
   let wrapper
+  const history = jest.fn()
+  const dispatch = jest.fn()
+
   beforeEach(() => {
     jest.clearAllMocks()
+    useDispatch.mockReturnValue(dispatch)
+    useHistory.mockReturnValue(history)
     wrapper = shallow(<SignUpScreen />)
   })
 
@@ -44,18 +49,10 @@ describe('SignUpScreen', () => {
 
   describe('when submit is clicked', () => {
     it('should dispatch action with correct type and payload', () => {
-      const dispatch = jest.fn()
-      useDispatch.mockReturnValue(dispatch)
-      const history = jest.fn()
-      useHistory.mockReturnValue(history)
       const email = 'sjlarson92@gmail.com'
       const password = '123'
-      wrapper
-        .find({ 'data-testid': 'emailInput' })
-        .simulate('change', { target: { value: email } })
-      wrapper
-        .find({ 'data-testid': 'passwordInput' })
-        .simulate('change', { target: { value: password } })
+      wrapper.find({ testid: 'emailInput' }).simulate('change', email)
+      wrapper.find({ testid: 'passwordInput' }).simulate('change', password)
       wrapper.find({ 'data-testid': 'submitButton' }).simulate('click')
       expect(dispatch).toHaveBeenCalledWith({
         type: TYPES.SET_ERROR_MESSAGE,
@@ -65,18 +62,10 @@ describe('SignUpScreen', () => {
       })
     })
     it('should call createUser with correct params', () => {
-      const dispatch = jest.fn()
-      useDispatch.mockReturnValue(dispatch)
-      const history = jest.fn()
-      useHistory.mockReturnValue(history)
       const email = 'sjlarson92@gmail.com'
       const password = '123'
-      wrapper
-        .find({ 'data-testid': 'emailInput' })
-        .simulate('change', { target: { value: email } })
-      wrapper
-        .find({ 'data-testid': 'passwordInput' })
-        .simulate('change', { target: { value: password } })
+      wrapper.find({ testid: 'emailInput' }).simulate('change', email)
+      wrapper.find({ testid: 'passwordInput' }).simulate('change', password)
       wrapper.find({ 'data-testid': 'submitButton' }).simulate('click')
       expect(createUser).toHaveBeenCalledWith(
         dispatch,

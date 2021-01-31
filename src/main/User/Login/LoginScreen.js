@@ -28,16 +28,18 @@ const LoginScreen = () => {
           <div className="d-flex justify-content-center">
             <form>
               <DapInput
+                testid="emailInput"
                 icon={faUser}
                 fieldType="text"
                 fieldName="email"
-                handleOnChange={eventEmail => setEmail(eventEmail)}
+                onChange={eventEmail => setEmail(eventEmail)}
               />
               <DapInput
+                testid="passwordInput"
                 icon={faKey}
                 fieldType="password"
                 fieldName="password"
-                handleOnChange={eventPassword => setPassword(eventPassword)}
+                onChange={eventPassword => setPassword(eventPassword)}
               />
               <div className="d-flex justify-content-center mt-3 login-container">
                 <button
@@ -55,6 +57,7 @@ const LoginScreen = () => {
             </form>
           </div>
           <UserCardFooter
+            testid="signUpLink"
             linkQuestion="Don't have an account?"
             linkText="Sign Up"
             linkTo="/sign-up"
