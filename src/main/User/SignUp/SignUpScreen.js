@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { faKey, faUser } from '@fortawesome/free-solid-svg-icons'
 import { createUser } from '../userRequests'
 import * as TYPES from '../../storage/actions'
+import DapInput from '../DapInput'
+import DapLogo from '../DapLogo'
+import UserCardFooter from '../UserCardFooter'
 
 const SignUpScreen = () => {
   const dispatch = useDispatch()
@@ -22,25 +26,46 @@ const SignUpScreen = () => {
   }
   return (
     <div>
-      <h1 data-testid="header">Sign Up</h1>
-      <div data-testid="errorMessage">{errorMessage}</div>
-      <input
-        data-testid="emailInput"
-        name="email"
-        type="text"
-        placeholder="Email"
-        onChange={e => setEmail(e.target.value)}
-      />
-      <input
-        data-testid="passwordInput"
-        name="password"
-        type="text"
-        placeholder="Password"
-        onChange={e => setPassword(e.target.value)}
-      />
-      <button data-testid="submitButton" onClick={() => handleOnClick()}>
-        Submit
-      </button>
+      <div className="d-flex login-div-container justify-content-center">
+        <div data-testid="errorMessage">{errorMessage}</div>
+        <div className="user-card">
+          <DapLogo />
+          <div className="d-flex justify-content-center">
+            <form>
+              <DapInput
+                testid="emailInput"
+                icon={faUser}
+                fieldType="text"
+                fieldName="email"
+                onChange={eventEmail => setEmail(eventEmail)}
+              />
+              <DapInput
+                testid="passwordInput"
+                icon={faKey}
+                fieldType="password"
+                fieldName="password"
+                onChange={eventPassword => setPassword(eventPassword)}
+              />
+              <div className="d-flex justify-content-center mt-3 login-container">
+                <button
+                  data-testid="submitButton"
+                  type="button"
+                  name="submitButton"
+                  className="btn login-btn"
+                  onClick={handleOnClick}
+                >
+                  Sign Up
+                </button>
+              </div>
+            </form>
+          </div>
+          <UserCardFooter
+            linkQuestion="Have an account?"
+            linkText="Login"
+            linkTo="/login"
+          />
+        </div>
+      </div>
     </div>
   )
 }

@@ -25,13 +25,6 @@ describe('LoginScreen', () => {
     wrapper = shallow(<LoginScreen />)
   })
 
-  describe('header', () => {
-    it('should render correct header', () => {
-      expect(wrapper.find({ 'data-testid': 'header' }).text()).toEqual(
-        'Login Screen',
-      )
-    })
-  })
   describe('message', () => {
     describe('when there is a message', () => {
       it('render message', () => {
@@ -89,12 +82,8 @@ describe('LoginScreen', () => {
       it('should call validateLogin with correct params', () => {
         const email = 'someEmail'
         const password = 'this is def not my password'
-        wrapper
-          .find({ 'data-testid': 'emailInput' })
-          .simulate('change', { target: { value: email } })
-        wrapper
-          .find({ 'data-testid': 'passwordInput' })
-          .simulate('change', { target: { value: password } })
+        wrapper.find({ testid: 'emailInput' }).simulate('change', email)
+        wrapper.find({ testid: 'passwordInput' }).simulate('change', password)
         wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
         expect(validateLogin).toHaveBeenCalledWith(
           dispatch,
@@ -106,10 +95,11 @@ describe('LoginScreen', () => {
     })
   })
 
-  describe('Sign Up Button', () => {
-    it('should redirect user to /sign-up when clicked', () => {
-      wrapper.find({ 'data-testid': 'signUpButton' }).simulate('click')
-      expect(history.push).toHaveBeenCalledWith('/sign-up')
+  describe('Sign Up Link', () => {
+    it('should have link to signUp', () => {
+      expect(wrapper.find({ testid: 'signUpLink' }).prop('linkTo')).toEqual(
+        '/sign-up',
+      )
     })
   })
 })
