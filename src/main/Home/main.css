@@ -42,6 +42,18 @@ img {
   height: 250px;
 }
 
+#dap-logo {
+  height: auto;
+  width: 200px;
+  margin-bottom: -90px;
+  margin-top: -90px;
+}
+
+#dap-navbar {
+  background: #f39c12;
+  color: #60a3bc;
+}
+
 .column {
   float: left;
   width: 30%;
