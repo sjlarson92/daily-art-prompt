@@ -10,7 +10,6 @@ const DapInput = ({ icon, fieldType, fieldName, onChange }) => {
         </span>
       </div>
       <input
-        data-testid="emailInput"
         type={fieldType}
         name={fieldName}
         className="form-control"
