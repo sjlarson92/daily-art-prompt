@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme/'
+import { shallow } from 'enzyme'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import SignUpScreen from '../../../main/User/SignUp/SignUpScreen'

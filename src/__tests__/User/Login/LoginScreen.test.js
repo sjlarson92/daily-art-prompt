@@ -83,9 +83,7 @@ describe('LoginScreen', () => {
         const email = 'someEmail'
         const password = 'this is def not my password'
         wrapper.find({ testid: 'emailInput' }).simulate('change', email)
-        wrapper
-          .find({ testid: 'passwordInput' })
-          .simulate('change', password)
+        wrapper.find({ testid: 'passwordInput' }).simulate('change', password)
         wrapper.find({ 'data-testid': 'loginButton' }).simulate('click')
         expect(validateLogin).toHaveBeenCalledWith(
           dispatch,
