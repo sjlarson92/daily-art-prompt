@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
+import Alert from 'react-bootstrap/Alert'
 import { validateLogin } from './authRequests'
-import './login.css'
+import '../user.css'
 import DapInput from '../DapInput'
 import DapLogo from '../DapLogo'
 import UserCardFooter from '../UserCardFooter'
@@ -11,22 +12,38 @@ import UserCardFooter from '../UserCardFooter'
 const LoginScreen = () => {
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
-  const errorMessage = useSelector(state => state.errorMessage)
+  const [alert, setAlert] = useState(null)
   const location = useLocation()
   const history = useHistory()
   const dispatch = useDispatch()
 
+  const handleOnClick = () => {
+    validateLogin(dispatch, history, email, password).catch(error => {
+      console.log('failed to login', error)
+      setAlert('Incorrect email or password')
+    })
+  }
   return (
     <div>
       {location?.state?.message && (
         <div data-testid="message">{location.state.message}</div>
       )}
-      <div data-testid="errorMessage">{errorMessage}</div>
-      <div className="d-flex login-div-container justify-content-center">
+      <div className="d-flex user-card-div-container justify-content-center">
         <div className="user-card">
           <DapLogo />
           <div className="d-flex justify-content-center">
             <form>
+              {alert && (
+                <Alert
+                  variant="danger"
+                  dismissible
+                  onClose={() => setAlert(null)}
+                  data-testid="errorMessage"
+                >
+                  {alert}
+                </Alert>
+              )}
+
               <DapInput
                 testid="emailInput"
                 icon={faUser}
@@ -47,9 +64,7 @@ const LoginScreen = () => {
                   type="button"
                   name="loginButton"
                   className="btn login-btn"
-                  onClick={() =>
-                    validateLogin(dispatch, history, email, password)
-                  }
+                  onClick={handleOnClick}
                 >
                   Login
                 </button>
