@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect } from 'react'
-import PromptButton from './PromptButton'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faChevronCircleRight,
+  faChevronCircleLeft,
+} from '@fortawesome/free-solid-svg-icons'
 import Prompt from './Prompt'
 import {
   updateNextDateAction,
@@ -12,6 +16,7 @@ const PromptLayout = () => {
   const prompts = useSelector(state => state.prompts)
   const date = useSelector(state => state.date)
   const dispatch = useDispatch()
+  const iconSize = '3x'
 
   useEffect(() => {
     dispatch({
@@ -24,19 +29,24 @@ const PromptLayout = () => {
 
   return (
     <div data-testid="mainContentContainer" className="prompt-row">
-      <PromptButton
+      <FontAwesomeIcon
         data-testid="previousButton"
+        className="prompt-button"
+        icon={faChevronCircleLeft}
+        size={iconSize}
         onClick={() => dispatch(updatePreviousDateAction())}
-        text="Previous"
       />
+
       {Object.keys(prompts).length > 0 && prompts[date] && (
         <Prompt data-testid="prompt" prompt={prompts[date]} />
       )}
 
-      <PromptButton
+      <FontAwesomeIcon
         data-testid="nextButton"
+        className="prompt-button"
+        icon={faChevronCircleRight}
+        size={iconSize}
         onClick={() => dispatch(updateNextDateAction())}
-        text="Next"
       />
     </div>
   )

@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import moment from 'moment'
 import Prompt from '../../main/Prompt/Prompt'
 
 const defaultProps = {
@@ -22,7 +23,7 @@ describe('<Prompt>', () => {
 
   it('should render correct date from prompt', () => {
     expect(wrapper.find({ 'data-testid': 'promptDate' }).text()).toEqual(
-      defaultProps.prompt.date,
+      moment(defaultProps.prompt.date).format('MMMM D, YYYY'),
     )
   })
 
@@ -43,12 +44,6 @@ describe('<Prompt>', () => {
   //   wrapper = shallow(<Prompt {...defaultProps} prompt={{...defaultProps.prompt, date: undefined}} />)
   //   expect(wrapper.find({testID:'promptDate'}).text()).toEqual('COOL DATE')
   // })
-
-  it('should render correct id from prompt', () => {
-    expect(wrapper.find({ 'data-testid': 'promptId' }).text()).toEqual(
-      `Prompt #${defaultProps.prompt.id}`,
-    )
-  })
 
   it('should render correct text from prompt', () => {
     expect(wrapper.find({ 'data-testid': 'promptText' }).text()).toEqual(

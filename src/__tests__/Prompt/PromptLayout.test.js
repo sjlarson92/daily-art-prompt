@@ -33,13 +33,7 @@ describe('<PromptLayout>', () => {
       expect(result).toEqual('prompt-row')
     })
 
-    describe('<PromptButton> for previousButton', () => {
-      it('renders correct text', () => {
-        const wrapper = shallow(<PromptLayout />)
-        expect(
-          wrapper.find({ 'data-testid': 'previousButton' }).prop('text'),
-        ).toEqual('Previous')
-      })
+    describe('<FontAwesomeIcon> for previousButton', () => {
       it('should dispatch with return value of updatePreviousDateAction when clicked', () => {
         const wrapper = shallow(<PromptLayout />)
         when(updatePreviousDateAction)
@@ -90,13 +84,7 @@ describe('<PromptLayout>', () => {
       })
     })
 
-    describe('<PromptButton> for nextButton', () => {
-      it('renders correct text', () => {
-        const wrapper = shallow(<PromptLayout />)
-        expect(
-          wrapper.find({ 'data-testid': 'nextButton' }).prop('text'),
-        ).toEqual('Next')
-      })
+    describe('<FontAwesomeIcon> for nextButton', () => {
       it('should dispatch with return value of updateNextDateAction when clicked', () => {
         const wrapper = shallow(<PromptLayout />)
         when(updateNextDateAction)

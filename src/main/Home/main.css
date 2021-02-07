@@ -14,6 +14,28 @@ body {
   text-align: center;
 }
 
+#prompt-layout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.prompt-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: white;
+  height: 250px;
+  width: 45%;
+}
+
+@media only screen and (max-width : 1200px) {
+  .prompt-row {
+    width: 60%;
+  }
+}
+
 .prompt {
   padding: 20px;
   display: flex;
@@ -22,20 +44,17 @@ body {
   justify-content: center;
 }
 
-.prompt .padding {
-  padding: inherit;
+.prompt-button {
+  color: #f39c12;
 }
 
-.prompt .text {
-  border-style: solid;
+.prompt-button:hover {
+  color: #60a3bc;
+  cursor:pointer;
 }
 
-.prompt-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
+#prompt-text {
+  font-size: 45px;
 }
 
 img {

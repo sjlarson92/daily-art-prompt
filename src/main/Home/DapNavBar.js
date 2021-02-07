@@ -11,7 +11,7 @@ const DapNavBar = () => {
   const dispatch = useDispatch()
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
   return (
-    <Navbar id="dap-navbar" fixed="top" expand="sm">
+    <Navbar id="dap-navbar" expand="sm">
       <img id="dap-logo" alt="dap logo" src={logo} />
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse className="justify-content-end">

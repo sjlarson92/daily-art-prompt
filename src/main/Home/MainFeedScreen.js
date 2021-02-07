@@ -20,15 +20,19 @@ const MainFeedScreen = () => {
   }, [dispatch, user.id])
 
   return (
-    <div data-testid="appContainer" className="app">
+    <div data-testid="appContainer">
       <DapNavBar />
-      <PromptLayout data-testid="promptLayout" />
-      <hr />
-      <h1 data-testid="artGalleryHeader" className="title">
-        Art Gallery
-      </h1>
-      <ImageUpload />
-      <ImageGallery />
+      <div className="app">
+        <div id="prompt-layout-container">
+          <PromptLayout data-testid="promptLayout" />
+        </div>
+        <hr />
+        <h1 data-testid="artGalleryHeader" className="title">
+          Art Gallery
+        </h1>
+        <ImageUpload />
+        <ImageGallery />
+      </div>
     </div>
   )
 }
