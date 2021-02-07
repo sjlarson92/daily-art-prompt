@@ -15,6 +15,12 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState(null)
   const [alert, setAlert] = useState(null)
 
+  const onKeyPress = key => {
+    if (key === 'Enter') {
+      handleOnClick()
+    }
+  }
+
   const handleOnClick = () => {
     createUser(dispatch, history, email, password).catch(error => {
       const message =
@@ -47,6 +53,7 @@ const SignUpScreen = () => {
                 fieldType="text"
                 fieldName="email"
                 onChange={eventEmail => setEmail(eventEmail)}
+                onKeyPress={onKeyPress}
               />
               <DapInput
                 testid="passwordInput"
@@ -54,6 +61,7 @@ const SignUpScreen = () => {
                 fieldType="password"
                 fieldName="password"
                 onChange={eventPassword => setPassword(eventPassword)}
+                onKeyPress={onKeyPress}
               />
               <div className="d-flex justify-content-center mt-3 login-container">
                 <button

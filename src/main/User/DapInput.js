@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
-const DapInput = ({ icon, fieldType, fieldName, onChange }) => {
+const DapInput = ({ icon, fieldType, fieldName, onChange, onKeyPress }) => {
   return (
     <div className="input-group mb-3">
       <div className="input-group-append">
@@ -15,6 +15,7 @@ const DapInput = ({ icon, fieldType, fieldName, onChange }) => {
         className="form-control"
         onChange={e => onChange(e.target.value)}
         placeholder={fieldName}
+        onKeyPress={e => onKeyPress(e.key)}
       />
     </div>
   )

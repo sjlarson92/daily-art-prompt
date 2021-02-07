@@ -61,6 +61,23 @@ describe('SignUpScreen', () => {
     })
   })
 
+  describe('when key is pressed', () => {
+    describe('when the key is Enter', () => {
+      it('calls createUser with correct params', () => {
+        createUser.mockResolvedValue()
+        const newWrapper = shallow(<SignUpScreen />)
+        newWrapper.find({ testid: 'emailInput' }).simulate('keyPress', 'Enter')
+        expect(createUser).toHaveBeenCalledWith(dispatch, history, null, null)
+      })
+    })
+    describe('when key is not Enter', () => {
+      it('should not call createUser', () => {
+        wrapper.find({ testid: 'emailInput' }).simulate('keyPress', 'money')
+        expect(createUser).not.toHaveBeenCalled()
+      })
+    })
+  })
+
   describe('when submit is clicked', () => {
     it('should call createUser with correct params', () => {
       const email = 'sjlarson92@gmail.com'

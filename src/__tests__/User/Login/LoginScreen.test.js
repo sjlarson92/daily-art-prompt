@@ -82,6 +82,32 @@ describe('LoginScreen', () => {
     })
   })
 
+  describe('DapInput', () => {
+    describe('when key is pressed', () => {
+      describe('when the key is Enter', () => {
+        it('calls validateLogin with correct params', () => {
+          validateLogin.mockResolvedValue()
+          const newWrapper = shallow(<LoginScreen />)
+          newWrapper
+            .find({ testid: 'emailInput' })
+            .simulate('keyPress', 'Enter')
+          expect(validateLogin).toHaveBeenCalledWith(
+            dispatch,
+            history,
+            null,
+            null,
+          )
+        })
+      })
+      describe('when key is not Enter', () => {
+        it('should not call validateLogin', () => {
+          wrapper.find({ testid: 'emailInput' }).simulate('keyPress', 'money')
+          expect(validateLogin).not.toHaveBeenCalled()
+        })
+      })
+    })
+  })
+
   describe('Login Button', () => {
     describe('when clicked', () => {
       it('should call validateLogin with correct params', () => {

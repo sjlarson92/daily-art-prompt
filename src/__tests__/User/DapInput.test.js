@@ -7,12 +7,14 @@ describe('DapInput', () => {
   const fieldType = 'some fieldType'
   const fieldName = 'field is a weird word, fiiiieeelldd?'
   const onChange = jest.fn()
+  const onKeyPress = jest.fn()
   const wrapper = shallow(
     <DapInput
       icon={icon}
       fieldType={fieldType}
       fieldName={fieldName}
       onChange={onChange}
+      onKeyPress={onKeyPress}
     />,
   )
   it('maps icon properly', () => {
@@ -33,6 +35,13 @@ describe('DapInput', () => {
         .find('input')
         .simulate('change', { target: { value: 'i want a nap' } })
       expect(onChange).toHaveBeenCalledWith('i want a nap')
+    })
+  })
+
+  describe('when key is pressed', () => {
+    it('calls onKeyPress with correct params', () => {
+      wrapper.find('input').simulate('keyPress', { key: 'some key' })
+      expect(onKeyPress).toHaveBeenCalledWith('some key')
     })
   })
 })

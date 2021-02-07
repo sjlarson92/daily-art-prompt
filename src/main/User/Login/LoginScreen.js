@@ -17,6 +17,12 @@ const LoginScreen = () => {
   const history = useHistory()
   const dispatch = useDispatch()
 
+  const onKeyPress = key => {
+    if (key === 'Enter') {
+      handleOnClick()
+    }
+  }
+
   const handleOnClick = () => {
     validateLogin(dispatch, history, email, password).catch(error => {
       console.log('failed to login', error)
@@ -49,6 +55,7 @@ const LoginScreen = () => {
                 fieldType="text"
                 fieldName="email"
                 onChange={eventEmail => setEmail(eventEmail)}
+                onKeyPress={onKeyPress}
               />
               <DapInput
                 testid="passwordInput"
@@ -56,6 +63,7 @@ const LoginScreen = () => {
                 fieldType="password"
                 fieldName="password"
                 onChange={eventPassword => setPassword(eventPassword)}
+                onKeyPress={onKeyPress}
               />
               <div className="d-flex justify-content-center mt-3 login-container">
                 <button
