@@ -3,7 +3,7 @@ import * as TYPES from '../../storage/actions'
 
 export const validateLogin = (dispatch, history, email, password) => {
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
-  axios
+  return axios
     .post(`${GATEWAY_URL}/api/login`, null, {
       auth: {
         username: email,
@@ -20,13 +20,5 @@ export const validateLogin = (dispatch, history, email, password) => {
         },
       })
       history.push('/')
-    })
-    .catch(error => {
-      dispatch({
-        type: TYPES.SET_ERROR_MESSAGE,
-        payload: {
-          error: 'Incorrect email or password',
-        },
-      })
     })
 }

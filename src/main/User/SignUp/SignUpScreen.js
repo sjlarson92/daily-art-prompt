@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons'
+import Alert from 'react-bootstrap/Alert'
 import { createUser } from '../userRequests'
-import * as TYPES from '../../storage/actions'
 import DapInput from '../DapInput'
 import DapLogo from '../DapLogo'
 import UserCardFooter from '../UserCardFooter'
@@ -13,23 +13,32 @@ const SignUpScreen = () => {
   const history = useHistory()
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
-  const errorMessage = useSelector(state => state.errorMessage)
+  const [alert, setAlert] = useState(null)
 
   const handleOnClick = () => {
-    dispatch({
-      type: TYPES.SET_ERROR_MESSAGE,
-      payload: {
-        error: null,
-      },
+    createUser(dispatch, history, email, password).catch(error => {
+      const message =
+        error.response.status === 409
+          ? error.response.headers.message
+          : 'An error occurred. Please try again.'
+      setAlert(message)
     })
-    createUser(dispatch, history, email, password)
   }
   return (
     <div>
-      <div className="d-flex login-div-container justify-content-center">
-        <div data-testid="errorMessage">{errorMessage}</div>
+      <div className="d-flex user-card-div-container justify-content-center">
         <div className="user-card">
           <DapLogo />
+          {alert && (
+            <Alert
+              data-testid="errorMessage"
+              variant="danger"
+              onClose={() => setAlert(null)}
+              dismissible
+            >
+              {alert}
+            </Alert>
+          )}
           <div className="d-flex justify-content-center">
             <form>
               <DapInput
