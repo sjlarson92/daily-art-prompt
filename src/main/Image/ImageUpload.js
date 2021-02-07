@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Alert from 'react-bootstrap/Alert'
 import { uploadImageAction } from './imageApi'
@@ -8,28 +8,33 @@ const ImageUpload = () => {
   const [imageDescription, setImageDescription] = useState(null)
   const [alert, setAlert] = useState({ message: '', variant: '' })
   const [showAlert, setShowAlert] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(true)
   const currentPromptId = useSelector(state => state.currentPromptId)
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
-  const handleClick = async () => {
-    if (insertedImage != null && imageDescription != null) {
-      const newAlert = await uploadImageAction(
-        user.id,
-        currentPromptId,
-        imageDescription,
-        insertedImage,
-        dispatch,
-      )
-      setShowAlert(true)
-      setAlert(newAlert)
+  useEffect(() => {
+    if (
+      insertedImage != null &&
+      imageDescription != null &&
+      imageDescription !== ''
+    ) {
+      setIsDisabled(false)
     } else {
-      setShowAlert(true)
-      setAlert({
-        variant: 'danger',
-        message: 'Please select image and add caption',
-      })
+      setIsDisabled(true)
     }
+  }, [insertedImage, imageDescription])
+
+  const handleClick = async () => {
+    const newAlert = await uploadImageAction(
+      user.id,
+      currentPromptId,
+      imageDescription,
+      insertedImage,
+      dispatch,
+    )
+    setShowAlert(true)
+    setAlert(newAlert)
   }
   return (
     <div data-testid="uploadImageDiv">
@@ -56,6 +61,7 @@ const ImageUpload = () => {
           onChange={e => setInsertedImage(e.target.files[0])}
         />
         <button
+          disabled={isDisabled}
           data-testid="uploadButton"
           onClick={handleClick}
         >
