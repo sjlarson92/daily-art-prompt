@@ -16,7 +16,8 @@ describe('authRequests', () => {
     jest.clearAllMocks()
   })
   it('should call api with correct params', async () => {
-    axios.post.mockResolvedValue('response')
+    const response = { data: { email, id: 1, role: 'royalty' } }
+    axios.post.mockResolvedValue(response)
     await validateLogin(dispatch, history, email, password)
     expect(axios.post).toHaveBeenCalledWith(`${GATEWAY_URL}/api/login`, null, {
       auth: {
@@ -56,30 +57,6 @@ describe('authRequests', () => {
       axios.post.mockResolvedValue(response)
       await validateLogin(dispatch, history, email, password)
       expect(history.push).toHaveBeenCalledWith('/')
-    })
-  })
-
-  describe('when api response is rejected', () => {
-    it('calls dispatch with correct params', async () => {
-      const error = {
-        response: {
-          status: 400,
-          headers: {
-            message: 'You shall not pass!',
-          },
-        },
-      }
-      axios.post.mockRejectedValue(error)
-      try {
-        await validateLogin(dispatch, history, email, password)
-      } catch (e) {
-        expect(dispatch).toHaveBeenCalledWith({
-          type: TYPES.SET_ERROR_MESSAGE,
-          payload: {
-            error: 'Incorrect email or password',
-          },
-        })
-      }
     })
   })
 })

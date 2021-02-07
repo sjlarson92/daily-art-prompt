@@ -29,17 +29,18 @@ const SignUpScreen = () => {
       <div className="d-flex user-card-div-container justify-content-center">
         <div className="user-card">
           <DapLogo />
+          {alert && (
+            <Alert
+              data-testid="errorMessage"
+              variant="danger"
+              onClose={() => setAlert(null)}
+              dismissible
+            >
+              {alert}
+            </Alert>
+          )}
           <div className="d-flex justify-content-center">
             <form>
-              {alert && (
-                <Alert
-                  variant="danger"
-                  onClose={() => setAlert(null)}
-                  dismissible
-                >
-                  {alert}
-                </Alert>
-              )}
               <DapInput
                 testid="emailInput"
                 icon={faUser}

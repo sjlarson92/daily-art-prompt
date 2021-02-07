@@ -3,8 +3,7 @@
     margin-top: 100px;
 }
 .user-card {
-    height: 400px;
-    width: 350px;
+    height: 100%;
     background: #f39c12;
     position: relative;
     display: flex;

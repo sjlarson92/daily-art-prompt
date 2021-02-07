@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { createUser } from '../../main/User/userRequests'
-import * as TYPES from '../../main/storage/actions'
 
 jest.mock('axios')
 
@@ -33,55 +32,6 @@ describe('userRequests', () => {
       await createUser(dispatch, history, email, password)
       expect(history.push).toHaveBeenCalledWith('/login', {
         message: 'Successfully Created New Account',
-      })
-    })
-  })
-
-  describe('when api response is rejected', () => {
-    describe('with status code 409', () => {
-      it('dispatch action with correct type and payload', async () => {
-        const error = {
-          response: {
-            status: 409,
-            headers: {
-              message: 'Can you believe its snowing in April?',
-            },
-          },
-        }
-        axios.post.mockRejectedValue(error)
-        try {
-          await createUser(dispatch, history, email, password)
-        } catch (e) {
-          expect(dispatch).toHaveBeenCalledWith({
-            type: TYPES.SET_ERROR_MESSAGE,
-            payload: {
-              error: error.response.headers.message,
-            },
-          })
-        }
-      })
-    })
-    describe('with any unsuccessful code not 409', () => {
-      it('dispatch action with correct type and payload', async () => {
-        const error = {
-          response: {
-            status: 400,
-            headers: {
-              message: 'The end is nigh!',
-            },
-          },
-        }
-        axios.post.mockRejectedValue(error)
-        try {
-          await createUser(dispatch, history, email, password)
-        } catch (e) {
-          expect(dispatch).toHaveBeenCalledWith({
-            type: TYPES.SET_ERROR_MESSAGE,
-            payload: {
-              error: 'An error occurred. Please try again.',
-            },
-          })
-        }
       })
     })
   })

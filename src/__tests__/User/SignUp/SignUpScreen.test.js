@@ -1,10 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import SignUpScreen from '../../../main/User/SignUp/SignUpScreen'
 import { createUser } from '../../../main/User/userRequests'
-import * as TYPES from '../../../main/storage/actions'
 
 jest.mock('../../../main/User/userRequests')
 jest.mock('react-redux')
@@ -24,43 +23,45 @@ describe('SignUpScreen', () => {
     wrapper = shallow(<SignUpScreen />)
   })
 
-  describe('errorMessage', () => {
-    describe('when errorMessage does NOT exist', () => {
-      it('should not render errorMessage', () => {
-        const errorMessage = null
-        useSelector.mockReturnValueOnce(errorMessage)
+  describe('Alert', () => {
+    describe('when createUser is successful', () => {
+      it('should not render alert', async () => {
+        createUser.mockResolvedValue()
         wrapper = shallow(<SignUpScreen />)
-        expect(
-          Object.entries(wrapper.find({ 'data-testid': 'errorMessage' })),
-        ).toHaveLength(0)
+        await wrapper.find({ 'data-testid': 'submitButton' }).simulate('click')
+        expect(wrapper.find({ 'data-testid': 'errorMessage' })).toHaveLength(0)
       })
     })
-    describe('when errorMessage exists', () => {
-      it('should render errorMessage', () => {
-        const errorMessage = 'errorMessage'
-        useSelector.mockReturnValueOnce(errorMessage)
+    describe('when createUser throws an error', () => {
+      describe('when error.response.status is 409', () => {
+        it('should render alert with correct message', async () => {
+          const errorMessage = 'rawr'
+          const error = {
+            response: { status: 409, headers: { message: errorMessage } },
+          }
+          createUser.mockRejectedValue(error)
+          wrapper = shallow(<SignUpScreen />)
+          await wrapper
+            .find({ 'data-testid': 'submitButton' })
+            .simulate('click')
+          expect(
+            wrapper.find({ 'data-testid': 'errorMessage' }).text(),
+          ).toEqual(errorMessage)
+        })
+      })
+      it('should render alert', async () => {
+        const error = { response: { status: 400 } }
+        createUser.mockRejectedValue(error)
         wrapper = shallow(<SignUpScreen />)
+        await wrapper.find({ 'data-testid': 'submitButton' }).simulate('click')
         expect(wrapper.find({ 'data-testid': 'errorMessage' }).text()).toEqual(
-          'errorMessage',
+          'An error occurred. Please try again.',
         )
       })
     })
   })
 
   describe('when submit is clicked', () => {
-    it('should dispatch action with correct type and payload', () => {
-      const email = 'sjlarson92@gmail.com'
-      const password = '123'
-      wrapper.find({ testid: 'emailInput' }).simulate('change', email)
-      wrapper.find({ testid: 'passwordInput' }).simulate('change', password)
-      wrapper.find({ 'data-testid': 'submitButton' }).simulate('click')
-      expect(dispatch).toHaveBeenCalledWith({
-        type: TYPES.SET_ERROR_MESSAGE,
-        payload: {
-          error: null,
-        },
-      })
-    })
     it('should call createUser with correct params', () => {
       const email = 'sjlarson92@gmail.com'
       const password = '123'

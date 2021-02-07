@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { useHistory, useLocation } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import LoginScreen from '../../../main/User/Login/LoginScreen'
 import { validateLogin } from '../../../main/User/Login/authRequests'
 
@@ -54,25 +54,30 @@ describe('LoginScreen', () => {
     })
   })
 
-  describe('errorMessage', () => {
-    describe('when there is an errorMessage', () => {
-      it('should render errorMessage', () => {
-        const errorMessage = 'error message'
-        useSelector.mockReturnValue(errorMessage)
+  describe('Alert', () => {
+    describe('when validateLogin throws an error', () => {
+      it('should render alert', async () => {
+        validateLogin.mockRejectedValue()
         const newWrapper = shallow(<LoginScreen />)
+        await newWrapper
+          .find({ 'data-testid': 'loginButton' })
+          .simulate('click')
         expect(
           newWrapper.find({ 'data-testid': 'errorMessage' }).text(),
-        ).toEqual('error message')
+        ).toEqual('Incorrect email or password')
       })
     })
-    describe('when there is not an errorMessage', () => {
-      it('should not render errorMessage', () => {
+    describe('when validateLogin is successful', () => {
+      it('should not render alert', async () => {
         jest.clearAllMocks()
-        useSelector.mockReturnValue(null)
+        validateLogin.mockResolvedValue()
         const newWrapper = shallow(<LoginScreen />)
-        expect(
-          newWrapper.find({ 'data-testid': 'errorMessage' }).childAt(0),
-        ).toHaveLength(0)
+        await newWrapper
+          .find({ 'data-testid': 'loginButton' })
+          .simulate('click')
+        expect(newWrapper.find({ 'data-testid': 'errorMessage' })).toHaveLength(
+          0,
+        )
       })
     })
   })
