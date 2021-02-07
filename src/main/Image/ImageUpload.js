@@ -23,6 +23,12 @@ const ImageUpload = () => {
       )
       setShowAlert(true)
       setAlert(newAlert)
+    } else {
+      setShowAlert(true)
+      setAlert({
+        variant: 'danger',
+        message: 'Please select image and add caption',
+      })
     }
   }
   return (
@@ -37,21 +43,25 @@ const ImageUpload = () => {
           {alert.message}
         </Alert>
       )}
-      <h1>Upload Image</h1>
-      <input
-        data-testid="fileInput"
-        type="file"
-        onChange={e => setInsertedImage(e.target.files[0])}
-      />
       <textarea
         testid="imageDescriptionTextArea"
         id="imageDescription"
-        placeholder="Add image description here..."
+        placeholder="Write a caption..."
         onChange={e => setImageDescription(e.target.value)}
       />
-      <button data-testid="uploadButton" onClick={handleClick}>
-        Upload
-      </button>
+      <div id="image-upload-div">
+        <input
+          data-testid="fileInput"
+          type="file"
+          onChange={e => setInsertedImage(e.target.files[0])}
+        />
+        <button
+          data-testid="uploadButton"
+          onClick={handleClick}
+        >
+          Upload
+        </button>
+      </div>
       <div />
     </div>
   )

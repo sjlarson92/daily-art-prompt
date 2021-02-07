@@ -61,6 +61,39 @@ img {
   height: 250px;
 }
 
+#image-tab-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#add-image-icon {
+  height: 50px;
+  filter: invert(61%) sepia(59%) saturate(904%) hue-rotate(354deg) brightness(99%) contrast(92%);
+  /*background-color: #f39c12;*/
+}
+
+#add-image-icon:hover {
+  cursor:pointer;
+}
+
+#image-modal-header {
+  background: #f39c12;
+  color: #4a8094;
+}
+
+#imageDescription {
+  width: 100%;
+}
+
+#image-upload-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 #dap-logo {
   height: auto;
   width: 200px;
