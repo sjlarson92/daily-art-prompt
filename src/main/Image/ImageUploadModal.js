@@ -16,7 +16,7 @@ const ImageUploadModal = () => {
       <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
-        size="lg"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >

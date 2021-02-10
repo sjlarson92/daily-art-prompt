@@ -61,7 +61,7 @@ describe('ImageUpload', () => {
       describe('<div> Image description', () => {
         it('should have textarea with correct placeholder', () => {
           expect(imageDescriptionTextArea.prop('placeholder')).toEqual(
-            'Add image description here...',
+            'Write a caption...',
           )
         })
       })
@@ -121,12 +121,14 @@ describe('ImageUpload', () => {
                   'data-testid': 'uploadButton',
                 })
                 await uploadButton.simulate('click')
-                expect(wrapper.find({ testid: 'alert' }).text()).toEqual(
-                  'Image has been saved',
-                )
-                expect(
-                  wrapper.find({ testid: 'alert' }).prop('variant'),
-                ).toEqual('success')
+                setTimeout(() => {
+                  expect(wrapper.find({ testid: 'alert' }).text()).toEqual(
+                    'Image has been saved',
+                  )
+                  expect(
+                    wrapper.find({ testid: 'alert' }).prop('variant'),
+                  ).toEqual('success')
+                }, 2000)
               })
             })
           })
