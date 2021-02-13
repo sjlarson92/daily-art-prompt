@@ -44,14 +44,14 @@ describe('<CommentLayout />', () => {
 
     describe('Delete comment button', () => {
       it('should call props onDelete when clicked', () => {
-        wrapper.find({ name: 'deleteButton' }).simulate('click')
+        wrapper.find({ testid: 'deleteButton' }).simulate('click')
         expect(defaultProps.onDelete).toHaveBeenCalledWith()
       })
     })
 
     describe('Edit comment Button', () => {
       it('should call onEdit when clicked', () => {
-        wrapper.find({ name: 'editButton' }).simulate('click')
+        wrapper.find({ testid: 'editButton' }).simulate('click')
         expect(defaultProps.onEdit).toHaveBeenCalledWith()
       })
     })
@@ -85,7 +85,7 @@ describe('<CommentLayout />', () => {
           />,
         )
         expect(
-          wrapper.find({ name: 'editInputBox' }).prop('defaultValue'),
+          wrapper.find({ testid: 'editInputBox' }).prop('defaultValue'),
         ).toEqual('currentComment')
       })
 
@@ -93,7 +93,7 @@ describe('<CommentLayout />', () => {
         wrapper = shallow(
           <CommentLayout {...defaultProps} comment={{ editing: true }} />,
         )
-        wrapper.find({ name: 'editInputBox' }).simulate('keyDown')
+        wrapper.find({ testid: 'editInputBox' }).simulate('keyDown')
         expect(defaultProps.onSubmit).toHaveBeenCalledWith()
       })
     })
@@ -103,14 +103,16 @@ describe('<CommentLayout />', () => {
         wrapper = shallow(
           <CommentLayout {...defaultProps} comment={{ editing: true }} />,
         )
-        expect(wrapper.find({ name: 'cancelButton' }).text()).toEqual('Cancel')
+        expect(wrapper.find({ testid: 'cancelButton' }).text()).toEqual(
+          'Cancel',
+        )
       })
 
       it('should call onCancel when clicked', () => {
         wrapper = shallow(
           <CommentLayout {...defaultProps} comment={{ editing: true }} />,
         )
-        wrapper.find({ name: 'cancelButton' }).simulate('click')
+        wrapper.find({ testid: 'cancelButton' }).simulate('click')
         expect(defaultProps.onCancel).toHaveBeenCalledWith()
       })
     })

@@ -35,7 +35,10 @@ export const imagesReducer = (state = [], action) => {
           }
           return {
             ...image,
-            comments: [...image?.comments, newComment],
+            comments:
+              image?.comments?.length > 0
+                ? [...image.comments, newComment]
+                : [newComment],
           }
         }
         return image

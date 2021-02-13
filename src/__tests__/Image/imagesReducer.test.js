@@ -196,6 +196,34 @@ describe('imagesReducer', () => {
           ])
         })
       })
+      describe('when previous comments are null', () => {
+        it('should return image with new comment added', () => {
+          const state = [
+            {
+              id: 1,
+              comments: null,
+            },
+          ]
+          const action = {
+            type: TYPES.ADD_COMMENT,
+            payload: {
+              imageId: 1,
+              value: 'new comment',
+            },
+          }
+          expect(imagesReducer(state, action)).toEqual([
+            {
+              id: 1,
+              comments: [
+                {
+                  id: 1,
+                  text: 'new comment',
+                },
+              ],
+            },
+          ])
+        })
+      })
       describe('when there are previous comments', () => {
         it('should return image with new comment added', () => {
           const state = [

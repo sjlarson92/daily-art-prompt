@@ -13,12 +13,12 @@ const CommentLayout = ({ comment, onDelete, onCancel, onEdit, onSubmit }) => (
           <FontAwesomeIcon
             id="delete-icon"
             icon={faTimes}
-            name="deleteButton"
+            testid="deleteButton"
             onClick={onDelete}
           />
           <FontAwesomeIcon
             id="edit-icon"
-            name="editButton"
+            testid="editButton"
             onClick={onEdit}
             icon={faPencilAlt}
           />
@@ -28,7 +28,7 @@ const CommentLayout = ({ comment, onDelete, onCancel, onEdit, onSubmit }) => (
       <div className="comment-layout-container" data-testid="editingDiv">
         <input
           className="comment-input-box"
-          name="editInputBox"
+          testid="editInputBox"
           defaultValue={comment.text}
           onKeyDown={onSubmit}
         />
@@ -36,7 +36,7 @@ const CommentLayout = ({ comment, onDelete, onCancel, onEdit, onSubmit }) => (
           id="cancel-button"
           className="btn"
           type="button"
-          name="cancelButton"
+          testid="cancelButton"
           onClick={onCancel}
         >
           Cancel
