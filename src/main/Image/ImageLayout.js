@@ -31,14 +31,14 @@ export const ImageLayout = ({
     }
   }
   return (
-    <div className="column">
+    <div id="image-layout-container">
       <Image data-testid="image" image={image} />
       {image.liked && (
         <div data-testid="likedDiv" className="likedText">
           Liked
         </div>
       )}
-      <div>
+      <div id="comment-container">
         <div>
           {image.comments &&
             image.comments.map(
@@ -69,6 +69,7 @@ export const ImageLayout = ({
             )}
         </div>
         <input
+          className="comment-input-box"
           data-testid="inputBox"
           type="text"
           name="commentBox"

@@ -7,7 +7,7 @@ const ImageGallery = () => {
   const currentPromptId = useSelector(state => state.currentPromptId)
 
   return (
-    <div className="row">
+    <div id="image-gallery">
       {images?.length > 0 &&
         images.map(
           image =>

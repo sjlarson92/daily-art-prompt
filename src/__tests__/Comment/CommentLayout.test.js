@@ -47,16 +47,9 @@ describe('<CommentLayout />', () => {
         wrapper.find({ name: 'deleteButton' }).simulate('click')
         expect(defaultProps.onDelete).toHaveBeenCalledWith()
       })
-      it('should render button with correct text', () => {
-        expect(wrapper.find({ name: 'deleteButton' }).text()).toEqual('Delete')
-      })
     })
 
     describe('Edit comment Button', () => {
-      it('should render button with correct text', () => {
-        expect(wrapper.find({ name: 'editButton' }).text()).toEqual('Edit')
-      })
-
       it('should call onEdit when clicked', () => {
         wrapper.find({ name: 'editButton' }).simulate('click')
         expect(defaultProps.onEdit).toHaveBeenCalledWith()

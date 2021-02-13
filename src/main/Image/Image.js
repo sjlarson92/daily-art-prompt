@@ -6,6 +6,7 @@ const Image = ({ image }) => {
   const dispatch = useDispatch()
   return (
     <img
+      className="user-image"
       src={image.url}
       alt={image.description}
       onDoubleClick={() =>

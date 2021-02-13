@@ -2,7 +2,6 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: #60a3bc !important;
 }
 
 .app {
@@ -25,7 +24,7 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  background-color: white;
+  background-color: #f39c12;
   height: 250px;
   width: 45%;
 }
@@ -45,7 +44,7 @@ body {
 }
 
 .prompt-button {
-  color: #f39c12;
+  color: white;
 }
 
 .prompt-button:hover {
@@ -76,6 +75,8 @@ img {
 
 #add-image-icon:hover {
   cursor:pointer;
+  filter: invert(42%) sepia(5%) saturate(3454%) hue-rotate(151deg) brightness(106%) contrast(81%);
+
 }
 
 #image-modal-header {
@@ -106,16 +107,69 @@ img {
   color: #60a3bc;
 }
 
-.column {
-  float: left;
-  width: 30%;
-  padding: 10px;
+#comment-container {
+  width: 100%;
 }
 
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+#image-gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#image-layout-container {
+  width: 60%;
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+
+.user-image {
+  width: 100%;
+  height: auto;
+  border-style: solid;
+  border-color: #d2d0d0;
+}
+
+.comment-input-box {
+  width: 100%;
+  border-top-style: none;
+  border-right-style: solid;
+  border-left-style: solid;
+  border-bottom-style: solid;
+  border-color: #d2d0d0;
+}
+
+.comment-layout-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-right-style: solid;
+  border-left-style: solid;
+  border-bottom-style: solid;
+  border-color: #d2d0d0;
+}
+
+#comment-icon-container {
+  width: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#delete-icon:hover {
+  color: red;
+  cursor: pointer;
+}
+
+#edit-icon:hover {
+  color: #f39c12;
+  cursor: pointer;
+}
+
+#cancel-button {
+  background: #c0392b !important;
+  color: white !important;
 }
 
 .column img {
@@ -142,4 +196,8 @@ img {
 
 #nav-user-dropdown::after {
   display: none;
+}
+
+#nav-user-dropdown:hover {
+  color: #4a8094;
 }
