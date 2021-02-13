@@ -1,7 +1,6 @@
 import axios from 'axios'
 import * as TYPES from '../storage/actions'
-
-const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
+import { GATEWAY_URL } from '../constants'
 
 export const getImagesAction = id => dispatch => {
   axios.get(`${GATEWAY_URL}/api/users/${id}/images`).then(response => {

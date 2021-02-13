@@ -1,8 +1,8 @@
 import axios from 'axios'
 import * as TYPES from '../../storage/actions'
+import { GATEWAY_URL } from '../../constants'
 
 export const validateLogin = (dispatch, history, email, password) => {
-  const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
   return axios
     .post(`${GATEWAY_URL}/api/login`, null, {
       auth: {

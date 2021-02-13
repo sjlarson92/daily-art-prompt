@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import * as TYPES from '../storage/actions'
 import logo from '../images/dapLogo.png'
+import { GATEWAY_URL } from '../constants'
 
 const DapNavBar = () => {
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
-  const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
   return (
     <Navbar id="dap-navbar" expand="sm">
       <img id="dap-logo" alt="dap logo" src={logo} />
