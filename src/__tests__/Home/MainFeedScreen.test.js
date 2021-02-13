@@ -59,14 +59,5 @@ describe('<MainFeedScreen>', () => {
         expect(wrapper.find({ 'data-testid': 'promptLayout' })).toHaveLength(1)
       })
     })
-
-    describe('<div> header for Art Gallery', () => {
-      it('should render header text', () => {
-        const result = wrapper
-          .find({ 'data-testid': 'artGalleryHeader' })
-          .text()
-        expect(result).toEqual('Art Gallery')
-      })
-    })
   })
 })

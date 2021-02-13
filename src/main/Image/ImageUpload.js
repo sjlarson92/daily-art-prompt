@@ -1,28 +1,41 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Alert from 'react-bootstrap/Alert'
 import { uploadImageAction } from './imageApi'
 
 const ImageUpload = () => {
   const [insertedImage, setInsertedImage] = useState(null)
-  const [imageDescription, setImageDescription] = useState(null)
+  const [imageDescription, setImageDescription] = useState('')
   const [alert, setAlert] = useState({ message: '', variant: '' })
   const [showAlert, setShowAlert] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(true)
+  const fileInputRef = useRef(null)
   const currentPromptId = useSelector(state => state.currentPromptId)
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    if (insertedImage != null && imageDescription !== '') {
+      setIsDisabled(false)
+    } else {
+      setIsDisabled(true)
+    }
+  }, [insertedImage, imageDescription])
+
   const handleClick = async () => {
-    if (insertedImage != null && imageDescription != null) {
-      const newAlert = await uploadImageAction(
-        user.id,
-        currentPromptId,
-        imageDescription,
-        insertedImage,
-        dispatch,
-      )
-      setShowAlert(true)
-      setAlert(newAlert)
+    const newAlert = await uploadImageAction(
+      user.id,
+      currentPromptId,
+      imageDescription,
+      insertedImage,
+      dispatch,
+    )
+    setInsertedImage(null)
+    setImageDescription('')
+    setShowAlert(true)
+    setAlert(newAlert)
+    if (fileInputRef.current !== null) {
+      fileInputRef.current.value = ''
     }
   }
   return (
@@ -37,21 +50,28 @@ const ImageUpload = () => {
           {alert.message}
         </Alert>
       )}
-      <h1>Upload Image</h1>
-      <input
-        data-testid="fileInput"
-        type="file"
-        onChange={e => setInsertedImage(e.target.files[0])}
-      />
       <textarea
         testid="imageDescriptionTextArea"
         id="imageDescription"
-        placeholder="Add image description here..."
+        placeholder="Write a caption..."
+        value={imageDescription}
         onChange={e => setImageDescription(e.target.value)}
       />
-      <button data-testid="uploadButton" onClick={handleClick}>
-        Upload
-      </button>
+      <div id="image-upload-div">
+        <input
+          data-testid="fileInput"
+          type="file"
+          ref={fileInputRef}
+          onChange={e => setInsertedImage(e.target.files[0])}
+        />
+        <button
+          disabled={isDisabled}
+          data-testid="uploadButton"
+          onClick={handleClick}
+        >
+          Upload
+        </button>
+      </div>
       <div />
     </div>
   )

@@ -6,8 +6,8 @@ import { getImagesAction } from '../Image/imageApi'
 import { getPromptsAction } from '../Prompt/promptsApi'
 import * as TYPES from '../storage/actions'
 import ImageGallery from '../Image/ImageGallery'
-import ImageUpload from '../Image/ImageUpload'
 import DapNavBar from './DapNavBar'
+import ImageUploadModal from '../Image/ImageUploadModal'
 
 const MainFeedScreen = () => {
   const user = useSelector(state => state.user)
@@ -27,10 +27,11 @@ const MainFeedScreen = () => {
           <PromptLayout data-testid="promptLayout" />
         </div>
         <hr />
-        <h1 data-testid="artGalleryHeader" className="title">
-          Art Gallery
-        </h1>
-        <ImageUpload />
+        <div id="image-tab-container">
+          <ImageUploadModal />
+          <div> My Gallery </div>
+          <div> Community Gallery </div>
+        </div>
         <ImageGallery />
       </div>
     </div>
