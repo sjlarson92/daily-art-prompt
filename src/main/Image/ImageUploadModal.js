@@ -9,11 +9,13 @@ const ImageUploadModal = () => {
     <div>
       <img
         id="add-image-icon"
+        testid="addImageIcon"
         src={addImageIcon}
         alt="add pic"
         onClick={() => setShowModal(true)}
       />
       <Modal
+        testid="uploadImageModal"
         show={showModal}
         onHide={() => setShowModal(false)}
         size="md"

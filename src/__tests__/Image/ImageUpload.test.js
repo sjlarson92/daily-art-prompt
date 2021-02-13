@@ -1,5 +1,5 @@
 import { when } from 'jest-when'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import axios from 'axios'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -65,8 +65,24 @@ describe('ImageUpload', () => {
           )
         })
       })
+
       describe('when fileInput changed', () => {
         describe('when imageDescription is entered', () => {
+          it('uploadButton should be enabled', () => {
+            jest.clearAllMocks()
+            const newWrapper = mount(<ImageUpload />)
+            inputTag = newWrapper.find({ 'data-testid': 'fileInput' })
+            imageDescriptionTextArea = newWrapper.find({
+              testid: 'imageDescriptionTextArea',
+            })
+            inputTag.simulate('change', fileInputEvent)
+            imageDescriptionTextArea.simulate('change', imageDescEvent)
+            expect(
+              newWrapper
+                .find({ 'data-testid': 'uploadButton' })
+                .prop('disabled'),
+            ).toEqual(false)
+          })
           describe('when upload button is clicked', () => {
             it('calls uploadImageAction with correct params', () => {
               jest.clearAllMocks()
@@ -134,6 +150,17 @@ describe('ImageUpload', () => {
           })
         })
         describe('when imageDescription is not entered', () => {
+          it('uploadButton should NOT be enabled', () => {
+            jest.clearAllMocks()
+            const newWrapper = mount(<ImageUpload />)
+            inputTag = newWrapper.find({ 'data-testid': 'fileInput' })
+            inputTag.simulate('change', fileInputEvent)
+            expect(
+              newWrapper
+                .find({ 'data-testid': 'uploadButton' })
+                .prop('disabled'),
+            ).toEqual(true)
+          })
           describe('when upload button is clicked', () => {
             it('should not make axios call', () => {
               inputTag.simulate('change', fileInputEvent)
@@ -152,8 +179,28 @@ describe('ImageUpload', () => {
           })
         })
       })
+
       describe('when fileInput not changed', () => {
+        describe('when imageDescription is not changed', () => {
+          wrapper = mount(<ImageUpload />)
+          expect(
+            wrapper.find({ 'data-testid': 'uploadButton' }).prop('disabled'),
+          ).toEqual(true)
+        })
         describe('when imageDescription is not null', () => {
+          it('uploadButton should NOT be enabled', () => {
+            jest.clearAllMocks()
+            const newWrapper = mount(<ImageUpload />)
+            imageDescriptionTextArea = newWrapper.find({
+              testid: 'imageDescriptionTextArea',
+            })
+            imageDescriptionTextArea.simulate('change', imageDescEvent)
+            expect(
+              newWrapper
+                .find({ 'data-testid': 'uploadButton' })
+                .prop('disabled'),
+            ).toEqual(true)
+          })
           describe('when upload button is clicked', () => {
             it('does not send the image over HTTP', () => {
               const uploadButton = wrapper
