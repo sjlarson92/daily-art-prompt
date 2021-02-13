@@ -15,12 +15,7 @@ const ImageUpload = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (
-      insertedImage != null &&
-      imageDescription != null &&
-      imageDescription !== '' &&
-      insertedImage !== ''
-    ) {
+    if (insertedImage != null && imageDescription !== '') {
       setIsDisabled(false)
     } else {
       setIsDisabled(true)

@@ -13,6 +13,7 @@ const ImageUploadModal = () => {
         src={addImageIcon}
         alt="add pic"
         onClick={() => setShowModal(true)}
+        role="presentation"
       />
       <Modal
         testid="uploadImageModal"
