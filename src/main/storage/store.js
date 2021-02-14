@@ -6,8 +6,9 @@ import { dateReducer } from '../Prompt/dateReducer'
 import { loadState, saveState } from './localStorage'
 import { userReducer } from '../User/userReducer'
 import { currentPromptIdReducer } from '../Prompt/currentPromptIdReducer'
+import * as TYPES from './actions'
 
-export const rootReducer = combineReducers({
+const appReducer = combineReducers({
   images: imagesReducer,
   date: dateReducer,
   prompts: promptsReducer,
@@ -15,11 +16,18 @@ export const rootReducer = combineReducers({
   currentPromptId: currentPromptIdReducer,
 })
 
+const rootReducer = (state, action) => {
+  if (action.type === TYPES.LOGOUT) {
+    return appReducer(undefined, action)
+  }
+  return appReducer(state, action)
+}
+
 const persistedState = loadState()
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-export const store = createStore(
+const store = createStore(
   rootReducer,
   persistedState,
   composeEnhancers(applyMiddleware(thunkMiddleware)),

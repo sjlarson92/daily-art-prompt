@@ -16,8 +16,6 @@ export const userReducer = (state = User, action) => {
         isLoggedIn: true,
         role: action.payload.role,
       }
-    case TYPES.LOGOUT:
-      return User
     default:
       return state
   }
