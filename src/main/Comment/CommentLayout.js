@@ -12,6 +12,7 @@ const CommentLayout = ({ comment, onDelete, onCancel, onEdit, onSubmit }) => (
         <div id="comment-icon-container">
           <FontAwesomeIcon
             id="delete-icon"
+            className="pointer-on-hover"
             icon={faTimes}
             testid="deleteButton"
             onClick={onDelete}

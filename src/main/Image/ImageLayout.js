@@ -1,47 +1,83 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import Image from './Image'
 import CommentLayout from '../Comment/CommentLayout'
 import * as TYPES from '../storage/actions'
 
-export const ImageLayout = ({
-  image,
-  deleteComment,
-  updateCommentEditing,
-  editComment,
-  addComment,
-}) => {
+const ImageLayout = ({ image }) => {
+  const dispatch = useDispatch()
   const [inputBoxText, setInputBoxText] = useState('')
 
-  const onChange = e => {
-    setInputBoxText(e.target.value)
+  const updateLikeImage = imageId => {
+    dispatch({
+      type: TYPES.UPDATE_IMAGE_LIKED,
+      payload: {
+        imageId,
+      },
+    })
   }
+
+  const deleteComment = (imageId, commentId) => {
+    dispatch({
+      type: TYPES.DELETE_COMMENT,
+      payload: {
+        imageId,
+        commentId,
+      },
+    })
+  }
+
+  const updateCommentEditing = (imageId, commentId, editing) => {
+    dispatch({
+      type: TYPES.UPDATE_COMMENT_EDITING,
+      payload: {
+        imageId,
+        commentId,
+        editing,
+      },
+    })
+  }
+
   const onKeyDown = (e, imageId) => {
     if (e.keyCode === 13) {
-      const { value } = e.target
-      addComment(value, imageId)
+      dispatch({
+        type: TYPES.ADD_COMMENT,
+        payload: {
+          imageId,
+          value: e.target.value,
+        },
+      })
       setInputBoxText('')
     }
   }
 
-  const handleSubmit = (e, imageId, commentId) => {
+  const updateComment = (e, imageId, commentId) => {
     if (e.keyCode === 13) {
-      const { value } = e.target
-      editComment(imageId, commentId, value)
+      dispatch({
+        type: TYPES.EDIT_COMMENT,
+        payload: {
+          imageId,
+          commentId,
+          value: e.target.value,
+        },
+      })
     }
   }
   return (
     <div id="image-layout-container">
       <Image data-testid="image" image={image} />
-      {image.liked && (
-        <div data-testid="likedDiv" className="likedText">
-          Liked
-        </div>
-      )}
-      <div id="comment-container">
-        <div>
-          {image.comments &&
-            image.comments.map(
+      <div id="image-details-container">
+        <FontAwesomeIcon
+          id={image.liked ? 'liked' : 'unliked'}
+          className="pointer-on-hover"
+          icon={faHeart}
+          onClick={() => updateLikeImage(image.id)}
+        />
+        <div id="comment-container">
+          <div>
+            {image?.comments?.map(
               comment =>
                 !comment.deleted && (
                   <CommentLayout
@@ -63,61 +99,25 @@ export const ImageLayout = ({
                         comment.editing,
                       )
                     }
-                    onSubmit={e => handleSubmit(e, image.id, comment.id)}
+                    onSubmit={e => updateComment(e, image.id, comment.id)}
                   />
                 ),
             )}
+          </div>
+          <input
+            className="comment-input-box"
+            data-testid="inputBox"
+            type="text"
+            name="commentBox"
+            value={inputBoxText}
+            onChange={e => setInputBoxText(e.target.value)}
+            onKeyDown={e => onKeyDown(e, image.id)}
+            placeholder="Add Comment..."
+          />
         </div>
-        <input
-          className="comment-input-box"
-          data-testid="inputBox"
-          type="text"
-          name="commentBox"
-          value={inputBoxText}
-          onChange={e => onChange(e)}
-          onKeyDown={e => onKeyDown(e, image.id)}
-          placeholder="Add Comment..."
-        />
       </div>
     </div>
   )
 }
 
-export const mapDispatchToProps = dispatch => ({
-  deleteComment: (imageId, commentId) =>
-    dispatch({
-      type: TYPES.DELETE_COMMENT,
-      payload: {
-        imageId,
-        commentId,
-      },
-    }),
-  updateCommentEditing: (imageId, commentId, editing) =>
-    dispatch({
-      type: TYPES.UPDATE_COMMENT_EDITING,
-      payload: {
-        imageId,
-        commentId,
-        editing,
-      },
-    }),
-  editComment: (imageId, commentId, value) =>
-    dispatch({
-      type: TYPES.EDIT_COMMENT,
-      payload: {
-        imageId,
-        commentId,
-        value,
-      },
-    }),
-  addComment: (value, imageId) =>
-    dispatch({
-      type: TYPES.ADD_COMMENT,
-      payload: {
-        imageId,
-        value,
-      },
-    }),
-})
-
-export default connect(null, mapDispatchToProps)(ImageLayout)
+export default ImageLayout

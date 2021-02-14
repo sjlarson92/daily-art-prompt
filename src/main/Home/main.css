@@ -122,34 +122,31 @@ img {
 
 #image-layout-container {
   width: 40%;
+  border: solid #e3e3e3;
   margin-bottom: 25px;
   margin-top: 25px;
+}
+
+#image-details-container {
+  margin: 1%
 }
 
 .user-image {
   width: 100%;
   height: auto;
-  border-style: solid;
-  border-color: #d2d0d0;
+  border-bottom-style: solid;
+  border-color: #e3e3e3;
 }
 
 .comment-input-box {
   width: 100%;
-  border-top-style: none;
-  border-right-style: solid;
-  border-left-style: solid;
-  border-bottom-style: solid;
-  border-color: #d2d0d0;
+  border-style: none;
 }
 
 .comment-layout-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-right-style: solid;
-  border-left-style: solid;
-  border-bottom-style: solid;
-  border-color: #d2d0d0;
 }
 
 #comment-icon-container {
@@ -162,7 +159,6 @@ img {
 
 #delete-icon:hover {
   color: red;
-  cursor: pointer;
 }
 
 #edit-icon:hover {
@@ -175,22 +171,16 @@ img {
   color: white !important;
 }
 
-.column img {
-  opacity: 0.8;
-  cursor: pointer;
-}
-
-.column img:hover {
-  opacity: 1;
-}
-
-.hidden {
-  display: none;
-}
-
-.likedText {
-  vertical-align: super;
+#liked {
   color: red;
+}
+
+#unliked {
+  color: grey;
+}
+
+.pointer-on-hover:hover {
+  cursor: pointer;
 }
 
 #nav-user-dropdown {
