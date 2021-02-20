@@ -38,7 +38,7 @@ describe('ImageLayout', () => {
   })
   describe('AddComment', () => {
     describe('when enter is pressed', () => {
-      it('makes axios call with correct params', async () => {
+      it('makes axios call with correct params', () => {
         const comment = 'some comment'
         const requestBody = {
           imageId: defaultProps.image.id,
@@ -47,10 +47,10 @@ describe('ImageLayout', () => {
         }
         axios.post.mockResolvedValue()
         const newWrapper = shallow(<ImageLayout {...defaultProps} />)
-        await newWrapper
+        newWrapper
           .find({ testid: 'commentInputBox' })
           .simulate('change', { target: { value: comment } })
-        await newWrapper
+        newWrapper
           .find({ testid: 'commentInputBox' })
           .simulate('keyDown', { keyCode: 13 })
         expect(axios.post).toHaveBeenCalledWith(
