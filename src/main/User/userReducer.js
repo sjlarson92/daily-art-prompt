@@ -1,13 +1,13 @@
 import * as TYPES from '../storage/actions'
 
-const User = {
+const initialState = {
   id: null,
   email: '',
   isLoggedIn: false,
   role: null,
 }
 
-export const userReducer = (state = User, action) => {
+export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case TYPES.LOGIN:
       return {
