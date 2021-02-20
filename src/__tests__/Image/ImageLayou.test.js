@@ -31,12 +31,10 @@ const defaultProps = {
 const dispatch = jest.fn()
 
 describe('ImageLayout', () => {
-  let wrapper
   beforeEach(() => {
     jest.clearAllMocks()
     useSelector.mockImplementation(callback => callback(mockState))
     useDispatch.mockReturnValue(dispatch)
-    wrapper = shallow(<ImageLayout {...defaultProps} />)
   })
   describe('AddComment', () => {
     describe('when enter is pressed', () => {
