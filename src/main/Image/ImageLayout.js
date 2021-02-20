@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios'
 import Image from './Image'
 import CommentLayout from '../Comment/CommentLayout'
 import * as TYPES from '../storage/actions'
+import { GATEWAY_URL } from '../constants'
 
 const ImageLayout = ({ image }) => {
   const dispatch = useDispatch()
   const [inputBoxText, setInputBoxText] = useState('')
+  const userId = useSelector(state => state.user.id)
 
   const updateLikeImage = imageId => {
     dispatch({
@@ -42,13 +45,14 @@ const ImageLayout = ({ image }) => {
 
   const onKeyDown = (e, imageId) => {
     if (e.keyCode === 13) {
-      dispatch({
-        type: TYPES.ADD_COMMENT,
-        payload: {
-          imageId,
-          value: e.target.value,
-        },
-      })
+      const requestBody = {
+        imageId,
+        userId,
+        text: inputBoxText,
+      }
+      axios
+        .post(`${GATEWAY_URL}/api/comments`, requestBody)
+        .then(r => console.log('successfully created comment'))
       setInputBoxText('')
     }
   }
@@ -106,7 +110,7 @@ const ImageLayout = ({ image }) => {
           </div>
           <input
             className="comment-input-box"
-            data-testid="inputBox"
+            testid="commentInputBox"
             type="text"
             name="commentBox"
             value={inputBoxText}

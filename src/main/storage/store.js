@@ -8,12 +8,21 @@ import { userReducer } from '../User/userReducer'
 import { currentPromptIdReducer } from '../Prompt/currentPromptIdReducer'
 import * as TYPES from './actions'
 
+const initialState = {
+  byId: {},
+}
+
+const commentsReducer = (state = initialState, action) => {
+  return initialState
+}
+
 const appReducer = combineReducers({
   images: imagesReducer,
   date: dateReducer,
   prompts: promptsReducer,
   user: userReducer,
   currentPromptId: currentPromptIdReducer,
+  comments: commentsReducer,
 })
 
 const rootReducer = (state, action) => {
