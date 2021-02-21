@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
@@ -12,6 +12,21 @@ const ImageLayout = ({ image }) => {
   const dispatch = useDispatch()
   const [inputBoxText, setInputBoxText] = useState('')
   const userId = useSelector(state => state.user.id)
+  // const comments = useSelector(state => state.comments)
+  const [comments, setComments] = useState([])
+
+  useEffect(() => {
+    axios.get(`${GATEWAY_URL}/api/comments?imageId=${image.id}`).then(r => {
+      console.log('response: ', r.data)
+      setComments(r.data)
+      // dispatch({
+      //   type: TYPES.SET_COMMENTS,
+      //   payload: {
+      //     comments: r.data,
+      //   },
+      // })
+    })
+  }, [image.id])
 
   const updateLikeImage = imageId => {
     dispatch({
@@ -50,9 +65,15 @@ const ImageLayout = ({ image }) => {
         userId,
         text: inputBoxText,
       }
-      axios
-        .post(`${GATEWAY_URL}/api/comments`, requestBody)
-        .then(r => console.log('successfully created comment'))
+      axios.post(`${GATEWAY_URL}/api/comments`, requestBody).then(r => {
+        // dispatch({
+        //   type: TYPES.ADD_COMMENT,
+        //   payload: {
+        //     comment: r.data,
+        //   },
+        // })
+        console.log('successfully created comment', r.data)
+      })
       setInputBoxText('')
     }
   }
@@ -81,7 +102,7 @@ const ImageLayout = ({ image }) => {
         />
         <div id="comment-container">
           <div>
-            {image?.comments?.map(
+            {comments?.map(
               comment =>
                 !comment.deleted && (
                   <CommentLayout
