@@ -12,19 +12,11 @@ const ImageLayout = ({ image }) => {
   const dispatch = useDispatch()
   const [inputBoxText, setInputBoxText] = useState('')
   const userId = useSelector(state => state.user.id)
-  // const comments = useSelector(state => state.comments)
   const [comments, setComments] = useState([])
 
   useEffect(() => {
     axios.get(`${GATEWAY_URL}/api/comments?imageId=${image.id}`).then(r => {
-      console.log('response: ', r.data)
       setComments(r.data)
-      // dispatch({
-      //   type: TYPES.SET_COMMENTS,
-      //   payload: {
-      //     comments: r.data,
-      //   },
-      // })
     })
   }, [image.id])
 
@@ -66,13 +58,7 @@ const ImageLayout = ({ image }) => {
         text: inputBoxText,
       }
       axios.post(`${GATEWAY_URL}/api/comments`, requestBody).then(r => {
-        // dispatch({
-        //   type: TYPES.ADD_COMMENT,
-        //   payload: {
-        //     comment: r.data,
-        //   },
-        // })
-        console.log('successfully created comment', r.data)
+        setComments(prevComments => [...prevComments, r.data])
       })
       setInputBoxText('')
     }
