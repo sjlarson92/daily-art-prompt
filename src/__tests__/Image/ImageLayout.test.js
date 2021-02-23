@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import React from 'react'
 import { GATEWAY_URL } from '../../main/constants'
 import ImageLayout from '../../main/Image/ImageLayout'
@@ -36,6 +36,22 @@ describe('ImageLayout', () => {
     useSelector.mockImplementation(callback => callback(mockState))
     useDispatch.mockReturnValue(dispatch)
   })
+  describe('on Render', () => {
+    it('make api call with correct params', () => {
+      axios.get.mockResolvedValue()
+      mount(<ImageLayout {...defaultProps} />)
+      expect(axios.get).toHaveBeenCalledWith(
+        `${GATEWAY_URL}/api/comments?imageId=${defaultProps.image.id}`,
+      )
+    })
+    it('renders comments from api call', () => {
+      axios.get.mockResolvedValue({ data: { id: 1 } })
+      const wrapper = mount(<ImageLayout {...defaultProps} />)
+      setTimeout(() => {
+        expect(wrapper.find({ testid: 'comment-1' })).toHaveLength(1)
+      }, 2000)
+    })
+  })
   describe('AddComment', () => {
     describe('when enter is pressed', () => {
       it('makes axios call with correct params', () => {
@@ -57,6 +73,18 @@ describe('ImageLayout', () => {
           `${GATEWAY_URL}/api/comments`,
           requestBody,
         )
+      })
+      it('renders new comment', async () => {
+        axios.post.mockResolvedValue({ data: { id: 1 } })
+        const newWrapper = shallow(<ImageLayout {...defaultProps} />)
+        newWrapper
+          .find({ testid: 'commentInputBox' })
+          .simulate('change', { target: { value: 'comment' } })
+        await newWrapper
+          .find({ testid: 'commentInputBox' })
+          .simulate('keyDown', { keyCode: 13 })
+        expect(newWrapper.find({ testid: 'comment-1' })).toHaveLength(1)
+        // expect comments.length == 2
       })
     })
     describe('when enter is NOT pressed', () => {

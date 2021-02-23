@@ -88,32 +88,22 @@ const ImageLayout = ({ image }) => {
         />
         <div id="comment-container">
           <div>
-            {comments?.map(
-              comment =>
-                !comment.deleted && (
-                  <CommentLayout
-                    data-testid={`comment-${comment.id}`}
-                    key={`comment-${comment.id}-${image.id}`}
-                    comment={comment}
-                    onDelete={() => deleteComment(image.id, comment.id)}
-                    onEdit={() =>
-                      updateCommentEditing(
-                        image.id,
-                        comment.id,
-                        comment.editing,
-                      )
-                    }
-                    onCancel={() =>
-                      updateCommentEditing(
-                        image.id,
-                        comment.id,
-                        comment.editing,
-                      )
-                    }
-                    onSubmit={e => updateComment(e, image.id, comment.id)}
-                  />
-                ),
-            )}
+            {comments.length > 0 &&
+              comments?.map(comment => (
+                <CommentLayout
+                  testid={`comment-${comment.id}`}
+                  key={`comment-${comment.id}-${image.id}`}
+                  comment={comment}
+                  onDelete={() => deleteComment(image.id, comment.id)}
+                  onEdit={() =>
+                    updateCommentEditing(image.id, comment.id, comment.editing)
+                  }
+                  onCancel={() =>
+                    updateCommentEditing(image.id, comment.id, comment.editing)
+                  }
+                  onSubmit={e => updateComment(e, image.id, comment.id)}
+                />
+              ))}
           </div>
           <input
             className="comment-input-box"
