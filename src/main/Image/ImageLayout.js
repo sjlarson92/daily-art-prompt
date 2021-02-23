@@ -29,14 +29,11 @@ const ImageLayout = ({ image }) => {
     })
   }
 
-  const deleteComment = commentId => {
-    dispatch({
-      type: TYPES.DELETE_COMMENT,
-      payload: {
-        imageId: image.id,
-        commentId,
-      },
-    })
+  const deleteComment = async commentId => {
+    await axios.delete(`${GATEWAY_URL}/api/comments/${commentId}`)
+    setComments(prevComments =>
+      prevComments.filter(comment => comment.id !== commentId),
+    )
   }
 
   const updateCommentEditing = (commentId, editing) => {

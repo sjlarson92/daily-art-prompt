@@ -30,7 +30,7 @@ const defaultProps = {
 
 const dispatch = jest.fn()
 
-describe('ImageLayout', () => {
+describe('<ImageLayout>', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     useSelector.mockImplementation(callback => callback(mockState))
@@ -50,6 +50,34 @@ describe('ImageLayout', () => {
       setTimeout(() => {
         expect(wrapper.find({ testid: 'comment-1' })).toHaveLength(1)
       }, 2000)
+    })
+  })
+  describe('<CommentLayout />', () => {
+    describe('onDelete', () => {
+      it('makes axios call with correct params', () => {
+        const commentId = 'some id'
+        axios.get.mockResolvedValue({ data: { id: commentId } })
+        axios.delete.mockResolvedValue()
+        const wrapper = mount(<ImageLayout {...defaultProps} />)
+        setTimeout(() => {
+          wrapper.find({ testid: `comment-${commentId}` }).simulate('delete')
+          expect(axios.delete).toHaveBeenCalledWith(
+            `${GATEWAY_URL}/api/comments/${commentId}`,
+          )
+        }, 2000)
+      })
+      it('no longer renders comment', () => {
+        const commentId = 'some id'
+        axios.get.mockResolvedValue({ data: { id: commentId } })
+        axios.delete.mockResolvedValue()
+        const wrapper = mount(<ImageLayout {...defaultProps} />)
+        setTimeout(() => {
+          wrapper.find({ testid: `comment-${commentId}` }).simulate('delete')
+          expect(wrapper.find({ testid: `comment-${commentId}` })).toHaveLength(
+            0,
+          )
+        }, 2000)
+      })
     })
   })
   describe('AddComment', () => {

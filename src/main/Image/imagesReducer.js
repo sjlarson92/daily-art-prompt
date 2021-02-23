@@ -23,26 +23,6 @@ export const imagesReducer = (state = [], action) => {
         return image
       })
 
-    case TYPES.DELETE_COMMENT:
-      return state.map(image => {
-        if (image.id === action.payload.imageId) {
-          const updatedComments = image.comments.map(comment => {
-            if (comment.id === action.payload.commentId) {
-              return {
-                ...comment,
-                deleted: true,
-              }
-            }
-            return comment
-          })
-          return {
-            ...image,
-            comments: updatedComments,
-          }
-        }
-        return image
-      })
-
     case TYPES.UPDATE_COMMENT_EDITING:
       return state.map(image => {
         if (image.id === action.payload.imageId) {
