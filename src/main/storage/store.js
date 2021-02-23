@@ -5,24 +5,15 @@ import { promptsReducer } from '../Prompt/promptsReducer'
 import { dateReducer } from '../Prompt/dateReducer'
 import { loadState, saveState } from './localStorage'
 import { userReducer } from '../User/userReducer'
-import { currentPromptIdReducer } from '../Prompt/currentPromptIdReducer'
+import { promptIdReducer } from '../Prompt/promptIdReducer'
 import * as TYPES from './actions'
-
-const initialState = {
-  byId: {},
-}
-
-const commentsReducer = (state = initialState, action) => {
-  return initialState
-}
 
 const appReducer = combineReducers({
   images: imagesReducer,
   date: dateReducer,
   prompts: promptsReducer,
   user: userReducer,
-  currentPromptId: currentPromptIdReducer,
-  comments: commentsReducer,
+  currentPromptId: promptIdReducer,
 })
 
 const rootReducer = (state, action) => {

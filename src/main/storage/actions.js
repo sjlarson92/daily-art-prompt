@@ -18,14 +18,6 @@ export const LOGIN = 'LOGIN'
 
 export const LOGOUT = 'LOGOUT'
 
-export const SIGN_UP = 'SIGN_UP'
-
-export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
-
-export const SET_USER = 'SET_USER'
-
-export const CLEAR_USER = 'CLEAR_USER'
-
 export const ADD_IMAGE = 'ADD_IMAGE'
 
 export const SET_CURRENT_PROMPT_ID = 'SET_CURRENT_PROMPT_ID'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
@@ -12,57 +12,64 @@ const ImageLayout = ({ image }) => {
   const dispatch = useDispatch()
   const [inputBoxText, setInputBoxText] = useState('')
   const userId = useSelector(state => state.user.id)
+  const [comments, setComments] = useState([])
 
-  const updateLikeImage = imageId => {
+  useEffect(() => {
+    axios.get(`${GATEWAY_URL}/api/comments?imageId=${image.id}`).then(r => {
+      setComments(r.data)
+    })
+  }, [image.id])
+
+  const updateLikeImage = () => {
     dispatch({
       type: TYPES.UPDATE_IMAGE_LIKED,
       payload: {
-        imageId,
+        imageId: image.id,
       },
     })
   }
 
-  const deleteComment = (imageId, commentId) => {
+  const deleteComment = commentId => {
     dispatch({
       type: TYPES.DELETE_COMMENT,
       payload: {
-        imageId,
+        imageId: image.id,
         commentId,
       },
     })
   }
 
-  const updateCommentEditing = (imageId, commentId, editing) => {
+  const updateCommentEditing = (commentId, editing) => {
     dispatch({
       type: TYPES.UPDATE_COMMENT_EDITING,
       payload: {
-        imageId,
+        imageId: image.id,
         commentId,
         editing,
       },
     })
   }
 
-  const onKeyDown = (e, imageId) => {
+  const onKeyDown = e => {
     if (e.keyCode === 13) {
       const requestBody = {
-        imageId,
+        imageId: image.id,
         userId,
         text: inputBoxText,
       }
-      axios
-        .post(`${GATEWAY_URL}/api/comments`, requestBody)
-        .then(r => console.log('successfully created comment'))
+      axios.post(`${GATEWAY_URL}/api/comments`, requestBody).then(r => {
+        setComments(prevComments => [...prevComments, r.data])
+      })
       setInputBoxText('')
     }
   }
 
-  const updateComment = (e, imageId, commentId) => {
+  const updateComment = (e, commentId) => {
     if (e.keyCode === 13) {
       dispatch({
         type: TYPES.EDIT_COMMENT,
         payload: {
-          imageId,
+          imageId: image.id,
           commentId,
           value: e.target.value,
         },
@@ -77,36 +84,26 @@ const ImageLayout = ({ image }) => {
           id={image.liked ? 'liked' : 'unliked'}
           className="pointer-on-hover"
           icon={faHeart}
-          onClick={() => updateLikeImage(image.id)}
+          onClick={updateLikeImage}
         />
         <div id="comment-container">
           <div>
-            {image?.comments?.map(
-              comment =>
-                !comment.deleted && (
-                  <CommentLayout
-                    data-testid={`comment-${comment.id}`}
-                    key={`comment-${comment.id}-${image.id}`}
-                    comment={comment}
-                    onDelete={() => deleteComment(image.id, comment.id)}
-                    onEdit={() =>
-                      updateCommentEditing(
-                        image.id,
-                        comment.id,
-                        comment.editing,
-                      )
-                    }
-                    onCancel={() =>
-                      updateCommentEditing(
-                        image.id,
-                        comment.id,
-                        comment.editing,
-                      )
-                    }
-                    onSubmit={e => updateComment(e, image.id, comment.id)}
-                  />
-                ),
-            )}
+            {comments.length > 0 &&
+              comments?.map(comment => (
+                <CommentLayout
+                  testid={`comment-${comment.id}`}
+                  key={`comment-${comment.id}-${image.id}`}
+                  comment={comment}
+                  onDelete={() => deleteComment(comment.id)}
+                  onEdit={() =>
+                    updateCommentEditing(comment.id, comment.editing)
+                  }
+                  onCancel={() =>
+                    updateCommentEditing(comment.id, comment.editing)
+                  }
+                  onSubmit={e => updateComment(e, comment.id)}
+                />
+              ))}
           </div>
           <input
             className="comment-input-box"
@@ -115,7 +112,7 @@ const ImageLayout = ({ image }) => {
             name="commentBox"
             value={inputBoxText}
             onChange={e => setInputBoxText(e.target.value)}
-            onKeyDown={e => onKeyDown(e, image.id)}
+            onKeyDown={e => onKeyDown(e)}
             placeholder="Add Comment..."
           />
         </div>
