@@ -20,40 +20,40 @@ const ImageLayout = ({ image }) => {
     })
   }, [image.id])
 
-  const updateLikeImage = imageId => {
+  const updateLikeImage = () => {
     dispatch({
       type: TYPES.UPDATE_IMAGE_LIKED,
       payload: {
-        imageId,
+        imageId: image.id,
       },
     })
   }
 
-  const deleteComment = (imageId, commentId) => {
+  const deleteComment = commentId => {
     dispatch({
       type: TYPES.DELETE_COMMENT,
       payload: {
-        imageId,
+        imageId: image.id,
         commentId,
       },
     })
   }
 
-  const updateCommentEditing = (imageId, commentId, editing) => {
+  const updateCommentEditing = (commentId, editing) => {
     dispatch({
       type: TYPES.UPDATE_COMMENT_EDITING,
       payload: {
-        imageId,
+        imageId: image.id,
         commentId,
         editing,
       },
     })
   }
 
-  const onKeyDown = (e, imageId) => {
+  const onKeyDown = e => {
     if (e.keyCode === 13) {
       const requestBody = {
-        imageId,
+        imageId: image.id,
         userId,
         text: inputBoxText,
       }
@@ -64,12 +64,12 @@ const ImageLayout = ({ image }) => {
     }
   }
 
-  const updateComment = (e, imageId, commentId) => {
+  const updateComment = (e, commentId) => {
     if (e.keyCode === 13) {
       dispatch({
         type: TYPES.EDIT_COMMENT,
         payload: {
-          imageId,
+          imageId: image.id,
           commentId,
           value: e.target.value,
         },
@@ -84,7 +84,7 @@ const ImageLayout = ({ image }) => {
           id={image.liked ? 'liked' : 'unliked'}
           className="pointer-on-hover"
           icon={faHeart}
-          onClick={() => updateLikeImage(image.id)}
+          onClick={updateLikeImage}
         />
         <div id="comment-container">
           <div>
@@ -94,14 +94,14 @@ const ImageLayout = ({ image }) => {
                   testid={`comment-${comment.id}`}
                   key={`comment-${comment.id}-${image.id}`}
                   comment={comment}
-                  onDelete={() => deleteComment(image.id, comment.id)}
+                  onDelete={() => deleteComment(comment.id)}
                   onEdit={() =>
-                    updateCommentEditing(image.id, comment.id, comment.editing)
+                    updateCommentEditing(comment.id, comment.editing)
                   }
                   onCancel={() =>
-                    updateCommentEditing(image.id, comment.id, comment.editing)
+                    updateCommentEditing(comment.id, comment.editing)
                   }
-                  onSubmit={e => updateComment(e, image.id, comment.id)}
+                  onSubmit={e => updateComment(e, comment.id)}
                 />
               ))}
           </div>
@@ -112,7 +112,7 @@ const ImageLayout = ({ image }) => {
             name="commentBox"
             value={inputBoxText}
             onChange={e => setInputBoxText(e.target.value)}
-            onKeyDown={e => onKeyDown(e, image.id)}
+            onKeyDown={e => onKeyDown(e)}
             placeholder="Add Comment..."
           />
         </div>
