@@ -1,7 +1,7 @@
 import React from 'react'
 
 const EditComment = ({ comment, onUpdate, onCancel }) => (
-  <div className="comment-layout-container" data-testid="editingDiv">
+  <div className="comment-layout-container">
     <input
       className="comment-input-box"
       defaultValue={comment.text}

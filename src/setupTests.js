@@ -1,6 +1,6 @@
 import { configure } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-import { act } from 'react-dom/test-utils' // same version as you added
+import Adapter from 'enzyme-adapter-react-16' // same version as you added
+import { act } from 'react-dom/test-utils'
 
 configure({ adapter: new Adapter() })
 

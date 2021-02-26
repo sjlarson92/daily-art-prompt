@@ -10,7 +10,6 @@ const CommentContainer = ({ imageId }) => {
   const [comments, setComments] = useState([])
   const [inputBoxText, setInputBoxText] = useState('')
   const [editCommentId, setEditCommentId] = useState(null)
-
   useEffect(() => {
     axios.get(`${GATEWAY_URL}/api/comments?imageId=${imageId}`).then(r => {
       setComments(r.data)
@@ -40,9 +39,9 @@ const CommentContainer = ({ imageId }) => {
 
   const updateComment = (e, comment) => {
     if (e.keyCode === 13) {
-      const newComment = { ...comment, text: e.target.value }
+      const updatedComment = { ...comment, text: e.target.value }
       axios
-        .put(`${GATEWAY_URL}/api/comments/${comment.id}`, newComment)
+        .put(`${GATEWAY_URL}/api/comments/${comment.id}`, updatedComment)
         .then(r => {
           setEditCommentId(null)
           setComments(prevComments =>
@@ -60,6 +59,7 @@ const CommentContainer = ({ imageId }) => {
           comments.map(comment =>
             comment.id === editCommentId ? (
               <EditComment
+                testid={`edit-comment-${comment.id}`}
                 key={`comment-${comment.id}`}
                 comment={comment}
                 onUpdate={updateComment}
@@ -67,7 +67,7 @@ const CommentContainer = ({ imageId }) => {
               />
             ) : (
               <Comment
-                testid={`comment-${comment.id}`}
+                testid={`show-comment-${comment.id}`}
                 key={`comment-${comment.id}`}
                 comment={comment}
                 onDelete={deleteComment}
