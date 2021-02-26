@@ -1,19 +1,25 @@
-import React from 'react'
 import { shallow } from 'enzyme'
+import React from 'react'
 import Comment from '../../main/Comment/Comment'
 
 const defaultProps = {
-  comment: 'text',
+  comment: { id: 1 },
+  onDelete: jest.fn(),
+  onEdit: jest.fn(),
 }
-
 describe('<Comment />', () => {
-  it('should render with correct comment', () => {
+  describe('Delete Icon', () => {
+    it('call onDelete with correct params when clicked', () => {
+      const wrapper = shallow(<Comment {...defaultProps} />)
+      wrapper.find({ testid: 'deleteButton' }).simulate('click')
+      expect(defaultProps.onDelete).toHaveBeenCalledWith(
+        defaultProps.comment.id,
+      )
+    })
+  })
+  describe('Edit Icon', () => {
     const wrapper = shallow(<Comment {...defaultProps} />)
-    expect(
-      wrapper
-        .find({ 'data-testid': 'commentDiv' })
-        .childAt(0)
-        .text(),
-    ).toEqual(defaultProps.comment)
+    wrapper.find({ testid: 'editButton' }).simulate('click')
+    expect(defaultProps.onEdit).toHaveBeenCalled()
   })
 })

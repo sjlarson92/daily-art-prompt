@@ -22,47 +22,6 @@ export const imagesReducer = (state = [], action) => {
         }
         return image
       })
-
-    case TYPES.UPDATE_COMMENT_EDITING:
-      return state.map(image => {
-        if (image.id === action.payload.imageId) {
-          const updatedCommentsClassName = image.comments.map(comment => {
-            if (comment.id === action.payload.commentId) {
-              return {
-                ...comment,
-                editing: !comment.editing,
-              }
-            }
-            return comment
-          })
-          return {
-            ...image,
-            comments: updatedCommentsClassName,
-          }
-        }
-        return image
-      })
-
-    case TYPES.EDIT_COMMENT:
-      return state.map(image => {
-        if (image.id === action.payload.imageId) {
-          const updatedComments = image.comments.map(comment => {
-            if (comment.id === action.payload.commentId) {
-              return {
-                ...comment,
-                text: action.payload.value,
-                editing: false,
-              }
-            }
-            return comment
-          })
-          return {
-            ...image,
-            comments: updatedComments,
-          }
-        }
-        return image
-      })
     default:
       return state
   }
