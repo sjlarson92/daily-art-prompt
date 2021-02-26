@@ -96,7 +96,7 @@ describe('imagesReducer', () => {
     })
   })
 
-  describe('when the action.type equals UPDATE_PROMPT_IMAGES', () => {
+  describe('when the action.type equals UPDATE_IMAGE_LIKED', () => {
     describe('when image.id equals payload.imageId and image.liked is false', () => {
       it('should update image.liked to true', () => {
         const state = [
@@ -108,7 +108,7 @@ describe('imagesReducer', () => {
         const action = {
           type: TYPES.UPDATE_IMAGE_LIKED,
           payload: {
-            imageId: 1,
+            updatedImage: { id: 1, liked: true },
           },
         }
         expect(imagesReducer(state, action)).toEqual([
@@ -130,7 +130,7 @@ describe('imagesReducer', () => {
         const action = {
           type: TYPES.UPDATE_IMAGE_LIKED,
           payload: {
-            imageId: 1,
+            updatedImage: { id: 1, liked: false },
           },
         }
         expect(imagesReducer(state, action)).toEqual([
@@ -153,7 +153,7 @@ describe('imagesReducer', () => {
         const action = {
           type: TYPES.UPDATE_IMAGE_LIKED,
           payload: {
-            imageId: 2,
+            updatedImage: { id: 2 },
           },
         }
         expect(imagesReducer(state, action)).toEqual([

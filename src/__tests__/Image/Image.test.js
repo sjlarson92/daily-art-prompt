@@ -1,12 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { useDispatch } from 'react-redux'
 import Image from '../../main/Image/Image'
-import * as TYPES from '../../main/storage/actions'
-
-jest.mock('react-redux', () => ({
-  useDispatch: jest.fn(),
-}))
 
 const defaultProps = {
   image: {
@@ -14,6 +8,7 @@ const defaultProps = {
     url: 'url',
     description: 'i am an image',
   },
+  onDoubleClick: jest.fn(),
 }
 describe('Image', () => {
   describe('img', () => {
@@ -30,18 +25,9 @@ describe('Image', () => {
     })
 
     it('dispatches the correct type/payload when image is doubleClicked', () => {
-      const dispatch = jest.fn()
-      useDispatch.mockReturnValue(dispatch)
-
       const wrapper = shallow(<Image {...defaultProps} />)
       wrapper.find('img').simulate('doubleClick')
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: TYPES.UPDATE_IMAGE_LIKED,
-        payload: {
-          imageId: defaultProps.image.id,
-        },
-      })
+      expect(defaultProps.onDoubleClick).toHaveBeenCalled()
     })
   })
 })
