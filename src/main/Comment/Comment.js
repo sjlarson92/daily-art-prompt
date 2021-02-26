@@ -1,8 +1,8 @@
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
+import React from 'react'
 
-export const Comment = ({ comment, onDelete, onEdit }) => (
+const Comment = ({ comment, onDelete, onEdit }) => (
   <div className="comment-layout-container" data-testid="nonEditingDiv">
     <div data-testid="commentDiv">{comment.text}</div>
     <div id="comment-icon-container">
@@ -23,22 +23,4 @@ export const Comment = ({ comment, onDelete, onEdit }) => (
   </div>
 )
 
-export const EditComment = ({ comment, onUpdate, onCancel }) => (
-  <div className="comment-layout-container" data-testid="editingDiv">
-    <input
-      className="comment-input-box"
-      testid="editInputBox"
-      defaultValue={comment.text}
-      onKeyDown={e => onUpdate(e, comment)}
-    />
-    <button
-      id="cancel-button"
-      className="btn"
-      type="button"
-      testid="cancelButton"
-      onClick={onCancel}
-    >
-      Cancel
-    </button>
-  </div>
-)
+export default Comment

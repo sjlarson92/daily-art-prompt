@@ -23,7 +23,6 @@ const ImageLayout = ({ image }) => {
       <Image data-testid="image" image={image} />
       <div id="image-details-container">
         <FontAwesomeIcon
-          id={image.liked ? 'liked' : 'unliked'}
           className="pointer-on-hover"
           icon={faHeart}
           onClick={updateLikeImage}

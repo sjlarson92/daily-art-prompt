@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import { EditComment, Comment } from './CommentLayout'
+import EditComment from './EditComment'
+import Comment from './Comment'
 import { GATEWAY_URL } from '../constants'
 
 const CommentContainer = ({ imageId }) => {
@@ -38,7 +39,6 @@ const CommentContainer = ({ imageId }) => {
   }
 
   const updateComment = (e, comment) => {
-    // TODO: remove dispatch methods from imagesReducer
     if (e.keyCode === 13) {
       const newComment = { ...comment, text: e.target.value }
       axios
@@ -67,6 +67,7 @@ const CommentContainer = ({ imageId }) => {
               />
             ) : (
               <Comment
+                testid={`comment-${comment.id}`}
                 key={`comment-${comment.id}`}
                 comment={comment}
                 onDelete={deleteComment}
