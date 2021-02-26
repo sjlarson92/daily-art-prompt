@@ -14,11 +14,8 @@ export const imagesReducer = (state = [], action) => {
 
     case TYPES.UPDATE_IMAGE_LIKED:
       return state.map(image => {
-        if (image.id === action.payload.imageId) {
-          return {
-            ...image,
-            liked: !image.liked,
-          }
+        if (image.id === action.payload.updatedImage.id) {
+          return action.payload.updatedImage
         }
         return image
       })
