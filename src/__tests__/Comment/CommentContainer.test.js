@@ -133,10 +133,30 @@ describe('<CommentContainer/>', () => {
         updatedComment,
       )
     })
-    it('renders comments with updated comment', () => {
-      // TODO: finish this test
+    it('renders comments with updated comment', async () => {
+      const updatedText = 'updated comment'
+      const updatedComment = { ...comment, text: updatedText }
+      axios.get.mockResolvedValue({ data: [comment] })
+      axios.put.mockResolvedValue({ data: updatedComment })
+      const wrapper = mount(<CommentContainer {...defaultProps} />)
+      await waitForComponentToMount(wrapper)
+      await act(async () => {
+        await wrapper
+          .find({ testid: `show-comment-${comment.id}` })
+          .prop('onEdit')()
+        wrapper.update()
+        wrapper.find({ testid: `edit-comment-${comment.id}` }).prop('onUpdate')(
+          { keyCode: 13, target: { value: updatedText } },
+          comment,
+        )
+      })
+      wrapper.update()
+      expect(
+        wrapper.find({ testid: `show-comment-${comment.id}` }).prop('comment'),
+      ).toEqual(updatedComment)
     })
   })
+
   describe('DeleteComment', () => {
     it('makes axios call with correct params', async () => {
       axios.get.mockResolvedValue({ data: [comment] })
