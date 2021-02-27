@@ -1,4 +1,4 @@
-export const UPDATE_IMAGE_LIKED = 'UPDATE_IMAGE_LIKED'
+export const UPDATE_IMAGE = 'UPDATE_IMAGE_LIKED'
 
 export const UPDATE_DATE = 'UPDATE_DATE'
 

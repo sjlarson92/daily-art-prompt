@@ -14,9 +14,8 @@ const ImageLayout = ({ image }) => {
   const updateLikeImage = () => {
     const updatedImage = { ...image, liked: !image.liked }
     axios.put(`${GATEWAY_URL}/api/images/${image.id}`, updatedImage).then(r => {
-      console.log('updatedImage from be: ', r.data)
       dispatch({
-        type: TYPES.UPDATE_IMAGE_LIKED,
+        type: TYPES.UPDATE_IMAGE,
         payload: {
           updatedImage: r.data,
         },

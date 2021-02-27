@@ -96,9 +96,9 @@ describe('imagesReducer', () => {
     })
   })
 
-  describe('when the action.type equals UPDATE_IMAGE_LIKED', () => {
-    describe('when image.id equals payload.imageId and image.liked is false', () => {
-      it('should update image.liked to true', () => {
+  describe('when the action.type equals UPDATE_IMAGE', () => {
+    describe('when image.id equals payload.image.id', () => {
+      it('should update image', () => {
         const state = [
           {
             id: 1,
@@ -106,7 +106,7 @@ describe('imagesReducer', () => {
           },
         ]
         const action = {
-          type: TYPES.UPDATE_IMAGE_LIKED,
+          type: TYPES.UPDATE_IMAGE,
           payload: {
             updatedImage: { id: 1, liked: true },
           },
@@ -115,28 +115,6 @@ describe('imagesReducer', () => {
           {
             id: 1,
             liked: true,
-          },
-        ])
-      })
-    })
-    describe('when image.id equals payload.imageId and when image.liked is true', () => {
-      it('should update image.liked to false', () => {
-        const state = [
-          {
-            id: 1,
-            liked: true,
-          },
-        ]
-        const action = {
-          type: TYPES.UPDATE_IMAGE_LIKED,
-          payload: {
-            updatedImage: { id: 1, liked: false },
-          },
-        }
-        expect(imagesReducer(state, action)).toEqual([
-          {
-            id: 1,
-            liked: false,
           },
         ])
       })
@@ -151,7 +129,7 @@ describe('imagesReducer', () => {
           },
         ]
         const action = {
-          type: TYPES.UPDATE_IMAGE_LIKED,
+          type: TYPES.UPDATE_IMAGE,
           payload: {
             updatedImage: { id: 2 },
           },

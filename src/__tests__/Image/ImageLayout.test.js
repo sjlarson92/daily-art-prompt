@@ -61,7 +61,7 @@ describe('<ImageLayout>', () => {
         const wrapper = shallow(<ImageLayout {...defaultProps} />)
         await wrapper.find('Image').simulate('doubleClick')
         expect(dispatch).toHaveBeenCalledWith({
-          type: TYPES.UPDATE_IMAGE_LIKED,
+          type: TYPES.UPDATE_IMAGE,
           payload: {
             updatedImage,
           },
@@ -93,7 +93,7 @@ describe('<ImageLayout>', () => {
         const wrapper = shallow(<ImageLayout {...defaultProps} />)
         await wrapper.find('FontAwesomeIcon').simulate('click')
         expect(dispatch).toHaveBeenCalledWith({
-          type: TYPES.UPDATE_IMAGE_LIKED,
+          type: TYPES.UPDATE_IMAGE,
           payload: {
             updatedImage,
           },
