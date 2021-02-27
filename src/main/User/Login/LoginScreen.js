@@ -31,12 +31,21 @@ const LoginScreen = () => {
   }
   return (
     <div>
-      {location?.state?.message && (
-        <div data-testid="message">{location.state.message}</div>
-      )}
       <div className="d-flex user-card-div-container justify-content-center">
         <div className="user-card">
           <DapLogo />
+          {location?.state?.message && (
+            <Alert
+              testid="signUpMessage"
+              variant="success"
+              onClose={() => {
+                history.replace('', null)
+              }}
+              dismissible
+            >
+              {location.state.message}
+            </Alert>
+          )}
           {alert && (
             <Alert
               variant="danger"

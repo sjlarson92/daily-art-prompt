@@ -35,7 +35,7 @@ describe('LoginScreen', () => {
         }
         useLocation.mockReturnValue(location)
         const newWrapper = shallow(<LoginScreen />)
-        expect(newWrapper.find({ 'data-testid': 'message' }).text()).toEqual(
+        expect(newWrapper.find({ testid: 'signUpMessage' }).text()).toEqual(
           'I am a message, render me!',
         )
       })
