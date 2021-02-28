@@ -1,17 +1,15 @@
 import thunkMiddleware from 'redux-thunk'
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
-import { imagesReducer } from '../Image/imagesReducer'
-import { promptsReducer } from '../Prompt/promptsReducer'
 import { dateReducer } from '../Prompt/dateReducer'
 import { loadState, saveState } from './localStorage'
 import { userReducer } from '../User/userReducer'
 import { promptIdReducer } from '../Prompt/promptIdReducer'
 import * as TYPES from './actions'
+import { imagesReducer } from '../Image/imagesReducer'
 
 const appReducer = combineReducers({
   images: imagesReducer,
   date: dateReducer,
-  prompts: promptsReducer,
   user: userReducer,
   currentPromptId: promptIdReducer,
 })

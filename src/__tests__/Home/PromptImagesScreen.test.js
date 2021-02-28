@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { useSelector, useDispatch } from 'react-redux'
-import MainFeedScreen from '../../main/Home/MainFeedScreen'
+import PromptImagesScreen from '../../main/Home/PromptImagesScreen'
 import { getImagesAction } from '../../main/Image/imageApi'
 import { getPromptsAction } from '../../main/Prompt/promptsApi'
 import * as TYPES from '../../main/storage/actions'
@@ -32,23 +32,23 @@ describe('<MainFeedScreen>', () => {
     jest.clearAllMocks()
     useSelector.mockImplementation(callback => callback(mockState))
     useDispatch.mockReturnValue(dispatch)
-    wrapper = shallow(<MainFeedScreen />)
+    wrapper = shallow(<PromptImagesScreen />)
   })
   describe('On Initial Render', () => {
     it('getImagesAction gets called with the correct param', () => {
-      mount(<MainFeedScreen />)
+      mount(<PromptImagesScreen />)
       expect(getImagesAction).toHaveBeenCalledWith(user.id)
     })
     it('dispatches getImagesAction', () => {
-      mount(<MainFeedScreen />)
+      mount(<PromptImagesScreen />)
       expect(dispatch).toHaveBeenCalledWith(getImagesAction())
     })
     it('dispatches getPromptsAction', () => {
-      mount(<MainFeedScreen />)
+      mount(<PromptImagesScreen />)
       expect(dispatch).toHaveBeenCalledWith(getPromptsAction())
     })
     it('dispatches SET_INITIAL_DATE', () => {
-      mount(<MainFeedScreen />)
+      mount(<PromptImagesScreen />)
       expect(dispatch).toHaveBeenCalledWith({ type: TYPES.SET_INITIAL_DATE })
     })
   })
