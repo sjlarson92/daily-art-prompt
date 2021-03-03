@@ -1,34 +1,17 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
 import ImageLayout from './ImageLayout'
-import { GATEWAY_URL } from '../constants'
-import * as TYPES from '../storage/actions'
+import { getImagesByPromptAndUserId } from './imageApi'
 
 const ImageGallery = () => {
-  const currentPromptId = useSelector(state => state.currentPromptId)
+  const currentPromptId = useSelector(state => state.prompt.id)
   const user = useSelector(state => state.user)
   const images = useSelector(state => state.images)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // TODO: make new api to get * images for userId where promptId = currentPromptId
-    // TODO: put in imagesApi?
-    // /users/${id}/images?promptId=promptId
     if (currentPromptId != null) {
-      axios
-        .get(
-          `${GATEWAY_URL}/api/users/${user.id}/images?promptId=${currentPromptId}`,
-        )
-        .then(r => {
-          const newImages = r.data
-          dispatch({
-            type: TYPES.SET_USER_IMAGES,
-            payload: {
-              images: newImages,
-            },
-          })
-        })
+      getImagesByPromptAndUserId(dispatch, user, currentPromptId)
     }
   }, [currentPromptId, user.id])
 

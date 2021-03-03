@@ -3,7 +3,7 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import { dateReducer } from '../Prompt/dateReducer'
 import { loadState, saveState } from './localStorage'
 import { userReducer } from '../User/userReducer'
-import { promptIdReducer } from '../Prompt/promptIdReducer'
+import { promptReducer } from '../Prompt/promptReducer'
 import * as TYPES from './actions'
 import { imagesReducer } from '../Image/imagesReducer'
 
@@ -11,7 +11,7 @@ const appReducer = combineReducers({
   images: imagesReducer,
   date: dateReducer,
   user: userReducer,
-  currentPromptId: promptIdReducer,
+  prompt: promptReducer,
 })
 
 const rootReducer = (state, action) => {
