@@ -38,6 +38,12 @@ describe('DapNavBar', () => {
     useHistory.mockReturnValueOnce(history)
     wrapper = shallow(<DapNavBar />)
   })
+  describe('DapLogo', () => {
+    it('call history.push with correct param', () => {
+      wrapper.find('img').simulate('click')
+      expect(history.push).toHaveBeenCalledWith('/')
+    })
+  })
   describe('NavDropDown', () => {
     it('should render correct user for title', () => {
       expect(wrapper.find({ id: 'nav-user-dropdown' }).prop('title')).toEqual(

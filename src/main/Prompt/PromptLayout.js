@@ -23,7 +23,6 @@ const PromptLayout = () => {
   }, [date, dispatch])
 
   const changeDate = amount => {
-    console.log('date: ', date)
     const newDate = moment(date)
       .add(amount, 'day')
       .format('YYYY-MM-DD')
