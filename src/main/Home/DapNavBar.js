@@ -37,7 +37,10 @@ const DapNavBar = () => {
           )}
           <NavDropdown.Item
             data-testid="logoutButton"
-            onClick={() => dispatch({ type: TYPES.LOGOUT })}
+            onClick={() => {
+              dispatch({ type: TYPES.LOGOUT })
+              history.push('/')
+            }}
           >
             Logout
           </NavDropdown.Item>

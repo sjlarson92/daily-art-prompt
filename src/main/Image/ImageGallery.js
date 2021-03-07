@@ -1,19 +1,28 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import ImageLayout from './ImageLayout'
-import { getImagesByPromptAndUserId } from './imageApi'
+import {
+  getCommunityImagesByPromptIdAndUserId,
+  getImagesByPromptAndUserId,
+} from './imageApi'
 
 const ImageGallery = () => {
   const currentPromptId = useSelector(state => state.prompt.id)
   const user = useSelector(state => state.user)
   const images = useSelector(state => state.images)
   const dispatch = useDispatch()
+  const location = useLocation()
 
   useEffect(() => {
     if (currentPromptId != null) {
-      getImagesByPromptAndUserId(dispatch, user, currentPromptId)
+      if (location.pathname.endsWith('community-gallery')) {
+        getCommunityImagesByPromptIdAndUserId(dispatch, user, currentPromptId)
+      } else {
+        getImagesByPromptAndUserId(dispatch, user, currentPromptId)
+      }
     }
-  }, [currentPromptId, user.id])
+  }, [currentPromptId, user, dispatch, location.pathname])
 
   return (
     <div id="image-gallery">

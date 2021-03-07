@@ -18,6 +18,26 @@ export const getImagesByPromptAndUserId = (dispatch, user, currentPromptId) => {
     })
 }
 
+export const getCommunityImagesByPromptIdAndUserId = (
+  dispatch,
+  user,
+  currentPromptId,
+) => {
+  axios
+    .get(
+      `${GATEWAY_URL}/api/community-images?promptId=${currentPromptId}&userId=${user.id}`,
+    )
+    .then(r => {
+      console.log('response: ', r.data)
+      dispatch({
+        type: TYPES.SET_USER_IMAGES,
+        payload: {
+          images: r.data,
+        },
+      })
+    })
+}
+
 export const updateLikeImageAction = (updatedImage, dispatch) => {
   axios
     .put(`${GATEWAY_URL}/api/images/${updatedImage.id}`, updatedImage)

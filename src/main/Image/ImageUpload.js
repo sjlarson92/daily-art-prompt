@@ -10,7 +10,7 @@ const ImageUpload = () => {
   const [showAlert, setShowAlert] = useState(false)
   const [isDisabled, setIsDisabled] = useState(true)
   const fileInputRef = useRef(null)
-  const currentPromptId = useSelector(state => state.currentPromptId)
+  const currentPromptId = useSelector(state => state.prompt.id)
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
