@@ -5,48 +5,46 @@ import {
   faChevronCircleRight,
   faChevronCircleLeft,
 } from '@fortawesome/free-solid-svg-icons'
+import { useHistory, useParams } from 'react-router-dom'
+import moment from 'moment'
 import Prompt from './Prompt'
-import {
-  updateNextDateAction,
-  updatePreviousDateAction,
-} from './dispatchFunctions'
-import * as TYPES from '../storage/actions'
+import { getPromptByDate } from './promptsApi'
+
+const iconSize = '3x'
 
 const PromptLayout = () => {
-  const prompts = useSelector(state => state.prompts)
-  const date = useSelector(state => state.date)
   const dispatch = useDispatch()
-  const iconSize = '3x'
+  const history = useHistory()
+  const { date } = useParams()
+  const prompt = useSelector(state => state.prompt)
 
   useEffect(() => {
-    dispatch({
-      type: TYPES.SET_CURRENT_PROMPT_ID,
-      payload: {
-        promptId: Object.keys(prompts).length > 0 && prompts[date]?.id,
-      },
-    })
-  }, [prompts, date, dispatch])
+    getPromptByDate(dispatch, date)
+  }, [date, dispatch])
+
+  const changeDate = amount => {
+    const newDate = moment(date)
+      .add(amount, 'day')
+      .format('YYYY-MM-DD')
+    history.push(`/prompt-images/${newDate}`)
+  }
 
   return (
     <div data-testid="mainContentContainer" className="prompt-row">
       <FontAwesomeIcon
-        data-testid="previousButton"
+        testid="previousButton"
         className="prompt-button"
         icon={faChevronCircleLeft}
         size={iconSize}
-        onClick={() => dispatch(updatePreviousDateAction())}
+        onClick={() => changeDate(-1)}
       />
-
-      {Object.keys(prompts).length > 0 && prompts[date] && (
-        <Prompt data-testid="prompt" prompt={prompts[date]} />
-      )}
-
+      {prompt && <Prompt testid="prompt" prompt={prompt} />}
       <FontAwesomeIcon
-        data-testid="nextButton"
+        testid="nextButton"
         className="prompt-button"
         icon={faChevronCircleRight}
         size={iconSize}
-        onClick={() => dispatch(updateNextDateAction())}
+        onClick={() => changeDate(1)}
       />
     </div>
   )

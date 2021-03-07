@@ -1,97 +1,77 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { when } from 'jest-when'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useParams } from 'react-router-dom'
+import moment from 'moment'
 import PromptLayout from '../../main/Prompt/PromptLayout'
-import {
-  updateNextDateAction,
-  updatePreviousDateAction,
-} from '../../main/Prompt/dispatchFunctions'
 
 jest.mock('react-redux')
-
-jest.mock('../../main/Prompt/dispatchFunctions')
+jest.mock('react-router-dom', () => ({
+  useHistory: jest.fn(),
+  useParams: jest.fn(),
+}))
 
 const date = '2021-01-11'
-const prompts = {
-  [date]: 'na na na na na na na na BATMAN!!!',
+const prompt = {
+  id: 1,
+  date,
+  text: 'i am a prompt',
 }
 const dispatch = jest.fn()
+const history = {
+  push: jest.fn(),
+}
 
 describe('<PromptLayout>', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    useSelector.mockReturnValueOnce(prompts).mockReturnValueOnce(date)
     useDispatch.mockReturnValueOnce(dispatch)
+    useHistory.mockReturnValueOnce(history)
+    useParams.mockReturnValueOnce({ date })
+    useSelector.mockReturnValueOnce(prompt)
   })
-  describe('<div> for mainContentContainer', () => {
-    it('should have a prompt-row className', () => {
-      const wrapper = shallow(<PromptLayout />)
-      const result = wrapper
-        .find({ 'data-testid': 'mainContentContainer' })
-        .prop('className')
-      expect(result).toEqual('prompt-row')
-    })
-
+  describe('<Promptlayout />', () => {
     describe('<FontAwesomeIcon> for previousButton', () => {
-      it('should dispatch with return value of updatePreviousDateAction when clicked', () => {
+      it('should call history.push with correct params', () => {
+        const newDate = moment(date)
+          .subtract(1, 'day')
+          .format('YYYY-MM-DD')
         const wrapper = shallow(<PromptLayout />)
-        when(updatePreviousDateAction)
-          .calledWith()
-          .mockReturnValue('hi')
-        wrapper.find({ 'data-testid': 'previousButton' }).simulate('click')
-        expect(dispatch).toHaveBeenCalledWith('hi')
+        wrapper.find({ testid: 'previousButton' }).simulate('click')
+        expect(history.push).toHaveBeenCalledWith(`/prompt-images/${newDate}`)
       })
     })
 
     describe('<Prompt>', () => {
-      describe('when there are prompts', () => {
-        describe('when the date in state is in prompts', () => {
-          it('should render', () => {
-            const wrapper = shallow(<PromptLayout />)
-            const result = wrapper.find({ 'data-testid': 'prompt' })
-            expect(result).toHaveLength(1)
-          })
-          it('should render with correct prompt prop', () => {
-            const wrapper = shallow(<PromptLayout />)
-            const result = wrapper
-              .find({ 'data-testid': 'prompt' })
-              .prop('prompt')
-            expect(result).toEqual(prompts[date])
-          })
+      describe('when there is a prompt for the date', () => {
+        it('should render', () => {
+          const wrapper = shallow(<PromptLayout />)
+          const result = wrapper.find({ testid: 'prompt' })
+          expect(result).toHaveLength(1)
         })
       })
-      describe('when the date in state is NOT in prompts', () => {
+      describe('when there is no prompt for the date', () => {
         it('should not render', () => {
           jest.resetAllMocks()
-          useSelector
-            .mockReturnValueOnce(prompts)
-            .mockReturnValueOnce('non existing date')
+          useDispatch.mockReturnValueOnce(dispatch)
+          useHistory.mockReturnValueOnce(history)
+          useParams.mockReturnValueOnce({ date })
+          useSelector.mockReturnValueOnce(null)
           const wrapper = shallow(<PromptLayout />)
-          const result = wrapper.find({ 'data-testid': 'prompt' })
-          expect(result).toHaveLength(0)
-        })
-      })
-
-      describe('when there are no prompts', () => {
-        it('should not render <Prompt>', () => {
-          jest.resetAllMocks()
-          useSelector.mockReturnValueOnce({}).mockReturnValueOnce(date)
-          const wrapper = shallow(<PromptLayout />)
-          const result = wrapper.find({ 'data-testid': 'prompt' })
+          const result = wrapper.find({ testid: 'prompt' })
           expect(result).toHaveLength(0)
         })
       })
     })
 
     describe('<FontAwesomeIcon> for nextButton', () => {
-      it('should dispatch with return value of updateNextDateAction when clicked', () => {
+      it('should call history.push with correct params', () => {
+        const newDate = moment(date)
+          .add(1, 'day')
+          .format('YYYY-MM-DD')
         const wrapper = shallow(<PromptLayout />)
-        when(updateNextDateAction)
-          .calledWith()
-          .mockReturnValue('hi')
-        wrapper.find({ 'data-testid': 'nextButton' }).simulate('click')
-        expect(dispatch).toHaveBeenCalledWith('hi')
+        wrapper.find({ testid: 'nextButton' }).simulate('click')
+        expect(history.push).toHaveBeenCalledWith(`/prompt-images/${newDate}`)
       })
     })
   })

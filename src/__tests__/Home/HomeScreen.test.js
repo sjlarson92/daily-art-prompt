@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import moment from 'moment'
 import HomeScreen from '../../main/Home/HomeScreen'
 
 jest.mock('react-router-dom', () => ({
@@ -39,12 +40,17 @@ describe('<HomeScreen>', () => {
     useHistory.mockReturnValue(history)
     useSelector.mockReturnValue(false)
     const wrapper = shallow(<HomeScreen />)
-    expect(wrapper.find({ 'data-testid': 'mainFeedScreen' })).toHaveLength(0)
+    expect(wrapper.find({ 'data-testid': 'appContainer' })).toHaveLength(0)
   })
 
   it('should return correct component if user is loggedIn', () => {
+    const todaysDate = moment().format('YYYY-MM-DD')
+    const history = {
+      push: jest.fn(),
+    }
+    useHistory.mockReturnValue(history)
     useSelector.mockReturnValue({ isLoggedIn: true })
-    const wrapper = shallow(<HomeScreen />)
-    expect(wrapper.find({ 'data-testid': 'mainFeedScreen' })).toHaveLength(1)
+    shallow(<HomeScreen />)
+    expect(history.push).toHaveBeenCalledWith(`/prompt-images/${todaysDate}`)
   })
 })

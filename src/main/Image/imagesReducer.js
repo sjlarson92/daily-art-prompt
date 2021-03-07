@@ -4,7 +4,7 @@ export const imagesReducer = (state = [], action) => {
   switch (action.type) {
     case TYPES.SET_USER_IMAGES: {
       const { images } = action.payload
-      return images ? [...state, ...images] : state
+      return images
     }
 
     case TYPES.ADD_IMAGE: {

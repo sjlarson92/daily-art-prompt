@@ -2,13 +2,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { shallow } from 'enzyme'
 import axios from 'axios'
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import * as TYPES from '../../main/storage/actions'
 import DapNavBar from '../../main/Home/DapNavBar'
 
-jest.mock('react-redux', () => ({
-  ...require.requireActual('react-redux'),
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
+jest.mock('react-redux')
+jest.mock('react-router-dom', () => ({
+  useHistory: jest.fn(),
 }))
 jest.mock('../../main/Image/ImageLayout')
 jest.mock('axios')
@@ -18,6 +18,10 @@ const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
 const user = {
   id: 'some id',
   email: 'SomeUser',
+}
+
+const history = {
+  push: jest.fn(),
 }
 
 const mockState = {
@@ -30,8 +34,15 @@ describe('DapNavBar', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     useSelector.mockImplementation(callback => callback(mockState))
-    useDispatch.mockReturnValue(dispatch)
+    useDispatch.mockReturnValueOnce(dispatch)
+    useHistory.mockReturnValueOnce(history)
     wrapper = shallow(<DapNavBar />)
+  })
+  describe('DapLogo', () => {
+    it('call history.push with correct param', () => {
+      wrapper.find('img').simulate('click')
+      expect(history.push).toHaveBeenCalledWith('/')
+    })
   })
   describe('NavDropDown', () => {
     it('should render correct user for title', () => {

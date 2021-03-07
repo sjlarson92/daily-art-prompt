@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { shallow } from 'enzyme'
 import React from 'react'
 import ImageGallery from '../../main/Image/ImageGallery'
@@ -6,6 +6,7 @@ import ImageGallery from '../../main/Image/ImageGallery'
 jest.mock('react-redux', () => ({
   ...require.requireActual('react-redux'),
   useSelector: jest.fn(),
+  useDispatch: jest.fn(),
 }))
 jest.mock('../../main/Image/ImageLayout')
 
@@ -26,24 +27,29 @@ const images = [
     liked: false,
   },
 ]
+const user = { id: 1 }
 
 const mockState = {
+  user,
   images,
-  currentPromptId: images[2].promptId,
+  prompt: { id: images[2].promptId },
 }
+
+const dispatch = jest.fn()
 
 describe('ImageGallery', () => {
   let wrapper
   beforeEach(() => {
     jest.clearAllMocks()
     useSelector.mockImplementation(callback => callback(mockState))
+    useDispatch.mockReturnValueOnce(dispatch)
     wrapper = shallow(<ImageGallery />)
   })
   describe('<ImageLayout>', () => {
-    describe('when there are images and promptId equals image.promptId', () => {
+    describe('when there are images', () => {
       it('renders imageLayout for each image in array', () => {
         expect(wrapper.find({ 'data-className': 'imageLayout' })).toHaveLength(
-          1,
+          3,
         )
       })
       describe('image prop', () => {

@@ -29,7 +29,7 @@ describe('imagesReducer', () => {
       })
     })
     describe('when there are images in state', () => {
-      it('should return updatedImages with previous state and new Image', () => {
+      it('should return updatedImages without previous state', () => {
         const newImage = {
           id: 'some id 1',
           userId: 'some user id',
@@ -48,12 +48,12 @@ describe('imagesReducer', () => {
             images: [newImage],
           },
         }
-        const expectedResult = [oldImage, newImage]
+        const expectedResult = [newImage]
         expect(imagesReducer([oldImage], action)).toEqual(expectedResult)
       })
     })
     describe('when image received is null or undefined', () => {
-      it('should return state unchanged', () => {
+      it('should return null', () => {
         const state = [
           {
             id: 'some id 1',
@@ -67,7 +67,7 @@ describe('imagesReducer', () => {
             images: null,
           },
         }
-        expect(imagesReducer(state, action)).toEqual(state)
+        expect(imagesReducer(state, action)).toEqual(null)
       })
     })
   })

@@ -2,15 +2,33 @@ import axios from 'axios'
 import * as TYPES from '../storage/actions'
 import { GATEWAY_URL } from '../constants'
 
-export const getImagesAction = id => dispatch => {
-  axios.get(`${GATEWAY_URL}/api/users/${id}/images`).then(response => {
-    dispatch({
-      type: TYPES.SET_USER_IMAGES,
-      payload: {
-        images: response.data,
-      },
+export const getImagesByPromptAndUserId = (dispatch, user, currentPromptId) => {
+  axios
+    .get(
+      `${GATEWAY_URL}/api/images?promptId=${currentPromptId}&userId=${user.id}`,
+    )
+    .then(r => {
+      const newImages = r.data
+      dispatch({
+        type: TYPES.SET_USER_IMAGES,
+        payload: {
+          images: newImages,
+        },
+      })
     })
-  })
+}
+
+export const updateLikeImageAction = (updatedImage, dispatch) => {
+  axios
+    .put(`${GATEWAY_URL}/api/images/${updatedImage.id}`, updatedImage)
+    .then(r => {
+      dispatch({
+        type: TYPES.UPDATE_IMAGE,
+        payload: {
+          updatedImage: r.data,
+        },
+      })
+    })
 }
 
 export const uploadImageAction = (
