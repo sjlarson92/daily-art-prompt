@@ -30,6 +30,7 @@ export const updateLikeImageAction = (updatedImage, dispatch) => {
       })
     })
 }
+
 export const uploadImageAction = (
   id,
   currentPromptId,

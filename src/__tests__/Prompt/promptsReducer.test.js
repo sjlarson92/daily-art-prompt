@@ -1,26 +1,27 @@
 import * as TYPES from '../../main/storage/actions'
-import { promptsReducer } from '../../main/Prompt/promptsReducer'
+import { promptReducer } from '../../main/Prompt/promptReducer'
 
 describe('promptsReducer', () => {
-  describe('when action.type is SET_INITIAL_PROMPTS', () => {
-    it('should return initial prompts', () => {
-      const state = []
+  describe('when action.type is SET_CURRENT_PROMPT', () => {
+    it('should return prompt', () => {
+      const prompt = 'some prompt'
+      const state = {}
       const action = {
-        type: TYPES.SET_INITIAL_PROMPTS,
+        type: TYPES.SET_CURRENT_PROMPT,
         payload: {
-          prompts: 'NOT an array of prompts',
+          prompt,
         },
       }
-      expect(promptsReducer(state, action)).toEqual('NOT an array of prompts')
+      expect(promptReducer(state, action)).toEqual(prompt)
     })
   })
   describe('when action.type is default', () => {
     it('should return state', () => {
-      const state = []
+      const state = {}
       const action = {
         type: '',
       }
-      expect(promptsReducer(state, action)).toEqual(state)
+      expect(promptReducer(state, action)).toEqual(state)
     })
   })
 })

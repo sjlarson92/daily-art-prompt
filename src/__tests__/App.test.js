@@ -5,84 +5,68 @@ import HomeScreen from '../main/Home/HomeScreen'
 import LoginScreen from '../main/User/Login/LoginScreen'
 import ErrorScreen from '../main/User/Login/ErrorScreen'
 import SignUpScreen from '../main/User/SignUp/SignUpScreen'
+import PromptImagesScreen from '../main/Home/PromptImagesScreen'
 
 describe('<App>', () => {
   let wrapper
   beforeEach(() => {
     wrapper = shallow(<App />)
   })
-  describe('<Route> at 0', () => {
+  describe('<Route> for HomeScreen', () => {
     it('has the correct exact prop', () => {
-      expect(
-        wrapper
-          .find('Route')
-          .at(0)
-          .prop('exact'),
-      ).toBeTruthy()
+      expect(wrapper.find({ testid: 'home' }).prop('exact')).toBeTruthy()
     })
 
     it('has the correct path prop', () => {
-      expect(
-        wrapper
-          .find('Route')
-          .at(0)
-          .prop('path'),
-      ).toEqual('/')
+      expect(wrapper.find({ testid: 'home' }).prop('path')).toEqual('/')
     })
 
     it('has the correct component prop', () => {
-      expect(
-        wrapper
-          .find('Route')
-          .at(0)
-          .prop('component'),
-      ).toEqual(HomeScreen)
+      expect(wrapper.find({ testid: 'home' }).prop('component')).toEqual(
+        HomeScreen,
+      )
     })
   })
-  describe('<Route> at 1', () => {
+  describe('<Route> for PromptImageScreen', () => {
     it('has correct path prop', () => {
-      expect(
-        wrapper
-          .find('Route')
-          .at(1)
-          .prop('path'),
-      ).toEqual('/login')
+      expect(wrapper.find({ testid: 'promptScreen' }).prop('path')).toEqual(
+        '/prompt-images/:date',
+      )
     })
     it('has correct component prop', () => {
       expect(
-        wrapper
-          .find('Route')
-          .at(1)
-          .prop('component'),
-      ).toEqual(LoginScreen)
+        wrapper.find({ testid: 'promptScreen' }).prop('component'),
+      ).toEqual(PromptImagesScreen)
     })
   })
-  describe('<Route> at 2', () => {
+  describe('<Route> for Login', () => {
     it('has correct path prop', () => {
-      expect(
-        wrapper
-          .find('Route')
-          .at(2)
-          .prop('path'),
-      ).toEqual('/sign-up')
+      expect(wrapper.find({ testid: 'login' }).prop('path')).toEqual('/login')
     })
     it('has correct component prop', () => {
-      expect(
-        wrapper
-          .find('Route')
-          .at(2)
-          .prop('component'),
-      ).toEqual(SignUpScreen)
+      expect(wrapper.find({ testid: 'login' }).prop('component')).toEqual(
+        LoginScreen,
+      )
     })
   })
-  describe('<Route> at 3', () => {
+  describe('<Route> for SignUp', () => {
+    it('has correct path prop', () => {
+      expect(wrapper.find({ testid: 'signUp' }).prop('path')).toEqual(
+        '/sign-up',
+      )
+    })
     it('should have correct component', () => {
-      expect(
-        wrapper
-          .find('Route')
-          .at(3)
-          .prop('component'),
-      ).toEqual(ErrorScreen)
+      expect(wrapper.find({ testid: 'signUp' }).prop('component')).toEqual(
+        SignUpScreen,
+      )
+    })
+  })
+
+  describe('<Route> for ErrorScreen', () => {
+    it('should have correct component', () => {
+      expect(wrapper.find({ testid: 'error' }).prop('component')).toEqual(
+        ErrorScreen,
+      )
     })
   })
 })

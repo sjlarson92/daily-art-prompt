@@ -21,11 +21,15 @@ export const App = () => {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route exact path="/" component={HomeScreen} />
-          <Route path="/prompt-images/:date" component={PromptImagesScreen} />
-          <Route path="/login" component={LoginScreen} />
-          <Route path="/sign-up" component={SignUpScreen} />
-          <Route component={ErrorScreen} />
+          <Route testid="home" exact path="/" component={HomeScreen} />
+          <Route
+            testid="promptScreen"
+            path="/prompt-images/:date"
+            component={PromptImagesScreen}
+          />
+          <Route testid="login" path="/login" component={LoginScreen} />
+          <Route testid="signUp" path="/sign-up" component={SignUpScreen} />
+          <Route testid="error" component={ErrorScreen} />
         </Switch>
       </Router>
     </Provider>

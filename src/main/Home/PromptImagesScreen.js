@@ -11,15 +11,15 @@ const PromptImagesScreen = () => {
       <DapNavBar />
       <div className="app">
         <div id="prompt-layout-container">
-          <PromptLayout data-testid="promptLayout" />
+          <PromptLayout testid="promptLayout" />
         </div>
         <hr />
         <div id="image-tab-container">
-          <ImageUploadModal />
+          <ImageUploadModal testid="imageUploadModal" />
           <div> My Gallery </div>
           <div> Community Gallery </div>
         </div>
-        <ImageGallery />
+        <ImageGallery testid="imageGallery" />
       </div>
     </div>
   )

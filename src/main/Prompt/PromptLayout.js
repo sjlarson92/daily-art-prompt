@@ -23,6 +23,7 @@ const PromptLayout = () => {
   }, [date, dispatch])
 
   const changeDate = amount => {
+    console.log('date: ', date)
     const newDate = moment(date)
       .add(amount, 'day')
       .format('YYYY-MM-DD')
@@ -32,15 +33,15 @@ const PromptLayout = () => {
   return (
     <div data-testid="mainContentContainer" className="prompt-row">
       <FontAwesomeIcon
-        data-testid="previousButton"
+        testid="previousButton"
         className="prompt-button"
         icon={faChevronCircleLeft}
         size={iconSize}
         onClick={() => changeDate(-1)}
       />
-      {prompt && <Prompt data-testid="prompt" prompt={prompt} />}
+      {prompt && <Prompt testid="prompt" prompt={prompt} />}
       <FontAwesomeIcon
-        data-testid="nextButton"
+        testid="nextButton"
         className="prompt-button"
         icon={faChevronCircleRight}
         size={iconSize}
