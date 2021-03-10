@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { shallow } from 'enzyme'
+import { useLocation } from 'react-router-dom'
 import React from 'react'
 import ImageGallery from '../../main/Image/ImageGallery'
 
@@ -7,6 +8,9 @@ jest.mock('react-redux', () => ({
   ...require.requireActual('react-redux'),
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
+}))
+jest.mock('react-router-dom', () => ({
+  useLocation: jest.fn(),
 }))
 jest.mock('../../main/Image/ImageLayout')
 
@@ -34,6 +38,9 @@ const mockState = {
   images,
   prompt: { id: images[2].promptId },
 }
+const location = {
+  pathname: 'fake/pathname',
+}
 
 const dispatch = jest.fn()
 
@@ -43,6 +50,7 @@ describe('ImageGallery', () => {
     jest.clearAllMocks()
     useSelector.mockImplementation(callback => callback(mockState))
     useDispatch.mockReturnValueOnce(dispatch)
+    useLocation.mockReturnValueOnce(location)
     wrapper = shallow(<ImageGallery />)
   })
   describe('<ImageLayout>', () => {
@@ -66,6 +74,7 @@ describe('ImageGallery', () => {
       it('should not render ImageLayout', () => {
         jest.resetAllMocks()
         useSelector.mockReturnValue([])
+        useLocation.mockReturnValue(location)
         wrapper = shallow(<ImageGallery />)
         expect(wrapper.find({ 'data-className': 'imageLayout' })).toHaveLength(
           0,

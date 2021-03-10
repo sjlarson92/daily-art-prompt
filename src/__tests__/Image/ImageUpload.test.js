@@ -15,11 +15,13 @@ const user = {
   email: 'SomeUser',
 }
 
-const currentPromptId = 1
+const prompt = {
+  id: 1,
+}
 
 const mockState = {
   user,
-  currentPromptId,
+  prompt,
 }
 const dispatch = jest.fn()
 
@@ -105,7 +107,7 @@ describe('ImageUpload', () => {
               uploadButton.simulate('click')
               expect(uploadImageAction).toHaveBeenCalledWith(
                 user.id,
-                currentPromptId,
+                prompt.id,
                 description,
                 image,
                 dispatch,
@@ -115,13 +117,7 @@ describe('ImageUpload', () => {
               it('renders alert with correct props', async () => {
                 jest.clearAllMocks()
                 when(uploadImageAction)
-                  .calledWith(
-                    user.id,
-                    currentPromptId,
-                    description,
-                    image,
-                    dispatch,
-                  )
+                  .calledWith(user.id, prompt.id, description, image, dispatch)
                   .mockResolvedValue({
                     message: 'Image has been saved',
                     variant: 'success',
