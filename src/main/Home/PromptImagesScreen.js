@@ -1,14 +1,15 @@
 import React from 'react'
 import './main.css'
-import { useHistory, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import PromptLayout from '../Prompt/PromptLayout'
 import ImageGallery from '../Image/ImageGallery'
 import DapNavBar from './DapNavBar'
 import ImageUploadModal from '../Image/ImageUploadModal'
 
 const PromptImagesScreen = () => {
-  const history = useHistory()
   const { date } = useParams()
+  const location = useLocation()
+
   return (
     <div data-testid="appContainer">
       <DapNavBar />
@@ -18,21 +19,32 @@ const PromptImagesScreen = () => {
         </div>
         <hr />
         <div id="image-tab-container">
-          <ImageUploadModal testid="imageUploadModal" />
-          <div
-            onClick={() => {
-              history.push(`/prompt-images/${date}`)
-            }}
-          >
-            My Gallery
+          <div className="col-4">
+            <ImageUploadModal testid="imageUploadModal" />
           </div>
-          <div
-            role="link"
-            onClick={() => {
-              history.push(`/prompt-images/${date}/community-gallery`)
-            }}
-          >
-            Community Gallery
+          <div className="col-4 pointer-on-hover">
+            <a
+              className={
+                location.pathname.endsWith('community-gallery')
+                  ? 'tab'
+                  : 'selected-tab tab'
+              }
+              href={`/prompt-images/${date}`}
+            >
+              My Gallery
+            </a>
+          </div>
+          <div className="col-4 pointer-on-hover">
+            <a
+              className={
+                location.pathname.endsWith('community-gallery')
+                  ? 'selected-tab tab'
+                  : 'tab'
+              }
+              href={`/prompt-images/${date}/community-gallery`}
+            >
+              Community Gallery
+            </a>
           </div>
         </div>
         <ImageGallery testid="imageGallery" />

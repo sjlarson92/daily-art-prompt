@@ -6,7 +6,7 @@ import addImageIcon from '../images/addImage.png'
 const ImageUploadModal = () => {
   const [showModal, setShowModal] = useState(null)
   return (
-    <div>
+    <div className="tab">
       <img
         id="add-image-icon"
         testid="addImageIcon"
