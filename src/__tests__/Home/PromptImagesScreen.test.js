@@ -35,6 +35,20 @@ describe('<PromptImagesScreen>', () => {
         expect(wrapper.find({ testid: 'imageUploadModal' })).toHaveLength(1)
       })
     })
+    describe('My Gallery', () => {
+      it('has correct href prop', () => {
+        expect(wrapper.find({ testid: 'myGallery' }).prop('href')).toEqual(
+          `/prompt-images/${date}`,
+        )
+      })
+    })
+    describe('Community Gallery', () => {
+      it('has correct href prop', () => {
+        expect(
+          wrapper.find({ testid: 'communityGallery' }).prop('href'),
+        ).toEqual(`/prompt-images/${date}/community-gallery`)
+      })
+    })
     describe('<ImageGallery>', () => {
       it('should exist', () => {
         expect(wrapper.find({ testid: 'imageGallery' })).toHaveLength(1)

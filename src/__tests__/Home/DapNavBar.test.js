@@ -103,6 +103,10 @@ describe('DapNavBar', () => {
         wrapper.find({ 'data-testid': 'logoutButton' }).simulate('click')
         expect(dispatch).toHaveBeenCalledWith({ type: TYPES.LOGOUT })
       })
+      it('history.push called with correct param', () => {
+        wrapper.find({ 'data-testid': 'logoutButton' }).simulate('click')
+        expect(history.push).toHaveBeenCalledWith('/')
+      })
     })
   })
 })

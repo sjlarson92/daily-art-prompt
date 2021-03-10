@@ -24,6 +24,7 @@ const PromptImagesScreen = () => {
           </div>
           <div className="col-4 pointer-on-hover">
             <a
+              testid="myGallery"
               className={
                 location.pathname.endsWith('community-gallery')
                   ? 'tab'
@@ -36,6 +37,7 @@ const PromptImagesScreen = () => {
           </div>
           <div className="col-4 pointer-on-hover">
             <a
+              testid="communityGallery"
               className={
                 location.pathname.endsWith('community-gallery')
                   ? 'selected-tab tab'

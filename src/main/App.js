@@ -25,7 +25,7 @@ export const App = () => {
           <Route testid="login" path="/login" component={LoginScreen} />
           <Route testid="signUp" path="/sign-up" component={SignUpScreen} />
           <Route
-            testid=""
+            testid="communityGallery"
             path="/prompt-images/:date/community-gallery"
             component={PromptImagesScreen}
           />

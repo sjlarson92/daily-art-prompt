@@ -4,6 +4,7 @@ import {
   updateLikeImageAction,
   getImagesByPromptAndUserId,
   uploadImageAction,
+  getCommunityImagesByPromptIdAndUserId,
 } from '../../main/Image/imageApi'
 import * as TYPES from '../../main/storage/actions'
 
@@ -47,6 +48,32 @@ describe('getImagesByPromptAndUserId', () => {
           images,
         },
       })
+    })
+  })
+})
+
+describe('getCommunityImagesByPromptIdAndUserId', () => {
+  const user = { id: 1 }
+  const currentPromptId = 1
+  const images = ['image1', 'image2']
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+  it('calls api with correct params', () => {
+    axios.get.mockResolvedValueOnce({ data: images })
+    getCommunityImagesByPromptIdAndUserId(dispatch, user, currentPromptId)
+    expect(axios.get).toHaveBeenCalledWith(
+      `${GATEWAY_URL}/api/community-images?promptId=${currentPromptId}&userId=${user.id}`,
+    )
+  })
+  it('calls dispatch with the correct params', async () => {
+    axios.get.mockResolvedValueOnce({ data: images })
+    await getCommunityImagesByPromptIdAndUserId(dispatch, user, currentPromptId)
+    expect(dispatch).toHaveBeenCalledWith({
+      type: TYPES.SET_USER_IMAGES,
+      payload: {
+        images,
+      },
     })
   })
 })
