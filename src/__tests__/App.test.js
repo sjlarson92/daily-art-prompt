@@ -61,18 +61,6 @@ describe('<App>', () => {
       ).toEqual(PromptImagesScreen)
     })
   })
-  describe('<Route> for PromptImageScreen with CommunityGallery', () => {
-    it('has correct path prop', () => {
-      expect(wrapper.find({ testid: 'communityGallery' }).prop('path')).toEqual(
-        '/prompt-images/:date/community-gallery',
-      )
-    })
-    it('has correct component prop', () => {
-      expect(
-        wrapper.find({ testid: 'promptScreen' }).prop('component'),
-      ).toEqual(PromptImagesScreen)
-    })
-  })
 
   describe('<Route> for ErrorScreen', () => {
     it('should have correct component', () => {
