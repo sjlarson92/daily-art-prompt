@@ -59,6 +59,24 @@ body {
   font-size: 45px;
 }
 
+.selected-tab {
+  border-bottom: solid;
+  border-bottom-color: #60a3bc;
+}
+
+.tab {
+  color: #60a3bc;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 50px;
+}
+
+.tab:hover {
+  color: #60a3bc;
+  text-decoration: none;
+}
+
 img {
   height: 250px;
 }

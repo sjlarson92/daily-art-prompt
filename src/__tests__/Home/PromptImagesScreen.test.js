@@ -1,34 +1,26 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { useSelector, useDispatch } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
 import PromptImagesScreen from '../../main/Home/PromptImagesScreen'
 
-jest.mock('react-redux', () => ({
-  ...require.requireActual('react-redux'),
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
+jest.mock('react-router-dom', () => ({
+  useLocation: jest.fn(),
+  useParams: jest.fn(),
 }))
-jest.mock('../../main/Image/imageApi')
-jest.mock('../../main/Prompt/promptsApi')
 jest.mock('../../main/Prompt/PromptLayout', () => () => <div />)
-jest.mock('axios')
 
-const user = {
-  id: 'some id',
-  email: 'SomeUser',
+const date = '2021-01-11'
+
+const location = {
+  pathname: 'fake/pathname',
 }
 
-const mockState = {
-  user,
-}
-const dispatch = jest.fn()
-
-describe('<MainFeedScreen>', () => {
+describe('<PromptImagesScreen>', () => {
   let wrapper
   beforeEach(() => {
     jest.clearAllMocks()
-    useSelector.mockImplementation(callback => callback(mockState))
-    useDispatch.mockReturnValue(dispatch)
+    useParams.mockReturnValueOnce({ date })
+    useLocation.mockReturnValueOnce(location)
     wrapper = shallow(<PromptImagesScreen />)
   })
 
@@ -41,6 +33,20 @@ describe('<MainFeedScreen>', () => {
     describe('<ImageUploadModal>', () => {
       it('should exist', () => {
         expect(wrapper.find({ testid: 'imageUploadModal' })).toHaveLength(1)
+      })
+    })
+    describe('My Gallery', () => {
+      it('has correct href prop', () => {
+        expect(wrapper.find({ testid: 'myGallery' }).prop('href')).toEqual(
+          `/prompt-images/${date}`,
+        )
+      })
+    })
+    describe('Community Gallery', () => {
+      it('has correct href prop', () => {
+        expect(
+          wrapper.find({ testid: 'communityGallery' }).prop('href'),
+        ).toEqual(`/prompt-images/${date}/community-gallery`)
       })
     })
     describe('<ImageGallery>', () => {

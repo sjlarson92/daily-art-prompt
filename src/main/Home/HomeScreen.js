@@ -7,9 +7,10 @@ const HomeScreen = () => {
   const user = useSelector(state => state.user)
   if (!user.isLoggedIn) {
     history.push('/login')
+  } else {
+    const todaysDate = moment().format('YYYY-MM-DD')
+    history.push(`/prompt-images/${todaysDate}`)
   }
-  const todaysDate = moment().format('YYYY-MM-DD')
-  history.push(`/prompt-images/${todaysDate}`)
   return null
 }
 

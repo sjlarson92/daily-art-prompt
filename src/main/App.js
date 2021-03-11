@@ -22,13 +22,13 @@ export const App = () => {
       <Router>
         <Switch>
           <Route testid="home" exact path="/" component={HomeScreen} />
+          <Route testid="login" path="/login" component={LoginScreen} />
+          <Route testid="signUp" path="/sign-up" component={SignUpScreen} />
           <Route
             testid="promptScreen"
             path="/prompt-images/:date"
             component={PromptImagesScreen}
           />
-          <Route testid="login" path="/login" component={LoginScreen} />
-          <Route testid="signUp" path="/sign-up" component={SignUpScreen} />
           <Route testid="error" component={ErrorScreen} />
         </Switch>
       </Router>

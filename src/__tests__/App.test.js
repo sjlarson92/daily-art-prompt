@@ -27,18 +27,6 @@ describe('<App>', () => {
       )
     })
   })
-  describe('<Route> for PromptImageScreen', () => {
-    it('has correct path prop', () => {
-      expect(wrapper.find({ testid: 'promptScreen' }).prop('path')).toEqual(
-        '/prompt-images/:date',
-      )
-    })
-    it('has correct component prop', () => {
-      expect(
-        wrapper.find({ testid: 'promptScreen' }).prop('component'),
-      ).toEqual(PromptImagesScreen)
-    })
-  })
   describe('<Route> for Login', () => {
     it('has correct path prop', () => {
       expect(wrapper.find({ testid: 'login' }).prop('path')).toEqual('/login')
@@ -59,6 +47,18 @@ describe('<App>', () => {
       expect(wrapper.find({ testid: 'signUp' }).prop('component')).toEqual(
         SignUpScreen,
       )
+    })
+  })
+  describe('<Route> for PromptImageScreen', () => {
+    it('has correct path prop', () => {
+      expect(wrapper.find({ testid: 'promptScreen' }).prop('path')).toEqual(
+        '/prompt-images/:date',
+      )
+    })
+    it('has correct component prop', () => {
+      expect(
+        wrapper.find({ testid: 'promptScreen' }).prop('component'),
+      ).toEqual(PromptImagesScreen)
     })
   })
 
