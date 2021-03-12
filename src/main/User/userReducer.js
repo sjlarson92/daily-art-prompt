@@ -12,6 +12,7 @@ export const userReducer = (state = initialState, action) => {
     case TYPES.LOGIN:
       return {
         email: action.payload.email,
+        name: action.payload.name,
         id: action.payload.id,
         isLoggedIn: true,
         role: action.payload.role,

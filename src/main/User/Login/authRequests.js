@@ -15,6 +15,7 @@ export const validateLogin = (dispatch, history, email, password) => {
         type: TYPES.LOGIN,
         payload: {
           email: response.data.email,
+          name: response.data.name,
           id: response.data.id,
           role: response.data.role,
         },

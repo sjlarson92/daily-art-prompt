@@ -24,7 +24,7 @@ const DapNavBar = () => {
       />
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse className="justify-content-end">
-        <NavDropdown id="nav-user-dropdown" alignRight title={user?.email}>
+        <NavDropdown id="nav-user-dropdown" alignRight title={user?.name}>
           {user.role === 'GODLIKE' && (
             <NavDropdown.Item
               testid="promptButton"
