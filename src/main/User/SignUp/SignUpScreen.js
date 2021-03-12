@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { faKey, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faKey, faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import Alert from 'react-bootstrap/Alert'
 import { createUser } from '../userRequests'
 import DapInput from '../DapInput'
@@ -53,7 +53,7 @@ const SignUpScreen = () => {
             <form>
               <DapInput
                 testid="emailInput"
-                icon={faUser}
+                icon={faEnvelope}
                 fieldType="text"
                 fieldName="email"
                 onChange={eventEmail => setEmail(eventEmail)}
