@@ -14,7 +14,6 @@ const SignUpScreen = () => {
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
   const [alert, setAlert] = useState(null)
-
   const onKeyPress = key => {
     if (key === 'Enter') {
       handleOnClick()
@@ -22,13 +21,17 @@ const SignUpScreen = () => {
   }
 
   const handleOnClick = () => {
-    createUser(dispatch, history, email, password).catch(error => {
-      const message =
-        error.response.status === 409
-          ? error.response.headers.message
-          : 'An error occurred. Please try again.'
-      setAlert(message)
-    })
+    if (email && password) {
+      createUser(dispatch, history, email, password).catch(error => {
+        const message =
+          error.response.status === 409
+            ? error.response.headers.message
+            : 'An error occurred. Please try again.'
+        setAlert(message)
+      })
+    } else {
+      setAlert('Please enter email and password')
+    }
   }
   return (
     <div>

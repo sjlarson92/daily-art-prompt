@@ -29,6 +29,7 @@ const ImageLayout = ({ image }) => {
           onClick={updateLikeImage}
         />
       </div>
+      <div>{image.description}</div>
       <CommentContainer imageId={image.id} />
     </div>
   )
