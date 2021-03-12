@@ -17,6 +17,7 @@ const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
 
 const user = {
   id: 'some id',
+  name: 'some name',
   email: 'SomeUser',
 }
 
@@ -47,7 +48,7 @@ describe('DapNavBar', () => {
   describe('NavDropDown', () => {
     it('should render correct user for title', () => {
       expect(wrapper.find({ id: 'nav-user-dropdown' }).prop('title')).toEqual(
-        user.email,
+        user.name,
       )
     })
     describe('Add Prompts Button', () => {

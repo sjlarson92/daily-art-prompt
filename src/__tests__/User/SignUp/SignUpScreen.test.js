@@ -17,6 +17,7 @@ describe('SignUpScreen', () => {
   const dispatch = jest.fn()
   const email = 'fake@gmail.com'
   const password = '123'
+  const name = 'fake name'
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -44,6 +45,7 @@ describe('SignUpScreen', () => {
     describe('when createUser is successful', () => {
       it('should not render alert', async () => {
         wrapper.find({ testid: 'emailInput' }).simulate('change', email)
+        wrapper.find({ testid: 'nameInput' }).simulate('change', name)
         wrapper.find({ testid: 'passwordInput' }).simulate('change', password)
         createUser.mockResolvedValue()
         await wrapper.find({ 'data-testid': 'submitButton' }).simulate('click')
@@ -54,6 +56,7 @@ describe('SignUpScreen', () => {
       describe('when error.response.status is 409', () => {
         it('should render alert with correct message', async () => {
           wrapper.find({ testid: 'emailInput' }).simulate('change', email)
+          wrapper.find({ testid: 'nameInput' }).simulate('change', name)
           wrapper.find({ testid: 'passwordInput' }).simulate('change', password)
           const errorMessage = 'rawr'
           const error = {
@@ -70,6 +73,7 @@ describe('SignUpScreen', () => {
       })
       it('should render alert', async () => {
         wrapper.find({ testid: 'emailInput' }).simulate('change', email)
+        wrapper.find({ testid: 'nameInput' }).simulate('change', name)
         wrapper.find({ testid: 'passwordInput' }).simulate('change', password)
         const error = { response: { status: 400 } }
         createUser.mockRejectedValue(error)
@@ -85,6 +89,7 @@ describe('SignUpScreen', () => {
     describe('when the key is Enter', () => {
       it('calls createUser with correct params', () => {
         wrapper.find({ testid: 'emailInput' }).simulate('change', email)
+        wrapper.find({ testid: 'nameInput' }).simulate('change', name)
         wrapper.find({ testid: 'passwordInput' }).simulate('change', password)
         createUser.mockResolvedValue()
         wrapper.find({ testid: 'emailInput' }).simulate('keyPress', 'Enter')
@@ -92,6 +97,7 @@ describe('SignUpScreen', () => {
           dispatch,
           history,
           email,
+          name,
           password,
         )
       })
@@ -107,12 +113,14 @@ describe('SignUpScreen', () => {
   describe('when submit is clicked', () => {
     it('should call createUser with correct params', () => {
       wrapper.find({ testid: 'emailInput' }).simulate('change', email)
+      wrapper.find({ testid: 'nameInput' }).simulate('change', name)
       wrapper.find({ testid: 'passwordInput' }).simulate('change', password)
       wrapper.find({ 'data-testid': 'submitButton' }).simulate('click')
       expect(createUser).toHaveBeenCalledWith(
         dispatch,
         history,
         email,
+        name,
         password,
       )
     })

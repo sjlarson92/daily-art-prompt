@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { faKey, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faKey, faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import Alert from 'react-bootstrap/Alert'
 import { createUser } from '../userRequests'
 import DapInput from '../DapInput'
@@ -12,6 +12,7 @@ const SignUpScreen = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const [email, setEmail] = useState(null)
+  const [name, setName] = useState(null)
   const [password, setPassword] = useState(null)
   const [alert, setAlert] = useState(null)
   const onKeyPress = key => {
@@ -21,8 +22,8 @@ const SignUpScreen = () => {
   }
 
   const handleOnClick = () => {
-    if (email && password) {
-      createUser(dispatch, history, email, password).catch(error => {
+    if (email && password && name) {
+      createUser(dispatch, history, email, name, password).catch(error => {
         const message =
           error.response.status === 409
             ? error.response.headers.message
@@ -52,10 +53,18 @@ const SignUpScreen = () => {
             <form>
               <DapInput
                 testid="emailInput"
-                icon={faUser}
+                icon={faEnvelope}
                 fieldType="text"
                 fieldName="email"
                 onChange={eventEmail => setEmail(eventEmail)}
+                onKeyPress={onKeyPress}
+              />
+              <DapInput
+                testid="nameInput"
+                icon={faUser}
+                fieldType="text"
+                fieldName="name"
+                onChange={eventName => setName(eventName)}
                 onKeyPress={onKeyPress}
               />
               <DapInput

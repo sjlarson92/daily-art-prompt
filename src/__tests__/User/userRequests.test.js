@@ -6,6 +6,7 @@ jest.mock('axios')
 describe('userRequests', () => {
   const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL
   const email = 'someEmail@testing.com'
+  const name = 'fake name'
   const password = 'fakePassword'
   const response = 'some Response'
   const dispatch = jest.fn()
@@ -17,10 +18,11 @@ describe('userRequests', () => {
   })
   it('should call api with correct params', () => {
     axios.post.mockResolvedValue(response)
-    createUser(dispatch, history, email, password)
+    createUser(dispatch, history, email, name, password)
     expect(axios.post).toHaveBeenCalledWith(`${GATEWAY_URL}/api/users`, null, {
       headers: {
         email,
+        name,
         password,
       },
     })
