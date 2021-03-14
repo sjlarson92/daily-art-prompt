@@ -4,7 +4,9 @@ import React from 'react'
 
 const Comment = ({ comment, onDelete, onEdit }) => (
   <div className="comment-layout-container">
-    <div>{comment.text}</div>
+    <div>
+      <strong>{comment.user.name}</strong> {comment.text}
+    </div>
     <div id="comment-icon-container">
       <FontAwesomeIcon
         id="delete-icon"
