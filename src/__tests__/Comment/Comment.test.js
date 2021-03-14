@@ -3,7 +3,7 @@ import React from 'react'
 import Comment from '../../main/Comment/Comment'
 
 const defaultProps = {
-  comment: { id: 1 },
+  comment: { id: 1, user: { id: 2 } },
   onDelete: jest.fn(),
   onEdit: jest.fn(),
 }
