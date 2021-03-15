@@ -23,6 +23,7 @@ const mockState = {
 const comment = {
   id: 1,
   text: 'comment',
+  user: { id: 2 },
 }
 
 const defaultProps = {
