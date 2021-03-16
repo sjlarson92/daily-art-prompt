@@ -51,6 +51,12 @@ export const updateLikeImageAction = (updatedImage, dispatch) => {
     })
 }
 
+export const deleteImageAction = imageId => {
+  axios.delete(`${GATEWAY_URL}/api/images/${imageId}`).then(r => {
+    console.log('response data for deleting image: ', r.data)
+  })
+}
+
 export const uploadImageAction = (
   id,
   currentPromptId,
