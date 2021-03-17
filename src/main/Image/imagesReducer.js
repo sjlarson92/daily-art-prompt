@@ -19,6 +19,9 @@ export const imagesReducer = (state = [], action) => {
         }
         return image
       })
+    case TYPES.DELETE_IMAGE:
+      return state.filter(image => image.id !== action.payload.imageId)
+
     default:
       return state
   }
