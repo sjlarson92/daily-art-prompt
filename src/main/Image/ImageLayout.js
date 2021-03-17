@@ -17,10 +17,6 @@ const ImageLayout = ({ image }) => {
     updateLikeImageAction(updatedImage, dispatch)
   }
 
-  const deleteImage = () => {
-    deleteImageAction(image.id, dispatch)
-  }
-
   return (
     <div id="image-layout-container">
       <Image
@@ -47,7 +43,7 @@ const ImageLayout = ({ image }) => {
             <Dropdown.Item
               testid="deleteImage"
               as="button"
-              onClick={deleteImage}
+              onClick={() => deleteImageAction(image.id, dispatch)}
             >
               Delete Image
             </Dropdown.Item>

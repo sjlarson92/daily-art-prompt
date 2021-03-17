@@ -52,15 +52,13 @@ export const updateLikeImageAction = (updatedImage, dispatch) => {
 }
 
 export const deleteImageAction = (imageId, dispatch) => {
-  axios.delete(`${GATEWAY_URL}/api/images/${imageId}`).then(r => {
-    if (r.status === 204) {
-      dispatch({
-        type: TYPES.DELETE_IMAGE,
-        payload: {
-          imageId,
-        },
-      })
-    }
+  axios.delete(`${GATEWAY_URL}/api/images/${imageId}`).then(() => {
+    dispatch({
+      type: TYPES.DELETE_IMAGE,
+      payload: {
+        imageId,
+      },
+    })
   })
 }
 
