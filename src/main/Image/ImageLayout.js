@@ -31,18 +31,24 @@ const ImageLayout = ({ image }) => {
       <div id="image-details-container">
         <FontAwesomeIcon
           id={image.liked ? 'liked' : 'unliked'}
+          testid="likeImage"
           className="pointer-on-hover"
           icon={faHeart}
           onClick={updateLikeImage}
         />
         {image.userId === userId && (
           <DropdownButton
+            testid="deleteImageDropdown"
             id="delete-image"
             className="pointer-on-hover"
             variant="none"
             title={<FontAwesomeIcon icon={faEllipsisH} />}
           >
-            <Dropdown.Item as="button" onClick={deleteImage}>
+            <Dropdown.Item
+              testid="deleteImage"
+              as="button"
+              onClick={deleteImage}
+            >
               Delete Image
             </Dropdown.Item>
           </DropdownButton>

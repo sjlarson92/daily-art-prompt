@@ -1,21 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { shallow } from 'enzyme'
 import React from 'react'
-import axios from 'axios'
 import ImageLayout from '../../main/Image/ImageLayout'
-import { GATEWAY_URL } from '../../main/constants'
-import * as TYPES from '../../main/storage/actions'
+import {
+  deleteImageAction,
+  updateLikeImageAction,
+} from '../../main/Image/imageApi'
 
 jest.mock('react-redux', () => ({
   ...require.requireActual('react-redux'),
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }))
-
-jest.mock('axios')
+jest.mock('../../main/Image/imageApi')
 
 const user = {
-  id: 'some id',
+  id: 1,
   email: 'SomeUser',
 }
 
@@ -26,78 +26,76 @@ const mockState = {
 const defaultProps = {
   image: {
     id: 'some id',
+    userId: user.id,
   },
 }
 
 const dispatch = jest.fn()
 
 describe('<ImageLayout>', () => {
+  let wrapper
   beforeEach(() => {
     jest.clearAllMocks()
     useSelector.mockImplementation(callback => callback(mockState))
     useDispatch.mockReturnValue(dispatch)
+    wrapper = shallow(<ImageLayout {...defaultProps} />)
   })
   describe('Image', () => {
     describe('when double clicked', () => {
-      it('makes api call with correct params', () => {
+      it('calls updateLikeImageAction with correct params', () => {
         const updatedImage = {
           ...defaultProps.image,
           liked: !defaultProps.image.liked,
         }
-        axios.put.mockResolvedValue({ data: updatedImage })
-        const wrapper = shallow(<ImageLayout {...defaultProps} />)
         wrapper.find('Image').simulate('doubleClick')
-        expect(axios.put).toHaveBeenCalledWith(
-          `${GATEWAY_URL}/api/images/${defaultProps.image.id}`,
+        expect(updateLikeImageAction).toHaveBeenCalledWith(
           updatedImage,
+          dispatch,
         )
-      })
-      it('dispatch with correct params', async () => {
-        const updatedImage = {
-          ...defaultProps.image,
-          liked: !defaultProps.image.liked,
-        }
-        axios.put.mockResolvedValue({ data: updatedImage })
-        const wrapper = shallow(<ImageLayout {...defaultProps} />)
-        await wrapper.find('Image').simulate('doubleClick')
-        expect(dispatch).toHaveBeenCalledWith({
-          type: TYPES.UPDATE_IMAGE,
-          payload: {
-            updatedImage,
-          },
-        })
       })
     })
   })
   describe('LikeImageIcon', () => {
     describe('when clicked', () => {
-      it('makes api call with correct params', () => {
+      it('calls updateLikeImageAction with correct params', () => {
         const updatedImage = {
           ...defaultProps.image,
           liked: !defaultProps.image.liked,
         }
-        axios.put.mockResolvedValue({ data: updatedImage })
-        const wrapper = shallow(<ImageLayout {...defaultProps} />)
         wrapper.find('FontAwesomeIcon').simulate('click')
-        expect(axios.put).toHaveBeenCalledWith(
-          `${GATEWAY_URL}/api/images/${defaultProps.image.id}`,
+        expect(updateLikeImageAction).toHaveBeenCalledWith(
           updatedImage,
+          dispatch,
         )
       })
-      it('dispatch with correct params', async () => {
-        const updatedImage = {
-          ...defaultProps.image,
-          liked: !defaultProps.image.liked,
-        }
-        axios.put.mockResolvedValue({ data: updatedImage })
-        const wrapper = shallow(<ImageLayout {...defaultProps} />)
-        await wrapper.find('FontAwesomeIcon').simulate('click')
-        expect(dispatch).toHaveBeenCalledWith({
-          type: TYPES.UPDATE_IMAGE,
-          payload: {
-            updatedImage,
+    })
+  })
+  describe('DeleteImageIcon', () => {
+    describe('when image.userId is equal to userId', () => {
+      it('renders DeleteImageDropdown', () => {
+        expect(wrapper.find({ testid: 'deleteImageDropdown' })).toHaveLength(1)
+      })
+      it('calls deleteImageAction with correct params when clicked', async () => {
+        await wrapper.find({ testid: 'deleteImageDropdown' }).simulate('click')
+        wrapper.find({ testid: 'deleteImage' }).simulate('click')
+        expect(deleteImageAction).toHaveBeenCalledWith(
+          defaultProps.image.id,
+          dispatch,
+        )
+      })
+    })
+    describe('when image.userId is NOT equal to userId', () => {
+      it('does NOT render DeleteImageDropdown', () => {
+        const modifiedProps = {
+          image: {
+            id: 'some id',
+            userId: 7,
           },
-        })
+        }
+        const newWrapper = shallow(<ImageLayout {...modifiedProps} />)
+        expect(newWrapper.find({ testid: 'deleteImageDropdown' })).toHaveLength(
+          0,
+        )
       })
     })
   })

@@ -5,6 +5,7 @@ import {
   getImagesByPromptAndUserId,
   uploadImageAction,
   getCommunityImagesByPromptIdAndUserId,
+  deleteImageAction,
 } from '../../main/Image/imageApi'
 import * as TYPES from '../../main/storage/actions'
 
@@ -103,6 +104,30 @@ describe('updateLikeImageAction', () => {
         type: TYPES.UPDATE_IMAGE,
         payload: {
           updatedImage,
+        },
+      })
+    })
+  })
+})
+
+describe('deleteImageAction', () => {
+  it('calls api with correct params', () => {
+    const imageId = 1
+    axios.delete.mockResolvedValue({ status: 204 })
+    deleteImageAction(imageId, dispatch)
+    expect(axios.delete).toHaveBeenCalledWith(
+      `${GATEWAY_URL}/api/images/${imageId}`,
+    )
+  })
+  describe('when api response status is 204', () => {
+    it('call dispatch with correct params', () => {
+      const imageId = 1
+      axios.delete.mockResolvedValue({ status: 204 })
+      deleteImageAction(imageId, dispatch)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: TYPES.DELETE_IMAGE,
+        payload: {
+          imageId,
         },
       })
     })

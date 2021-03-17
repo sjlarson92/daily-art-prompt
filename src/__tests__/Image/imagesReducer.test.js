@@ -96,7 +96,7 @@ describe('imagesReducer', () => {
     })
   })
 
-  describe('when the action.type equals UPDATE_IMAGE', () => {
+  describe(`when the action.type equals ${TYPES.UPDATE_IMAGE}`, () => {
     describe('when image.id equals payload.image.id', () => {
       it('should update image', () => {
         const state = [
@@ -141,6 +141,14 @@ describe('imagesReducer', () => {
           },
         ])
       })
+    })
+  })
+
+  describe(`when case is ${TYPES.DELETE_IMAGE}`, () => {
+    it('returns filtered state', () => {
+      const state = [{ id: 1 }, { id: 2 }, { id: 1 }]
+      const action = { type: TYPES.DELETE_IMAGE, payload: { imageId: 1 } }
+      expect(imagesReducer(state, action)).toEqual([{ id: 2 }])
     })
   })
 
