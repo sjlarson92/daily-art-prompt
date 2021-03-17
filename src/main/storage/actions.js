@@ -1,5 +1,7 @@
 export const UPDATE_IMAGE = 'UPDATE_IMAGE_LIKED'
 
+export const DELETE_IMAGE = 'DELETE_IMAGE'
+
 export const UPDATE_DATE = 'UPDATE_DATE'
 
 export const SET_USER_IMAGES = 'SET_USER_IMAGES'

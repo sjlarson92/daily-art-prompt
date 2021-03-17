@@ -18,7 +18,7 @@ const ImageLayout = ({ image }) => {
   }
 
   const deleteImage = () => {
-    deleteImageAction(image.id)
+    deleteImageAction(image.id, dispatch)
   }
 
   return (
