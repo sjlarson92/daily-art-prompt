@@ -126,6 +126,7 @@ img {
 #dap-navbar {
   background: #f39c12;
   color: #60a3bc;
+  height: 60px;
 }
 
 #comment-container {
@@ -217,5 +218,48 @@ img {
 }
 
 #nav-user-dropdown:hover {
+  color: #4a8094;
+}
+
+#welcome-banner {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: #4a8094;
+  margin-top: 60px;
+}
+
+#welcome-screen-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 200px;
+  margin-left: 200px;
+}
+
+.feature {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.feature-divider {
+  margin: 5rem 0;
+}
+
+.ugh {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.welcome-navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.blue-font {
   color: #4a8094;
 }

@@ -3,13 +3,13 @@ import React, { useEffect } from 'react'
 import { Provider } from 'react-redux'
 import axios from 'axios'
 import LoginScreen from './User/Login/LoginScreen'
-import HomeScreen from './Home/HomeScreen'
 import ErrorScreen from './User/Login/ErrorScreen'
 import store from './storage/store'
 import SignUpScreen from './User/SignUp/SignUpScreen'
 import './Home/main.css'
 import { GATEWAY_URL } from './constants'
 import PromptImagesScreen from './Home/PromptImagesScreen'
+import HomeScreen from './Home/HomeScreen'
 
 export const App = () => {
   useEffect(() => {
@@ -21,7 +21,7 @@ export const App = () => {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route testid="home" exact path="/" component={HomeScreen} />
+          <Route exact path="/" component={HomeScreen} />
           <Route testid="login" path="/login" component={LoginScreen} />
           <Route testid="signUp" path="/sign-up" component={SignUpScreen} />
           <Route

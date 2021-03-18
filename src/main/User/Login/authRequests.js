@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 import * as TYPES from '../../storage/actions'
 import { GATEWAY_URL } from '../../constants'
 
@@ -20,6 +21,7 @@ export const validateLogin = (dispatch, history, email, password) => {
           role: response.data.role,
         },
       })
-      history.push('/')
+      const todaysDate = moment().format('YYYY-MM-DD')
+      history.push(`/prompt-images/${todaysDate}`)
     })
 }
