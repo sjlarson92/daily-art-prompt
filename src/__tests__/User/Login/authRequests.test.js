@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 import { validateLogin } from '../../../main/User/Login/authRequests'
 import * as TYPES from '../../../main/storage/actions'
 
@@ -54,9 +55,10 @@ describe('authRequests', () => {
           id: 2,
         },
       }
+      const todaysDate = moment().format('YYYY-MM-DD')
       axios.post.mockResolvedValue(response)
       await validateLogin(dispatch, history, email, password)
-      expect(history.push).toHaveBeenCalledWith('/')
+      expect(history.push).toHaveBeenCalledWith(`/prompt-images/${todaysDate}`)
     })
   })
 })

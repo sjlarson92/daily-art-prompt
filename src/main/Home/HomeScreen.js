@@ -13,6 +13,7 @@ const HomeScreen = () => {
     <div>
       <Navbar id="dap-navbar" className="welcome-navbar" expand="sm">
         <img
+          testid="dapLogo"
           id="dap-logo"
           className="pointer-on-hover"
           role="presentation"
@@ -21,10 +22,10 @@ const HomeScreen = () => {
           src={logo}
         />
         <Nav>
-          <Nav.Link href="/login">
+          <Nav.Link testid="login" href="/login">
             <div className="pointer-on-hover blue-font">Login</div>
           </Nav.Link>
-          <Nav.Link href="/sign-up">
+          <Nav.Link testid="signUp" href="/sign-up">
             <div className="pointer-on-hover blue-font">Sign Up</div>
           </Nav.Link>
         </Nav>
